@@ -62,14 +62,14 @@ export const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(
   ({ className, items, activeItem, onItemClick, ...props }, ref) => {
     return (
       <motion.nav
-        ref={ref}
+        ref={ref as React.Ref<HTMLElement>}
         className={cn(
           'p-1.5 rounded-2xl bg-gradient-to-b from-bg-elevated/95 to-bg/70 backdrop-blur-lg border border-jet/10 shadow-[0_8px_32px_rgba(26,26,26,0.08)] relative overflow-hidden',
           className
         )}
         initial="initial"
         whileHover="hover"
-        {...props}
+        {...(props as Record<string, unknown>)}
       >
         <motion.div
           className="absolute -inset-2 bg-gradient-radial from-transparent via-accent/15 via-30% via-warm/15 via-60% via-lime/15 via-90% to-transparent rounded-3xl z-0 pointer-events-none"
