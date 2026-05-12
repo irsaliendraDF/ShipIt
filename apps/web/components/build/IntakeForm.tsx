@@ -1,16 +1,68 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { SparkSprite } from './Sprites';
+import { catalog, type CatalogTool } from '@/data/catalog';
 
 // TODO: replace with real Formspree endpoint
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
+type PickKind = 'single' | 'bundle' | 'subscription' | 'custom';
 
+const MAX_BY_KIND: Partial<Record<PickKind, number>> = {
+  single: 1,
+  bundle: 3,
+};
+
+/**
+ * Catalog-aware intake form.
+ *
+ * Behavior:
+ *  - The "what are you picking?" dropdown reveals the tool checkbox grid only
+ *    when the buyer is in single-tool or bundle-of-3 mode.
+ *  - The bundle-of-3 mode enforces a hard cap of 3 selections (additional
+ *    clicks are blocked and a "you've picked 3" line appears).
+ *  - On mount, the URL hash and `?tool=` query param can pre-select a single
+ *    tool (set when a catalog card is clicked).
+ *  - Submit POSTs to Formspree (placeholder endpoint, see TODO above).
+ */
 export function IntakeForm() {
   const [state, setState] = useState<FormState>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [kind, setKind] = useState<PickKind | ''>('');
+  const [picks, setPicks] = useState<Set<string>>(new Set());
+
+  // URL pre-selection: ?tool=interactive-quiz#pick-a-tool puts the form in
+  // "single tool" mode with that checkbox already ticked.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('tool');
+    if (slug && catalog.some((t) => t.slug === slug)) {
+      setKind('single');
+      setPicks(new Set([slug]));
+    }
+  }, []);
+
+  const max = kind ? MAX_BY_KIND[kind] : undefined;
+  const showCheckboxes = kind === 'single' || kind === 'bundle';
+  const atCap = max !== undefined && picks.size >= max;
+
+  function togglePick(slug: string) {
+    setPicks((prev) => {
+      const next = new Set(prev);
+      if (next.has(slug)) {
+        next.delete(slug);
+      } else if (max !== undefined && next.size >= max) {
+        // ignore: hit the cap (single = 1, bundle = 3)
+        return prev;
+      } else {
+        next.add(slug);
+      }
+      return next;
+    });
+  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -19,6 +71,8 @@ export function IntakeForm() {
 
     const form = e.currentTarget;
     const data = new FormData(form);
+    // Add the selected tools (FormData multi-value not picked up from the controlled set otherwise).
+    for (const slug of picks) data.append('tools', slug);
 
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -29,6 +83,8 @@ export function IntakeForm() {
       if (!res.ok) throw new Error('submission failed');
       setState('success');
       form.reset();
+      setPicks(new Set());
+      setKind('');
     } catch {
       setState('error');
       setErrorMsg('something went wrong. try again or email irene@digitalflowconsulting.ca.');
@@ -37,16 +93,17 @@ export function IntakeForm() {
 
   if (state === 'success') {
     return (
-      <div className="mx-auto max-w-[380px] text-center bg-offwhite border border-jet/10 rounded-2xl p-10">
+      <div className="mx-auto max-w-[420px] text-center bg-offwhite border border-jet/10 rounded-2xl p-10">
         <div className="flex justify-center mb-5">
           <SparkSprite size={48} />
         </div>
         <h3 className="font-display text-[28px] font-normal text-jet leading-tight">
-          got it. talk soon.
+          got it. quote coming.
         </h3>
         <p className="mt-4 font-sans text-[17px] text-jet/75 leading-relaxed">
-          i read every submission. you&apos;ll hear from me within 24 hours with next steps.
-          usually it&apos;s a quick reply with a discovery call link or a clarifying question.
+          i&apos;ll review your selections and email you a quote and a contract within 24
+          hours. once you sign and pay, your tool ships in 2 days (or your custom build
+          kicks off into the 10-day timeline).
         </p>
         <a
           href="#top"
@@ -63,7 +120,7 @@ export function IntakeForm() {
       onSubmit={handleSubmit}
       action={FORMSPREE_ENDPOINT}
       method="POST"
-      className="mx-auto max-w-[640px] bg-offwhite border border-jet/10 rounded-2xl p-8"
+      className="mx-auto max-w-[720px] bg-offwhite border border-jet/10 rounded-2xl p-8"
       noValidate
     >
       {state === 'error' && errorMsg && (
@@ -76,14 +133,7 @@ export function IntakeForm() {
       )}
 
       <div className="space-y-5">
-        <Field
-          id="name"
-          name="name"
-          label="name"
-          type="text"
-          placeholder="your name"
-          required
-        />
+        <Field id="name" name="name" label="name" type="text" placeholder="your name" required />
         <Field
           id="company"
           name="company"
@@ -101,35 +151,120 @@ export function IntakeForm() {
           required
         />
 
+        <div>
+          <label htmlFor="kind" className="block font-sans text-[14px] font-medium text-jet mb-2">
+            what are you picking?<span aria-hidden="true" className="text-orange ml-1">*</span>
+          </label>
+          <select
+            id="kind"
+            name="kind"
+            required
+            value={kind}
+            onChange={(e) => {
+              const next = e.target.value as PickKind | '';
+              setKind(next);
+              // Reset picks when the kind changes so the cap re-applies cleanly.
+              setPicks(new Set());
+            }}
+            className="w-full bg-white border border-jet/15 rounded-[10px] px-4 py-3.5 font-sans text-[16px] text-jet focus:outline-none focus:border-orange focus:ring-[3px] focus:ring-orange/20 transition-all"
+          >
+            <option value="" disabled>
+              select one
+            </option>
+            <option value="single">single tool, pick which one below</option>
+            <option value="bundle">bundle of 3, $1,500 flat</option>
+            <option value="subscription">monthly subscription, let&apos;s talk</option>
+            <option value="custom">custom build, let&apos;s scope it</option>
+          </select>
+        </div>
+
+        {showCheckboxes && (
+          <fieldset className="space-y-3">
+            <legend className="font-sans text-[14px] font-medium text-jet">
+              which tool{kind === 'bundle' ? 's' : ''}?
+              <span aria-hidden="true" className="text-orange ml-1">*</span>
+            </legend>
+            <p className="font-sans text-[13px] text-jet/60">
+              {kind === 'single'
+                ? 'pick one tool.'
+                : `pick up to three. ${
+                    atCap
+                      ? "you've picked 3. unselect one to swap."
+                      : `${3 - picks.size} more to go.`
+                  }`}
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {catalog.map((tool) => {
+                const checked = picks.has(tool.slug);
+                const disabled = !checked && atCap;
+                return (
+                  <li key={tool.slug}>
+                    <label
+                      className={[
+                        'flex items-start gap-3 rounded-md border p-3 cursor-pointer transition-colors',
+                        checked
+                          ? 'border-orange bg-orange/5'
+                          : disabled
+                          ? 'border-jet/10 bg-white opacity-50 cursor-not-allowed'
+                          : 'border-jet/10 bg-white hover:border-orange/50',
+                      ].join(' ')}
+                    >
+                      <input
+                        type="checkbox"
+                        className="mt-1 accent-orange"
+                        checked={checked}
+                        disabled={disabled}
+                        onChange={() => togglePick(tool.slug)}
+                      />
+                      <span>
+                        <span className="block font-sans text-[14px] font-medium text-jet">
+                          {tool.name}
+                        </span>
+                        <span className="block font-sans text-[12px] text-jet/60">
+                          CAD ${tool.price}
+                        </span>
+                      </span>
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+          </fieldset>
+        )}
+
         <TextareaField
-          id="tool"
-          name="tool"
-          label="what tool are your clients asking for?"
+          id="business"
+          name="business"
+          label="tell me about your business"
           rows={3}
-          placeholder="they keep asking us for a way to... / we need something that does... / we currently use [tool] and it doesn't quite..."
+          placeholder="industry, what your business does, who your clients are."
           required
         />
 
         <TextareaField
-          id="workaround"
-          name="workaround"
-          label="what's the current workaround?"
-          rows={2}
-          placeholder="a Typeform / a spreadsheet / doing it manually / a Notion page"
+          id="contents"
+          name="contents"
+          label="what goes inside the tool?"
+          rows={4}
+          placeholder="the content that needs to go into the tool you picked. questions, prompts, framework labels, scoring rules, prizes, whatever applies. as much detail as you have."
+          required
         />
 
-        <SelectField
-          id="budget"
-          name="budget"
-          label="budget range"
-          required
-          options={[
-            { value: 'skiff', label: 'skiff tier (~$1,500)' },
-            { value: 'schooner', label: 'schooner tier (~$3,500)' },
-            { value: 'galleon', label: 'galleon tier (~$7,500+)' },
-            { value: 'unsure', label: 'not sure yet' },
-          ]}
-        />
+        <fieldset>
+          <legend className="font-sans text-[14px] font-medium text-jet">
+            branding ready to send?<span aria-hidden="true" className="text-orange ml-1">*</span>
+          </legend>
+          <div className="mt-2 space-y-2">
+            <Radio
+              name="branding"
+              value="ready"
+              label="yes, i have logo, brand colors, fonts ready"
+              required
+            />
+            <Radio name="branding" value="mostly" label="mostly, i have logo and colors" />
+            <Radio name="branding" value="help" label="need help, i don't have a brand kit yet" />
+          </div>
+        </fieldset>
 
         <SelectField
           id="timeline"
@@ -137,9 +272,8 @@ export function IntakeForm() {
           label="timeline"
           required
           options={[
-            { value: 'yesterday', label: 'needed yesterday' },
-            { value: 'month', label: 'within a month' },
-            { value: '2-3-months', label: '2-3 months' },
+            { value: 'asap', label: 'asap, within a week' },
+            { value: '2-3-weeks', label: '2-3 weeks is fine' },
             { value: 'flexible', label: 'flexible / exploring' },
           ]}
         />
@@ -247,5 +381,27 @@ function SelectField({ id, name, label, options, required }: SelectFieldProps) {
         ))}
       </select>
     </div>
+  );
+}
+
+type RadioProps = {
+  name: string;
+  value: string;
+  label: string;
+  required?: boolean;
+};
+
+function Radio({ name, value, label, required }: RadioProps) {
+  return (
+    <label className="flex items-start gap-2.5 cursor-pointer">
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        required={required}
+        className="mt-1 accent-orange"
+      />
+      <span className="font-sans text-[15px] text-jet/80">{label}</span>
+    </label>
   );
 }
