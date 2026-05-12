@@ -2,9 +2,13 @@
 
 import { useEffect, useState, type FormEvent } from 'react';
 import { SparkSprite } from './Sprites';
-import { catalog, type CatalogTool } from '@/data/catalog';
+import { catalog } from '@/data/catalog';
+import { supabase, type IntakeSubmissionInsert } from '@/lib/supabase';
 
-// TODO: replace with real Formspree endpoint
+// Optional Formspree fallback: if NEXT_PUBLIC_SUPABASE_* env vars aren't
+// configured (e.g. preview deploys without env), the form falls back to
+// posting at this endpoint. Leave as placeholder; Supabase is the primary
+// destination once env vars are set.
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
@@ -71,16 +75,37 @@ export function IntakeForm() {
 
     const form = e.currentTarget;
     const data = new FormData(form);
-    // Add the selected tools (FormData multi-value not picked up from the controlled set otherwise).
-    for (const slug of picks) data.append('tools', slug);
 
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' },
-      });
-      if (!res.ok) throw new Error('submission failed');
+      if (supabase) {
+        // Primary path: insert directly into Supabase. RLS allows anon INSERT
+        // only, so submissions land but nobody can read them through this key.
+        const row: IntakeSubmissionInsert = {
+          name: String(data.get('name') ?? ''),
+          company: String(data.get('company') ?? ''),
+          email: String(data.get('email') ?? ''),
+          kind: (data.get('kind') as IntakeSubmissionInsert['kind']) || 'custom',
+          tools: Array.from(picks),
+          business: String(data.get('business') ?? ''),
+          contents: String(data.get('contents') ?? ''),
+          branding:
+            (data.get('branding') as IntakeSubmissionInsert['branding']) || 'help',
+          timeline:
+            (data.get('timeline') as IntakeSubmissionInsert['timeline']) || 'flexible',
+          notes: (data.get('notes') as string) || null,
+        };
+        const { error } = await supabase.from('intake_submissions').insert(row);
+        if (error) throw error;
+      } else {
+        // Fallback path: Formspree, used when env vars aren't set.
+        for (const slug of picks) data.append('tools', slug);
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error('submission failed');
+      }
       setState('success');
       form.reset();
       setPicks(new Set());

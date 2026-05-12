@@ -28,6 +28,10 @@ export type Experiment = {
   // If set, tile and carousel link out to this URL instead of /experiments/[slug].
   // Used for experiments hosted on their own domain (e.g. a standalone Vercel deploy).
   externalUrl?: string;
+  // If set, this experiment is a remix of another. The value is the parent's
+  // slug. The detail page renders a "🔀 a remix of <Parent>" chip, and the
+  // parent's detail page renders a "🌳 remixes" strip listing the children.
+  riffedFrom?: string;
 };
 
 export const experiments: Experiment[] = [
@@ -167,6 +171,11 @@ export function getRelatedExperiments(slug: string, limit = 3): Experiment[] {
 
 export function getExperimentsByContributor(handle: string): Experiment[] {
   return experiments.filter((e) => e.contributor === handle);
+}
+
+/** Experiments that list `parentSlug` as their parent via the riffedFrom field. */
+export function getRemixesOf(parentSlug: string): Experiment[] {
+  return experiments.filter((e) => e.riffedFrom === parentSlug);
 }
 
 export function getAllTags(): ExperimentTag[] {

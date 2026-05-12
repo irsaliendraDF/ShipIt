@@ -108,6 +108,7 @@ Each game in `games/` is self-contained: an `index.html`, a `main.js`, and an `e
 | `controls`    | no       | Plain-language control instructions shown on the experiment page.                           |
 | `createdAt`   | no       | ISO date.                                                                                   |
 | `externalUrl` | no       | If your experiment is hosted on its own domain, set this and the gallery tile + iframe links to that URL instead of the in-repo `games/` folder. |
+| `riffedFrom`  | no       | Slug of a parent experiment you riffed off. The detail page shows "🔀 a remix of …", and the parent's page lists your work under "🌳 remixes". |
 
 ## Contributor schema (`apps/web/data/contributors.ts`)
 
@@ -131,6 +132,17 @@ Each game in `games/` is self-contained: an `index.html`, a `main.js`, and an `e
 - **Encouraged:** `avatar` (drop the file in `apps/web/public/crew/`)
 - **Encouraged:** `links.github` + 1 or 2 of `site`, `linkedin`, `twitter`
 - Bio shows up everywhere your work is credited. One to three sentences. Lowercase is on-brand but not enforced.
+
+## Riffing on someone else's experiment
+
+The promise on the marquee is real: fork mine, i'll fork yours. To make your remix readable in lineage:
+
+1. Open the source folder on GitHub from any experiment's "🍴 Fork this experiment" button.
+2. Copy `games/<original-slug>/` into your own folder under `games/your-slug/`.
+3. Change what you want. Credit the original in your `description` if it shaped the riff.
+4. Add `riffedFrom: 'original-slug'` to your entry in `apps/web/data/experiments.ts`.
+
+When your PR merges, your experiment's page shows "🔀 a remix of [Original]", and the original's page lists yours under "🌳 remixes" — automatic, no extra wiring.
 
 ## Pull request process
 
@@ -188,6 +200,25 @@ If your experiment needs camera but isn't tagged appropriately, it'll be silentl
 - `RTCPeerConnection`, `sendBeacon`
 
 Findings appear in the PR check logs. The scan doesn't auto-fail — it's a notice for the maintainer. If you're using something flagged for a legitimate reason, leave a note in your PR description.
+
+## Environment variables
+
+Local dev runs fine without any env vars, but if you want the shipit.build
+intake form to write into the real Supabase database (instead of the
+Formspree fallback), copy `apps/web/.env.example` to `apps/web/.env.local`
+and fill in:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+Both vars are `NEXT_PUBLIC_*` because the anon key is designed to ship in
+the browser bundle. The actual access control is Row Level Security on the
+Supabase side (see `supabase/migrations/*_init_shipit_schema.sql`).
+
+For production, set the same two vars in Vercel → Project Settings →
+Environment Variables.
 
 ## Code of conduct
 
