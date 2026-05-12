@@ -9,9 +9,10 @@ type Props = {
   title: string;
   controls?: string;
   tags?: ExperimentTag[];
+  externalUrl?: string;
 };
 
-export function ExperimentFrame({ slug, title, controls, tags = [] }: Props) {
+export function ExperimentFrame({ slug, title, controls, tags = [], externalUrl }: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [showControls, setShowControls] = useState(true);
 
@@ -23,7 +24,7 @@ export function ExperimentFrame({ slug, title, controls, tags = [] }: Props) {
     setShowControls(false);
   };
 
-  const src = `/games-static/${slug}/index.html`;
+  const src = externalUrl ?? `/games-static/${slug}/index.html`;
 
   // Cover all features the embedded apps might need. Including 'self' lets the
   // parent delegate the feature to the same-origin iframe.

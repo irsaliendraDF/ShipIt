@@ -50,7 +50,7 @@ export function IntakeForm() {
         </p>
         <a
           href="#top"
-          className="mt-7 inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] text-purple border border-purple rounded-full px-5 py-2.5 hover:bg-purple/10 transition-colors"
+          className="mt-7 inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] text-jet border border-jet/30 rounded-full px-5 py-2.5 hover:border-orange hover:text-orange transition-colors"
         >
           back to top
         </a>
@@ -157,7 +157,7 @@ export function IntakeForm() {
         <button
           type="submit"
           disabled={state === 'submitting'}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans font-semibold text-[16px] bg-purple text-cream rounded-full px-7 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(139,92,246,0.25)] transition-all disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans font-semibold text-[16px] bg-orange text-cream rounded-full px-7 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(255,122,61,0.3)] transition-all disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none"
         >
           {state === 'submitting' ? 'sending...' : 'send it →'}
         </button>
@@ -188,7 +188,7 @@ function Field({ id, name, label, type, placeholder, required }: FieldProps) {
         type={type}
         placeholder={placeholder}
         required={required}
-        className="w-full bg-white border border-jet/15 rounded-[10px] px-4 py-3.5 font-sans text-[16px] text-jet placeholder:text-jet/40 focus:outline-none focus:border-purple focus:ring-[3px] focus:ring-purple/15 transition-all"
+        className="w-full bg-white border border-jet/15 rounded-[10px] px-4 py-3.5 font-sans text-[16px] text-jet placeholder:text-jet/40 focus:outline-none focus:border-orange focus:ring-[3px] focus:ring-orange/20 transition-all"
       />
     </div>
   );
@@ -209,7 +209,7 @@ function TextareaField({ id, name, label, rows, placeholder, required }: Textare
         rows={rows}
         placeholder={placeholder}
         required={required}
-        className="w-full bg-white border border-jet/15 rounded-[10px] px-4 py-3.5 font-sans text-[16px] text-jet placeholder:text-jet/40 focus:outline-none focus:border-purple focus:ring-[3px] focus:ring-purple/15 transition-all resize-y"
+        className="w-full bg-white border border-jet/15 rounded-[10px] px-4 py-3.5 font-sans text-[16px] text-jet placeholder:text-jet/40 focus:outline-none focus:border-orange focus:ring-[3px] focus:ring-orange/20 transition-all resize-y"
       />
     </div>
   );
@@ -235,7 +235,7 @@ function SelectField({ id, name, label, options, required }: SelectFieldProps) {
         name={name}
         required={required}
         defaultValue=""
-        className="w-full bg-white border border-jet/15 rounded-[10px] px-4 py-3.5 font-sans text-[16px] text-jet focus:outline-none focus:border-purple focus:ring-[3px] focus:ring-purple/15 transition-all"
+        className="w-full bg-white border border-jet/15 rounded-[10px] px-4 py-3.5 font-sans text-[16px] text-jet focus:outline-none focus:border-orange focus:ring-[3px] focus:ring-orange/20 transition-all"
       >
         <option value="" disabled>
           select one

@@ -15,7 +15,7 @@ import { getContributor } from '@/data/contributors';
 type Props = { params: { slug: string } };
 
 export function generateStaticParams() {
-  return experiments.filter((e) => !e.externalUrl).map((e) => ({ slug: e.slug }));
+  return experiments.map((e) => ({ slug: e.slug }));
 }
 
 export function generateMetadata({ params }: Props) {
@@ -67,7 +67,7 @@ export default function ExperimentPage({ params }: Props) {
         </div>
 
         {exp.status === 'live' ? (
-          <ExperimentFrame slug={exp.slug} title={exp.title} controls={exp.controls} tags={exp.tags} />
+          <ExperimentFrame slug={exp.slug} title={exp.title} controls={exp.controls} tags={exp.tags} externalUrl={exp.externalUrl} />
         ) : (
           <div className="aspect-[16/9] w-full bg-bg-elevated border border-jet/10 flex items-center justify-center relative overflow-hidden">
             <div

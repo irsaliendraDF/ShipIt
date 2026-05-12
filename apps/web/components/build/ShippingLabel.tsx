@@ -62,7 +62,7 @@ export function ShippingLabel({
 
       <div className="flex items-start justify-between mb-4">
         {/* tier number badge */}
-        <div className="w-9 h-9 rounded-md bg-jet text-cream font-pixel text-[10px] flex items-center justify-center">
+        <div className="w-9 h-9 rounded-md bg-cream border border-orange text-orange font-pixel text-[10px] flex items-center justify-center">
           {tier}
         </div>
         {/* top-right sprite */}

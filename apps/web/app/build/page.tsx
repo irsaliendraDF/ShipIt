@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Code2, Box, User, Lock } from 'lucide-react';
 import { ShipSprite, BuildSprite, SparkSprite, BoltSprite } from '@/components/build/Sprites';
 import { ShippingLabel } from '@/components/build/ShippingLabel';
 import { IntakeForm } from '@/components/build/IntakeForm';
@@ -89,7 +90,7 @@ export default function BuildHomePage() {
           <nav className="flex items-center gap-2 sm:gap-4">
             <a
               href="#about"
-              className="hidden sm:inline-flex font-sans text-[15px] text-jet hover:text-purple transition-colors px-3 py-2"
+              className="hidden sm:inline-flex font-sans text-[15px] text-jet hover:text-orange transition-colors px-3 py-2"
             >
               about
             </a>
@@ -97,7 +98,7 @@ export default function BuildHomePage() {
               href={BOOK_A_CALL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] bg-purple text-cream rounded-full px-5 py-2.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(139,92,246,0.25)] transition-all"
+              className="inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] bg-orange text-cream rounded-full px-5 py-2.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(255,122,61,0.3)] transition-all"
             >
               book a call
             </a>
@@ -147,13 +148,13 @@ export default function BuildHomePage() {
               href={BOOK_A_CALL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center font-sans font-semibold text-[16px] bg-purple text-cream rounded-full px-6 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(139,92,246,0.25)] transition-all"
+              className="inline-flex items-center justify-center font-sans font-semibold text-[16px] bg-orange text-cream rounded-full px-6 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(255,122,61,0.3)] transition-all"
             >
               book a discovery call
             </a>
             <a
               href="#intake"
-              className="inline-flex items-center justify-center font-sans font-semibold text-[16px] bg-transparent text-purple border border-purple rounded-full px-[23px] py-[13px] hover:bg-purple/10 transition-colors"
+              className="inline-flex items-center justify-center font-sans font-semibold text-[16px] bg-transparent text-jet border border-jet/30 rounded-full px-[23px] py-[13px] hover:border-orange hover:text-orange transition-colors"
             >
               tell me about your tool problem
             </a>
@@ -349,7 +350,7 @@ export default function BuildHomePage() {
             {exampleTools.map((tool) => (
               <div
                 key={tool.title}
-                className="bg-offwhite border border-jet/10 rounded-[12px] p-[14px] min-h-[160px] flex flex-col gap-2 hover:border-purple/40 transition-colors"
+                className="bg-offwhite border border-jet/10 rounded-[12px] p-[14px] min-h-[160px] flex flex-col gap-2 hover:border-orange/50 transition-colors"
               >
                 <div className="flex-shrink-0">
                   <ToolSprite name={tool.sprite} />
@@ -366,94 +367,158 @@ export default function BuildHomePage() {
         </div>
       </section>
 
-      {/* SECTION 7 — WHAT THIS IS NOT */}
-      <section className="py-16 lg:py-24 border-t border-jet/8">
-        <div className="max-w-[1080px] mx-auto px-6">
-          <p className="font-pixel text-[11px] uppercase text-purple tracking-[0.18em]">
-            BEFORE YOU BOOK
-          </p>
-          <h2 className="mt-4 font-display font-normal text-jet text-[28px] sm:text-[32px] leading-[1.15] max-w-[820px]">
-            we should agree on what shipit.build isn&apos;t.
-          </h2>
+      {/* SECTION 7 — WHAT THIS IS NOT (compact bordered callout, skim-friendly) */}
+      <section className="py-12 lg:py-16">
+        <div className="max-w-[820px] mx-auto px-6">
+          <div className="border-2 border-jet/15 rounded-2xl bg-cream p-6 lg:p-8">
+            <p className="font-pixel text-[10px] uppercase text-orange tracking-[0.18em]">
+              BEFORE YOU BOOK
+            </p>
+            <h2 className="mt-2 font-display font-normal text-jet text-[22px] sm:text-[24px] leading-tight">
+              we should agree on what shipit.build isn&apos;t.
+            </h2>
 
-          <ul className="mt-10 space-y-5 font-sans text-[17px] text-jet/80 leading-relaxed max-w-[820px]">
-            <li className="flex items-start gap-3">
-              <span aria-hidden="true" className="text-orange font-semibold flex-shrink-0 mt-[2px]">
-                ×
-              </span>
-              <span>
-                <strong className="text-jet font-semibold">not a no-code platform.</strong>{' '}
-                we use code. real code. you get the code when we ship.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span aria-hidden="true" className="text-orange font-semibold flex-shrink-0 mt-[2px]">
-                ×
-              </span>
-              <span>
-                <strong className="text-jet font-semibold">not a SaaS product.</strong> we
-                don&apos;t sell subscriptions. we build the tool and you own it.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span aria-hidden="true" className="text-orange font-semibold flex-shrink-0 mt-[2px]">
-                ×
-              </span>
-              <span>
-                <strong className="text-jet font-semibold">not a marketplace.</strong>{' '}
-                there&apos;s no other builders here. it&apos;s me. you talk to me. i build it.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span aria-hidden="true" className="text-orange font-semibold flex-shrink-0 mt-[2px]">
-                ×
-              </span>
-              <span>
-                <strong className="text-jet font-semibold">not a freelance gig.</strong>{' '}
-                fixed scope, fixed price, fixed timeline. no per-hour billing, no scope
-                creep, no &ldquo;depends.&rdquo;
-              </span>
-            </li>
-          </ul>
+            <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
+              <li className="flex items-start gap-3">
+                <Code2
+                  className="w-5 h-5 text-orange flex-shrink-0 mt-[3px]"
+                  aria-hidden="true"
+                />
+                <div>
+                  <p className="font-sans font-semibold text-[15px] text-jet leading-snug">
+                    not a no-code platform
+                  </p>
+                  <p className="font-sans text-[13px] text-jet/65 mt-1 leading-snug">
+                    we use real code. you get it when we ship.
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <Box
+                  className="w-5 h-5 text-orange flex-shrink-0 mt-[3px]"
+                  aria-hidden="true"
+                />
+                <div>
+                  <p className="font-sans font-semibold text-[15px] text-jet leading-snug">
+                    not a SaaS product
+                  </p>
+                  <p className="font-sans text-[13px] text-jet/65 mt-1 leading-snug">
+                    no subscriptions. we build it, you own it.
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <User
+                  className="w-5 h-5 text-orange flex-shrink-0 mt-[3px]"
+                  aria-hidden="true"
+                />
+                <div>
+                  <p className="font-sans font-semibold text-[15px] text-jet leading-snug">
+                    not a marketplace
+                  </p>
+                  <p className="font-sans text-[13px] text-jet/65 mt-1 leading-snug">
+                    no other builders. you talk to me. i build it.
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <Lock
+                  className="w-5 h-5 text-orange flex-shrink-0 mt-[3px]"
+                  aria-hidden="true"
+                />
+                <div>
+                  <p className="font-sans font-semibold text-[15px] text-jet leading-snug">
+                    not a freelance gig
+                  </p>
+                  <p className="font-sans text-[13px] text-jet/65 mt-1 leading-snug">
+                    fixed scope, price, timeline. no &ldquo;depends.&rdquo;
+                  </p>
+                </div>
+              </li>
+            </ul>
 
-          <p className="mt-10 font-sans italic text-[17px] text-jet leading-relaxed max-w-[820px]">
-            it&apos;s a productized service. that&apos;s the whole thing.
-          </p>
+            <p className="mt-7 pt-5 border-t border-jet/10 font-sans italic text-[14px] text-jet/75 leading-relaxed">
+              it&apos;s a productized service. that&apos;s the whole thing.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* SECTION 8 — ABOUT */}
+      {/* SECTION 8 — WHO BUILDS THIS (two-headshot crew) */}
       <section id="about" className="py-16 lg:py-24 bg-offwhite border-t border-jet/8">
         <div className="max-w-[1080px] mx-auto px-6">
           <p className="font-pixel text-[11px] uppercase text-orange tracking-[0.18em]">
             WHO BUILDS THIS
           </p>
           <h2 className="mt-4 font-display font-normal text-jet text-[28px] sm:text-[32px] leading-[1.15] max-w-[820px]">
-            built by irene.
+            built by a two-person crew.
           </h2>
+          <p className="mt-6 font-sans text-[17px] text-jet/70 leading-relaxed max-w-[620px]">
+            small team, no agency. you talk to the people doing the work. based in
+            halifax, nova scotia. shipping across canada.
+          </p>
 
-          <div className="mt-10 space-y-5 font-sans text-[17px] text-jet/85 leading-relaxed max-w-[620px]">
-            <p>
-              hi. i&apos;m irene. i&apos;m based in halifax, nova scotia, and i&apos;ve spent
-              the last decade-plus in sales operations and CRM strategy. somewhere along the
-              way, vibe coding became a thing, and suddenly the gap between &ldquo;my client
-              needs a tool&rdquo; and &ldquo;there&apos;s a tool&rdquo; got really small.
-            </p>
-            <p>
-              shipit.build is the productized version of that gap-closing. you tell me what
-              your clients keep asking for. i build it. you white-label it and ship it to
-              them. everyone wins, nobody hires a developer.
-            </p>
-            <p>
-              i also run shipit.fun, the community side of this whole thing. that&apos;s where
-              i build weird things for fun. shipit.build is where i build serious things for
-              revenue. they share a brand family but operate independently.
-            </p>
-            <p>
-              if any of this sounds like what you need, book a call. or fill the form below.
-              either way, i read everything and reply within 24 hours.
-            </p>
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Irene card */}
+            <article className="bg-cream border border-jet/10 rounded-2xl p-6 lg:p-7">
+              <div className="flex items-center gap-4">
+                {/* TODO: replace with real headshot at /public/team/irene.jpg */}
+                <div
+                  className="w-20 h-20 rounded-full flex-shrink-0 flex items-center justify-center font-display text-[28px] text-cream"
+                  style={{ background: '#ff7a3d' }}
+                  aria-label="Irene headshot placeholder"
+                >
+                  IS
+                </div>
+                <div>
+                  <h3 className="font-display text-[22px] text-jet leading-tight">
+                    irene saliendra
+                  </h3>
+                  <p className="mt-1 font-pixel text-[9px] uppercase text-orange tracking-[0.18em]">
+                    SALES · STRATEGY · BUILDS
+                  </p>
+                </div>
+              </div>
+              <p className="mt-5 font-sans text-[15px] text-jet/80 leading-relaxed">
+                a decade-plus in sales ops and CRM strategy across atlantic canada.
+                runs the discovery calls, scopes the tool, and writes the code that
+                ships. founder of DigitalFlow Consulting and shipit.fun.
+              </p>
+            </article>
+
+            {/* Chido card */}
+            <article className="bg-cream border border-jet/10 rounded-2xl p-6 lg:p-7">
+              <div className="flex items-center gap-4">
+                {/* TODO: replace with real headshot at /public/team/chido.jpg */}
+                <div
+                  className="w-20 h-20 rounded-full flex-shrink-0 flex items-center justify-center font-display text-[28px] text-cream"
+                  style={{ background: '#ff6fb5' }}
+                  aria-label="Chido headshot placeholder"
+                >
+                  C
+                </div>
+                <div>
+                  <h3 className="font-display text-[22px] text-jet leading-tight">
+                    chido
+                  </h3>
+                  <p className="mt-1 font-pixel text-[9px] uppercase text-bubblegum tracking-[0.18em]">
+                    MARKETING · BRAND · STORY
+                  </p>
+                </div>
+              </div>
+              <p className="mt-5 font-sans text-[15px] text-jet/80 leading-relaxed">
+                {/* TODO: replace placeholder bio with real copy from Chido */}
+                shapes how shipit.build shows up in the world. runs brand, copy, and
+                positioning for the tools we ship. makes sure the work feels like it
+                came from a team, not a faceless studio.
+              </p>
+            </article>
           </div>
+
+          <p className="mt-10 font-sans text-[16px] text-jet/75 leading-relaxed max-w-[620px]">
+            if any of this sounds like what you need, book a call or fill the form
+            below. we read everything and reply within 24 hours.
+          </p>
         </div>
       </section>
 
@@ -498,7 +563,7 @@ export default function BuildHomePage() {
               <li>
                 <a
                   href="https://shipit.fun"
-                  className="font-sans text-[14px] text-jet hover:text-purple transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-orange transition-colors"
                 >
                   shipit.fun →
                 </a>
@@ -517,7 +582,7 @@ export default function BuildHomePage() {
                   href="https://www.linkedin.com/in/irenesaliendra"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-[14px] text-jet hover:text-purple transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-orange transition-colors"
                 >
                   linkedin →
                 </a>
@@ -526,7 +591,7 @@ export default function BuildHomePage() {
                 {/* TODO: confirm real contact email for footer */}
                 <a
                   href="mailto:irene@digitalflowconsulting.ca"
-                  className="font-sans text-[14px] text-jet hover:text-purple transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-orange transition-colors"
                 >
                   email →
                 </a>
@@ -536,7 +601,7 @@ export default function BuildHomePage() {
                   href={BOOK_A_CALL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-[14px] text-jet hover:text-purple transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-orange transition-colors"
                 >
                   book a call →
                 </a>

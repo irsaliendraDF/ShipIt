@@ -35,7 +35,7 @@ export function ExperimentCarousel({ experiments, className }: Props) {
           brandInitial: (contributor?.name ?? e.contributor).slice(0, 1).toUpperCase(),
           brandColor: contributor?.avatarColor ?? '#ff6fb5',
           promoCode: e.status === 'live' ? '● LIVE' : e.status === 'wip' ? '◐ WIP' : '○ ARCHIVED',
-          href: e.externalUrl ?? `/experiments/${e.slug}`,
+          href: `/experiments/${e.slug}`,
         };
       }),
     [experiments]

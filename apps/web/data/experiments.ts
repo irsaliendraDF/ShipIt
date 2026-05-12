@@ -126,6 +126,7 @@ export const experiments: Experiment[] = [
     status: 'live',
     tech: ['React', 'Vite', 'Tailwind', 'Web Audio API', 'Canvas API'],
     controls: 'Pick a tone, type the names, tap good candies (and on-vibe bonuses) while dodging gray ones for 60s.',
+    thumbnail: '/thumbnails/tap-a-gram.svg',
     createdAt: '2026-05-12',
     externalUrl: 'https://tap-a-gram.vercel.app',
   },
