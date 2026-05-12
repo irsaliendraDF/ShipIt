@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cinematic Hand Gesture FX</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body {
+    margin: 0; padding: 0; height: 100%; width: 100%;
+    background: #000; color: #cfefff;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    overflow: hidden;
+  }
+  #app { position: fixed; inset: 0; }
+  canvas.three { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  canvas.debug { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  #hud {
+    position: fixed; top: 10px; left: 12px;
+    padding: 8px 10px; border: 1px solid rgba(120, 220, 255, 0.35);
+    background: rgba(0, 20, 35, 0.55); backdrop-filter: blur(6px);
+    font-size: 12px; line-height: 1.4; letter-spacing: 0.5px;
+    border-radius: 4px; pointer-events: none; text-shadow: 0 0 4px #00aaff88;
+    z-index: 10;
+  }
+  #hud .row { display: flex; gap: 10px; }
+  #hud .k { color: #7ae0ff; }
+  #hud .v { color: #e8fbff; }
+  #help {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    padding: 18px 22px; border: 1px solid rgba(120, 220, 255, 0.45);
+    background: rgba(0, 20, 35, 0.82); backdrop-filter: blur(10px);
+    border-radius: 8px; max-width: 560px; font-size: 13px;
+    display: none; z-index: 20; box-shadow: 0 0 40px #00aaff22;
+  }
+  #help h2 { margin: 0 0 10px; color: #7ae0ff; font-size: 15px; letter-spacing: 1px; }
+  #help ul { margin: 6px 0 0 16px; padding: 0; }
+  #help li { margin: 2px 0; }
+  #help .keys { color: #ffd27a; }
+  #perm {
+    position: fixed; inset: 0; display: none;
+    align-items: center; justify-content: center; z-index: 30;
+    background: radial-gradient(ellipse at center, #001a2a 0%, #000 100%);
+  }
+  #perm .box {
+    padding: 22px 26px; border: 1px solid rgba(120, 220, 255, 0.5);
+    border-radius: 8px; max-width: 480px; text-align: center;
+    background: rgba(0, 20, 35, 0.85);
+  }
+  #perm h1 { color: #7ae0ff; font-size: 18px; margin: 0 0 10px; }
+  #perm button {
+    margin-top: 14px; padding: 10px 18px; cursor: pointer;
+    border: 1px solid #7ae0ff; background: #002a44;
+    color: #dff6ff; font-family: inherit; font-size: 13px;
+    border-radius: 4px; letter-spacing: 1px;
+  }
+  #perm button:hover { background: #003c60; box-shadow: 0 0 12px #00aaff66; }
+</style>
+<!-- Three.js via importmap, MediaPipe via classic scripts (they set globals) -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+</head>
+<body>
+  <div id="app">
+    <canvas class="three" id="three-canvas"></canvas>
+    <canvas class="debug" id="debug-canvas"></canvas>
+    <video id="video" playsinline style="display:none"></video>
+
+    <div id="hud">
+      <div class="row"><span class="k">FPS</span><span class="v" id="fps">--</span></div>
+      <div class="row"><span class="k">Gesture</span><span class="v" id="gesture">none</span></div>
+      <div class="row"><span class="k">Hands</span><span class="v" id="hands">0</span></div>
+      <div class="row"><span class="k">Keys</span><span class="v">H help · D debug · M mirror · S stats · P preset · T trainer · , settings</span></div>
+    </div>
+
+    <div id="help">
+      <h2>Cinematic Hand Gesture FX</h2>
+      <div style="color:#7ae0ff;margin-bottom:4px">Single-hand</div>
+      <ul>
+        <li>Open palm forward → Iron Man repulsor</li>
+        <li>Fist → Open → Shockwave burst</li>
+        <li>Pinch &amp; pull → Dr. Strange portal</li>
+        <li>Point index → Laser beam</li>
+        <li>Web shooter (ring+pinky curled) → Spider web</li>
+        <li>Swipe open palm → Particle slash</li>
+        <li>Hold palm up 1s → Holographic orb</li>
+      </ul>
+      <div style="color:#7ae0ff;margin:6px 0 4px">Two-hand</div>
+      <ul>
+        <li>Two L-frames → JARVIS HUD</li>
+        <li>Both palms forward → Wide light beam</li>
+        <li>Clap → Big shockwave</li>
+        <li>Palms forward, hands overlap → Shield</li>
+        <li>Both fists, arms wide → Energy whips</li>
+        <li>Open palms facing each other → Charge orb</li>
+        <li>Both index pointing same way → Twin lasers</li>
+        <li>Prayer hands → Vertical light pillar</li>
+        <li>Crossed arms → Reality-warp ripple</li>
+      </ul>
+      <div style="color:#ffd27a;margin:6px 0 4px">Combos</div>
+      <ul>
+        <li>Repulsor ×3 (same hand, 1.2s) → Repulsor Barrage</li>
+        <li>Pinch-pull → Fist → Portal Punch</li>
+        <li>Web → Swipe → Web Zip</li>
+        <li>Pinch-pull each hand fast → Strange Sanctum</li>
+        <li>Charge 1.5s → snap palms out → Unibeam</li>
+        <li>L-frame → both palms open → JARVIS Boot</li>
+        <li>Shield → crossed arms → Cataclysm</li>
+      </ul>
+      <div style="margin-top:10px">Keys:
+        <span class="keys">H</span> help ·
+        <span class="keys">D</span> debug ·
+        <span class="keys">M</span> mirror ·
+        <span class="keys">S</span> stats ·
+        <span class="keys">P</span> next preset ·
+        <span class="keys">T</span> trainer ·
+        <span class="keys">,</span> settings ·
+        <span class="keys">Shift+T</span> quick-record ·
+        <span class="keys">C</span> random combo ·
+        <span class="keys">1-9</span> manual trigger
+      </div>
+    </div>
+
+    <div id="perm">
+      <div class="box">
+        <h1>Camera access needed</h1>
+        <div id="perm-msg">Allow webcam access to use hand gesture effects.</div>
+        <button id="perm-retry">Grant Camera Access</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "slug": "aura-tap",
+  "title": "Aura Tap",
+  "description": "Hand-tracked rhythm game. Tap notes to the beat with your aura.",
+  "contributor": "thearcadecrew",
+  "tags": ["gesture", "mediapipe", "game", "audio"],
+  "status": "live",
+  "tech": ["MediaPipe Tasks Vision", "Canvas API", "Web Audio API", "Vite"],
+  "controls": "Pick a song, then tap notes by raising your hands in time. Webcam required.",
+  "createdAt": "2026-05-10"
+}

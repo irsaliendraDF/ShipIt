@@ -1,0 +1,1549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>qigong · ancient cultivation, but make it for the timeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..900&family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:  #fef9f0;
+    --pink:   #ff3b8a;
+    --lime:   #c7f73a;
+    --purple: #2d1b4e;
+    --yellow: #ffe066;
+    --sky:    #7dd3fc;
+
+    --shadow-purple: 8px 8px 0 var(--purple);
+    --shadow-pink:   8px 8px 0 var(--pink);
+    --shadow-lime:   8px 8px 0 var(--lime);
+
+    --display: "Bricolage Grotesque", serif;
+    --mono:    "DM Mono", monospace;
+    --hanzi:   "Noto Serif SC", serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; }
+
+  body {
+    font-family: var(--display);
+    color: var(--purple);
+    background-color: var(--cream);
+    background-image: radial-gradient(circle at 1px 1px, rgba(45,27,78,0.18) 1.2px, transparent 0);
+    background-size: 24px 24px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* atmospheric blobs */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob.pink { background: var(--pink); width: 520px; height: 520px; top: -120px; right: -120px; }
+  .blob.lime { background: var(--lime); width: 480px; height: 480px; bottom: -120px; left: -120px; }
+  .blob.sky  { background: var(--sky);  width: 360px; height: 360px; top: 38%; left: 42%; }
+
+  .screen {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 32px;
+    z-index: 2;
+    overflow-y: auto;
+  }
+  .screen.hidden { display: none; }
+  #screen-title { align-items: flex-start; padding-top: 4vh; padding-bottom: 4vh; }
+
+  /* ============ TITLE SCREEN ============ */
+  .title-wrap {
+    text-align: center;
+    max-width: 980px;
+  }
+  .sticker-pill {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--purple);
+    border: 3px solid var(--purple);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    transform: rotate(-3deg);
+    box-shadow: 6px 6px 0 var(--purple);
+    margin-bottom: 18px;
+  }
+  .wordmark {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin: 0;
+    line-height: 0.9;
+  }
+  .wordmark .chip {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(60px, 11vw, 150px);
+    letter-spacing: -0.05em;
+    padding: 0.05em 0.18em 0.12em;
+    border: 4px solid var(--purple);
+    border-radius: 24px;
+    color: var(--purple);
+    box-shadow: var(--shadow-purple);
+    display: inline-block;
+  }
+  .wordmark .qi   { background: var(--pink); transform: rotate(-2deg); }
+  .wordmark .gong { background: var(--lime); transform: rotate(2deg); }
+
+  .title-hanzi {
+    font-family: var(--hanzi);
+    font-weight: 700;
+    font-size: clamp(20px, 3vw, 34px);
+    letter-spacing: 0.45em;
+    margin: 22px 0 10px;
+    color: var(--purple);
+  }
+  .title-tagline {
+    font-family: var(--display);
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(14px, 1.5vw, 18px);
+    color: var(--purple);
+    opacity: 0.78;
+    margin-bottom: 14px;
+  }
+
+  .mode-row {
+    display: flex; gap: 18px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .mode-btn {
+    appearance: none; -webkit-appearance: none;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    background: var(--cream);
+    color: var(--purple);
+    border: 4px solid var(--purple);
+    border-radius: 100px;
+    padding: 12px 26px;
+    cursor: pointer;
+    box-shadow: var(--shadow-purple);
+    transition: transform 80ms ease, box-shadow 80ms ease, background 120ms;
+  }
+  .mode-btn:hover  { transform: translate(-2px, -2px); box-shadow: 12px 12px 0 var(--purple); }
+  .mode-btn:active { transform: translate(3px, 3px);   box-shadow: 4px 4px 0 var(--purple); }
+  .mode-btn.active { background: var(--lime); }
+
+  .row-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--purple);
+    opacity: 0.7;
+    margin: 14px 0 8px;
+  }
+  .level-row {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .level-btn {
+    appearance: none;
+    font-family: var(--display);
+    font-weight: 800;
+    background: var(--cream);
+    color: var(--purple);
+    border: 3px solid var(--purple);
+    border-radius: 16px;
+    padding: 8px 14px 10px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--purple);
+    transition: transform 80ms ease, box-shadow 80ms ease, background 120ms;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    min-width: 110px;
+  }
+  .level-btn:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--purple); }
+  .level-btn:active { transform: translate(2px,2px);   box-shadow: 2px 2px 0 var(--purple); }
+  .level-btn.active { background: var(--pink); color: var(--cream); }
+  .level-btn .lv-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    opacity: 0.8;
+  }
+  .level-btn .lv-name {
+    font-size: 16px;
+    letter-spacing: -0.01em;
+  }
+  .level-btn .lv-hanzi {
+    font-family: var(--hanzi);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    margin-top: 1px;
+    opacity: 0.85;
+  }
+
+  .ex-meta {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;
+  }
+  .ex-num, .ex-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin: 0;
+  }
+  .ex-num { background: var(--purple); color: var(--cream); }
+  .ex-tag.lv    { background: var(--lime);   color: var(--purple); border: 2px solid var(--purple); padding: 3px 10px; }
+  .ex-tag.lymph { background: var(--sky);    color: var(--purple); border: 2px solid var(--purple); padding: 3px 10px; }
+  .ex-tag.hidden { display: none; }
+
+  .begin-btn {
+    appearance: none; -webkit-appearance: none;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    background: var(--pink);
+    color: var(--cream);
+    border: 4px solid var(--purple);
+    border-radius: 100px;
+    padding: 16px 40px;
+    cursor: pointer;
+    box-shadow: var(--shadow-purple);
+    transition: transform 80ms ease, box-shadow 80ms ease;
+  }
+  .begin-btn:hover  { transform: translate(-2px, -2px); box-shadow: 12px 12px 0 var(--purple); }
+  .begin-btn:active { transform: translate(3px, 3px);   box-shadow: 4px 4px 0 var(--purple); }
+  .begin-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* ============ LOADER ============ */
+  .loader-card {
+    background: var(--cream);
+    border: 4px solid var(--purple);
+    border-radius: 28px;
+    box-shadow: var(--shadow-pink);
+    padding: 48px 56px;
+    text-align: center;
+    max-width: 560px;
+  }
+  .loader-hanzi {
+    font-family: var(--hanzi);
+    font-weight: 900;
+    font-size: 120px;
+    color: var(--pink);
+    line-height: 1;
+    display: inline-block;
+    animation: bounceY 1.2s ease-in-out infinite;
+  }
+  @keyframes bounceY {
+    0%, 100% { transform: translateY(0)    rotate(-2deg); }
+    50%      { transform: translateY(-22px) rotate(3deg); }
+  }
+  .loader-msg {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    margin: 16px 0 8px;
+  }
+  .loader-hint {
+    font-family: var(--mono);
+    font-size: 14px;
+    opacity: 0.7;
+  }
+  .loader-hint.error { color: var(--pink); opacity: 1; font-weight: 500; }
+
+  /* ============ GAME SCREEN ============ */
+  .game-grid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+  }
+  .cam-pane {
+    flex: 1.4;
+    position: relative;
+    border: 4px solid var(--purple);
+    border-radius: 28px;
+    background: var(--purple);
+    box-shadow: 10px 10px 0 var(--purple);
+    overflow: hidden;
+    min-height: 480px;
+  }
+  #video, #overlay {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    transform: scaleX(-1);
+  }
+  #video {
+    object-fit: cover;
+    filter: brightness(0.65) contrast(1.05) saturate(0.95);
+  }
+
+  .player-tags {
+    position: absolute;
+    top: 18px; left: 18px; right: 18px;
+    display: flex; justify-content: space-between;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .ptag {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 16px;
+    border: 3px solid var(--purple);
+    border-radius: 100px;
+    padding: 8px 18px;
+    box-shadow: 4px 4px 0 var(--purple);
+    color: var(--purple);
+  }
+  .ptag.p1 { background: var(--pink);  color: var(--cream); }
+  .ptag.p2 { background: var(--lime); }
+  .ptag.hidden { display: none; }
+
+  .music-btn {
+    position: absolute;
+    top: 18px; right: 18px;
+    appearance: none;
+    background: var(--yellow);
+    border: 3px solid var(--purple);
+    border-radius: 100px;
+    padding: 10px 18px;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--purple);
+    z-index: 6;
+  }
+  .music-btn:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--purple); }
+  .music-btn:active { transform: translate(2px,2px);   box-shadow: 2px 2px 0 var(--purple); }
+  .music-btn.muted  { background: var(--cream); opacity: 0.85; }
+
+  .ctrl-btn.menu { background: var(--pink); color: var(--cream); }
+
+  .info-pane {
+    flex: 1;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    overflow-y: auto;
+  }
+
+  .ex-card {
+    background: var(--cream);
+    border: 4px solid var(--purple);
+    border-radius: 28px;
+    box-shadow: var(--shadow-pink);
+    padding: 22px 24px;
+  }
+  .ex-num {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--purple);
+    color: var(--cream);
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+  }
+  .ex-hanzi {
+    font-family: var(--hanzi);
+    font-weight: 900;
+    font-size: 38px;
+    line-height: 1.1;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .ex-name {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .ex-vibe {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--pink);
+    margin-bottom: 14px;
+  }
+  .ex-instruction {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--purple);
+    opacity: 0.85;
+  }
+
+  .meter-card {
+    background: var(--cream);
+    border: 4px solid var(--purple);
+    border-radius: 28px;
+    box-shadow: var(--shadow-purple);
+    padding: 18px 22px;
+  }
+  .meter-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 8px;
+  }
+  .meter-label {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+  }
+  .meter-time {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--purple);
+    opacity: 0.75;
+  }
+  .meter-bar {
+    height: 22px;
+    border: 3px solid var(--purple);
+    border-radius: 100px;
+    background: var(--cream);
+    overflow: hidden;
+    position: relative;
+  }
+  .meter-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--pink);
+    border-radius: 100px;
+    transition: width 80ms linear, background 120ms;
+  }
+  .meter-fill.p2 { background: var(--lime); }
+  .meter-fill.locked { background: var(--lime); }
+
+  .players-row {
+    display: flex; gap: 12px;
+  }
+  .player-card {
+    flex: 1;
+    background: var(--cream);
+    border: 4px solid var(--purple);
+    border-radius: 24px;
+    box-shadow: 6px 6px 0 var(--purple);
+    padding: 14px 16px;
+    transition: transform 160ms ease, background 160ms ease;
+  }
+  .player-card.matching {
+    background: var(--lime);
+    transform: scale(1.02);
+  }
+  .player-card .pname {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .player-card .pqi {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 28px;
+    margin: 4px 0 2px;
+  }
+  .player-card .prank {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+  }
+  .player-card .prank-hanzi {
+    font-family: var(--hanzi);
+    font-weight: 700;
+    font-size: 13px;
+    margin-left: 6px;
+    letter-spacing: 0.15em;
+    opacity: 0.7;
+  }
+
+  .controls-row {
+    display: flex; gap: 12px;
+  }
+  .ctrl-btn {
+    flex: 1;
+    appearance: none;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 16px;
+    background: var(--cream);
+    color: var(--purple);
+    border: 3px solid var(--purple);
+    border-radius: 100px;
+    padding: 14px 18px;
+    cursor: pointer;
+    box-shadow: 5px 5px 0 var(--purple);
+    transition: transform 80ms ease, box-shadow 80ms ease;
+  }
+  .ctrl-btn:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--purple); }
+  .ctrl-btn:active { transform: translate(2px,2px);   box-shadow: 2px 2px 0 var(--purple); }
+
+  /* ============ TOAST ============ */
+  .toast-stack {
+    position: fixed;
+    top: 24px; left: 0; right: 0;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    pointer-events: none;
+    z-index: 50;
+  }
+  .toast {
+    background: var(--cream);
+    border: 4px solid var(--purple);
+    border-radius: 100px;
+    padding: 14px 28px;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+    box-shadow: var(--shadow-purple);
+    animation: toastIn 380ms cubic-bezier(.34, 1.56, .64, 1) both;
+  }
+  .toast.big {
+    background: var(--yellow);
+    font-size: 26px;
+    padding: 16px 34px;
+  }
+  .toast.fading {
+    animation: toastOut 320ms ease forwards;
+  }
+  @keyframes toastIn {
+    0%   { transform: translateY(-60px) scale(0.9); opacity: 0; }
+    60%  { transform: translateY(8px)   scale(1.04); opacity: 1; }
+    100% { transform: translateY(0)     scale(1);    opacity: 1; }
+  }
+  @keyframes toastOut {
+    to { transform: translateY(-30px); opacity: 0; }
+  }
+
+  /* ============ CONFETTI ============ */
+  .confetti {
+    position: fixed;
+    pointer-events: none;
+    font-size: 26px;
+    z-index: 40;
+    will-change: transform, opacity;
+    animation: confettiFall 1.2s cubic-bezier(.4, .8, .6, 1) forwards;
+  }
+  @keyframes confettiFall {
+    0%   { transform: translate(-50%, -20px) rotate(0deg);   opacity: 1; }
+    100% { transform: translate(var(--dx), 70vh) rotate(var(--rot)); opacity: 0; }
+  }
+
+  @media (max-width: 900px) {
+    .game-grid { flex-direction: column; }
+    .info-pane { max-width: none; }
+    .cam-pane { min-height: 320px; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="blob pink"></div>
+<div class="blob lime"></div>
+<div class="blob sky"></div>
+
+<!-- ========== TITLE SCREEN ========== -->
+<section id="screen-title" class="screen">
+  <div class="title-wrap">
+    <div class="sticker-pill">it's giving immortal ✨</div>
+    <h1 class="wordmark">
+      <span class="chip qi">qi</span>
+      <span class="chip gong">gong</span>
+    </h1>
+    <div class="title-hanzi">氣 功 修 煉</div>
+    <div class="title-tagline">~ ancient cultivation, but make it for the timeline ~</div>
+    <div class="row-label">mode</div>
+    <div class="mode-row">
+      <button class="mode-btn active" data-mode="solo">🧘 solo run</button>
+      <button class="mode-btn" data-mode="duo">👯 duo mode</button>
+    </div>
+    <div class="row-label">level</div>
+    <div class="level-row">
+      <button class="level-btn active" data-level="1">
+        <span class="lv-num">LV 1</span>
+        <span class="lv-name">starter pack</span>
+        <span class="lv-hanzi">初心</span>
+      </button>
+      <button class="level-btn" data-level="2">
+        <span class="lv-num">LV 2</span>
+        <span class="lv-name">getting cracked</span>
+        <span class="lv-hanzi">練氣</span>
+      </button>
+      <button class="level-btn" data-level="3">
+        <span class="lv-num">LV 3</span>
+        <span class="lv-name">ascension arc</span>
+        <span class="lv-hanzi">飛升</span>
+      </button>
+      <button class="level-btn" data-level="4">
+        <span class="lv-num">LV 4</span>
+        <span class="lv-name">endgame mode</span>
+        <span class="lv-hanzi">大成</span>
+      </button>
+    </div>
+    <button id="beginBtn" class="begin-btn" style="margin-top: 22px;">let's get this bread →</button>
+  </div>
+</section>
+
+<!-- ========== LOADER SCREEN ========== -->
+<section id="screen-loader" class="screen hidden">
+  <div class="loader-card">
+    <div class="loader-hanzi">氣</div>
+    <div id="loaderMsg" class="loader-msg">summoning the chi…</div>
+    <div id="loaderHint" class="loader-hint">stand 6ft back so the camera sees u 📸</div>
+  </div>
+</section>
+
+<!-- ========== GAME SCREEN ========== -->
+<section id="screen-game" class="screen hidden">
+  <div class="game-grid">
+    <div class="cam-pane">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="overlay"></canvas>
+      <div class="player-tags">
+        <div id="tagP1" class="ptag p1">PLAYER 1</div>
+        <div id="tagP2" class="ptag p2 hidden">PLAYER 2</div>
+      </div>
+      <button id="musicBtn" class="music-btn">🔊 vibes on</button>
+    </div>
+
+    <div class="info-pane">
+      <div class="ex-card">
+        <div class="ex-meta">
+          <div id="exNum"  class="ex-num">FORM 01 / 05</div>
+          <div id="exLvTag" class="ex-tag lv">LV 1</div>
+          <div id="exLymphTag" class="ex-tag lymph hidden">🩺 LYMPH</div>
+        </div>
+        <div id="exHanzi" class="ex-hanzi">托天勢</div>
+        <div id="exName" class="ex-name">Lifting the Sky</div>
+        <div id="exVibe" class="ex-vibe">// the manifesting one</div>
+        <div id="exInstruction" class="ex-instruction">arms straight up. palms to the sky.</div>
+      </div>
+
+      <div class="meter-card">
+        <div class="meter-row">
+          <div id="meterLabel" class="meter-label">find the form</div>
+          <div id="meterTime" class="meter-time">0.0 / 3.0s</div>
+        </div>
+        <div class="meter-bar"><div id="meterFillP1" class="meter-fill"></div></div>
+        <div id="meterRowP2" class="meter-row" style="margin-top:10px; display:none;">
+          <div class="meter-label">P2</div>
+          <div id="meterTimeP2" class="meter-time">0.0 / 3.0s</div>
+        </div>
+        <div id="meterBarP2" class="meter-bar" style="display:none;"><div id="meterFillP2" class="meter-fill p2"></div></div>
+      </div>
+
+      <div class="players-row">
+        <div id="cardP1" class="player-card">
+          <div class="pname">PLAYER 1</div>
+          <div id="qiP1" class="pqi">0 qi</div>
+          <div class="prank"><span id="rankP1">NPC</span><span class="prank-hanzi" id="rankHanziP1">入門</span></div>
+        </div>
+        <div id="cardP2" class="player-card" style="display:none;">
+          <div class="pname">PLAYER 2</div>
+          <div id="qiP2" class="pqi">0 qi</div>
+          <div class="prank"><span id="rankP2">NPC</span><span class="prank-hanzi" id="rankHanziP2">入門</span></div>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <button id="skipBtn" class="ctrl-btn">skip ts ⏭</button>
+        <button id="menuBtn" class="ctrl-btn menu">← back to menu</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="toastStack" class="toast-stack"></div>
+
+<script type="module">
+import {
+  PoseLandmarker,
+  FilesetResolver,
+  DrawingUtils
+} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.6/vision_bundle.mjs";
+
+// ============ STATE ============
+const state = {
+  mode: "solo",          // "solo" | "duo"
+  level: 1,              // 1..4
+  forms: [],             // filtered forms for current level
+  holdMult: 1.0,
+  running: false,
+  exIndex: 0,
+  poseLandmarker: null,
+  video: null,
+  canvas: null,
+  ctx: null,
+  drawingUtils: null,
+  lastVideoTime: -1,
+  lastTickMs: 0,
+  rafId: 0,
+  stream: null,
+  players: [
+    { qi: 0, hold: 0, advanced: false },
+    { qi: 0, hold: 0, advanced: false }
+  ]
+};
+
+// ============ FORMS ============
+const EX = [
+  {
+    tier: 1,
+    hanzi: "托天勢",
+    name:  "Lifting the Sky",
+    vibe:  "// the manifesting one",
+    instruction: "arms straight up. palms to the sky. you're literally holding up the universe rn.",
+    hold: 3.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], le = lm[13], re_ = lm[14], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lw || !rw || !le || !re_) return false;
+      const wristsUp = (ls.y - lw.y) >= 0.08 && (rs.y - rw.y) >= 0.08;
+      const elbowsUp = le.y < ls.y && re_.y < rs.y;
+      // arms relatively vertical — distinguish from white crane wide-V
+      const shoulderW = Math.abs(ls.x - rs.x);
+      const notTooWide = Math.abs(lw.x - rw.x) < 1.4 * shoulderW;
+      return wristsUp && elbowsUp && notTooWide;
+    }
+  },
+  {
+    tier: 1,
+    hanzi: "抱月勢",
+    name:  "Holding the Moon",
+    vibe:  "// delulu is the solulu",
+    instruction: "cradle an invisible moon at chest height. fingertips meet. arms rounded soft.",
+    hold: 4.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], lh = lm[23], rh = lm[24], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lh || !rh || !lw || !rw) return false;
+      const chestY = (ls.y + rs.y) / 2;
+      const hipY   = (lh.y + rh.y) / 2;
+      const avgWristY = (lw.y + rw.y) / 2;
+      const shoulderW = Math.abs(ls.x - rs.x);
+      const wristGap  = Math.abs(lw.x - rw.x);
+      const inBand = avgWristY > chestY && avgWristY < hipY;
+      const closeWrists = wristGap < 0.55 * shoulderW;
+      return inBand && closeWrists;
+    }
+  },
+  {
+    tier: 1,
+    hanzi: "開弓勢",
+    name:  "Drawing the Bow",
+    vibe:  "// go off",
+    instruction: "one arm fully extended sideways. the other pulls across your chest. archer mode.",
+    hold: 3.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lw || !rw) return false;
+      const chestY = (ls.y + rs.y) / 2;
+      const wristsAtChest = Math.abs(lw.y - chestY) < 0.18 && Math.abs(rw.y - chestY) < 0.18;
+      // case A: left arm extended out (x to its side), right hand pulled across near left shoulder
+      const caseA = (lw.x < ls.x - 0.18) && (Math.abs(rw.x - ls.x) < 0.18);
+      // case B: mirror — right arm extended, left hand near right shoulder
+      const caseB = (rw.x > rs.x + 0.18) && (Math.abs(lw.x - rs.x) < 0.18);
+      return wristsAtChest && (caseA || caseB);
+    }
+  },
+  {
+    tier: 1,
+    hanzi: "托天按地",
+    name:  "Press Heaven Push Earth",
+    vibe:  "// high low energy",
+    instruction: "one palm pushing up to the sky. the other pressing down to the floor. duality.",
+    hold: 3.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], lh = lm[23], rh = lm[24], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lh || !rh || !lw || !rw) return false;
+      const hipY = (lh.y + rh.y) / 2;
+      // left up + right down
+      const A = (ls.y - lw.y) >= 0.10 && rw.y > hipY;
+      // right up + left down
+      const B = (rs.y - rw.y) >= 0.10 && lw.y > hipY;
+      return A || B;
+    }
+  },
+  {
+    tier: 1,
+    hanzi: "抱樹勢",
+    name:  "Embracing the Tree",
+    vibe:  "// touch grass mode",
+    instruction: "arms wide and forward at chest height. you hugging a massive tree. literally rooted.",
+    hold: 5.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lw || !rw) return false;
+      const chestY = (ls.y + rs.y) / 2;
+      const avgWristY = (lw.y + rw.y) / 2;
+      const shoulderW = Math.abs(ls.x - rs.x);
+      const wristGap  = Math.abs(lw.x - rw.x);
+      const atChest = Math.abs(avgWristY - chestY) < 0.14;
+      const wideEnough = wristGap > 0.7 * shoulderW && wristGap < 1.6 * shoulderW;
+      return atChest && wideEnough;
+    }
+  },
+
+  // ============ OPPOSITE FORMS ============
+
+  {
+    tier: 2,
+    hanzi: "按地勢",
+    name:  "Pressing the Earth",
+    vibe:  "// grounded af",
+    instruction: "both palms pressing down toward the floor. anchor yourself. opposite of holding up the sky.",
+    hold: 3.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], le = lm[13], re_ = lm[14], lh = lm[23], rh = lm[24], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lh || !rh || !lw || !rw || !le || !re_) return false;
+      const hipY = (lh.y + rh.y) / 2;
+      const centerX = (lh.x + rh.x) / 2;
+      // wrists clearly below hips, but not just hanging at sides
+      const wristsBelow    = (lw.y - hipY) > 0.05 && (rw.y - hipY) > 0.05;
+      const wristsNotTooLow = (lw.y - hipY) < 0.32 && (rw.y - hipY) < 0.32;
+      // wrists in front of pelvis area (near body centerline)
+      const wristsCentered = Math.abs(lw.x - centerX) < 0.22 && Math.abs(rw.x - centerX) < 0.22;
+      const elbowsBelow    = le.y > ls.y && re_.y > rs.y;
+      return wristsBelow && wristsNotTooLow && wristsCentered && elbowsBelow;
+    }
+  },
+
+  {
+    tier: 2,
+    hanzi: "分月勢",
+    name:  "Parting the Moon",
+    vibe:  "// boundaries era",
+    instruction: "arms held wide and rounded out at chest height. like the moon split in two. boundaries 💅",
+    hold: 3.5,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], lh = lm[23], rh = lm[24], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lh || !rh || !lw || !rw) return false;
+      const chestY = (ls.y + rs.y) / 2;
+      const hipY   = (lh.y + rh.y) / 2;
+      const avgWristY = (lw.y + rw.y) / 2;
+      const shoulderW = Math.abs(ls.x - rs.x);
+      const inBand = avgWristY > chestY && avgWristY < hipY;
+      const wide   = Math.abs(lw.x - rw.x) > 1.4 * shoulderW;
+      return inBand && wide;
+    }
+  },
+
+  {
+    tier: 2,
+    hanzi: "合掌勢",
+    name:  "Joining Palms",
+    vibe:  "// namaste mfs",
+    instruction: "palms pressed together at heart center. centering tf down.",
+    hold: 3.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lw || !rw) return false;
+      const chestY = (ls.y + rs.y) / 2;
+      const avgWristY = (lw.y + rw.y) / 2;
+      const shoulderW = Math.abs(ls.x - rs.x);
+      const atChest = Math.abs(avgWristY - chestY) < 0.18;
+      const tightGap = Math.abs(lw.x - rw.x) < 0.25 * shoulderW;
+      return atChest && tightGap;
+    }
+  },
+
+  {
+    tier: 2,
+    hanzi: "平地勢",
+    name:  "Level Earth Cross",
+    vibe:  "// equal energy",
+    instruction: "both arms straight out to the sides. T-pose energy. you are the antenna.",
+    hold: 3.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lw || !rw) return false;
+      const shoulderW = Math.abs(ls.x - rs.x);
+      const wristsAtShoulder = Math.abs(lw.y - ls.y) < 0.12 && Math.abs(rw.y - rs.y) < 0.12;
+      // arms fully extended — wrist gap clearly wider than shoulders
+      const fullySpread = Math.abs(lw.x - rw.x) > 2.0 * shoulderW;
+      return wristsAtShoulder && fullySpread;
+    }
+  },
+
+  {
+    tier: 2,
+    hanzi: "白鶴亮翅",
+    name:  "White Crane Spreads Wings",
+    vibe:  "// arrived dramatically",
+    instruction: "both arms reaching up and out in a wide V. crane mode. main entrance.",
+    hold: 3.5,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lw || !rw) return false;
+      const wristsUp = (ls.y - lw.y) >= 0.05 && (rs.y - rw.y) >= 0.05;
+      const shoulderW = Math.abs(ls.x - rs.x);
+      const wide = Math.abs(lw.x - rw.x) > 1.5 * shoulderW;
+      return wristsUp && wide;
+    }
+  },
+
+  {
+    tier: 3,
+    hanzi: "金雞獨立",
+    name:  "Golden Rooster",
+    vibe:  "// flamingo phase",
+    instruction: "stand on one leg. lift the other knee up high. balance is a flex.",
+    hold: 4.0,
+    match: (lm) => {
+      const lh = lm[23], rh = lm[24], lk = lm[25], rk = lm[26];
+      if (!lh || !rh || !lk || !rk) return false;
+      const lkVis = lk.visibility ?? 1;
+      const rkVis = rk.visibility ?? 1;
+      if (lkVis < 0.5 && rkVis < 0.5) return false;
+      const hipY = (lh.y + rh.y) / 2;
+      const kneeDiff = Math.abs(lk.y - rk.y);
+      const oneKneeLifted = (lk.y < hipY + 0.05) || (rk.y < hipY + 0.05);
+      return kneeDiff > 0.15 && oneKneeLifted;
+    }
+  },
+
+  // ============ LYMPHATIC DRAINAGE ============
+  // Each form targets a real lymph chain: cervical (neck), axillary (armpit),
+  // intercostal (sides). Held statically here; in practice these are usually
+  // paired with light tapping/breathing.
+
+  {
+    tier: 3,
+    lymph: true,
+    hanzi: "頸開勢",
+    name:  "Opening the Neck",
+    vibe:  "// crick that neck",
+    instruction: "fingers laced behind your head, elbows pull wide. neck lymph saying thank u 🙏",
+    hold: 3.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], le = lm[13], re_ = lm[14], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !le || !re_ || !lw || !rw) return false;
+      const shoulderW = Math.abs(ls.x - rs.x);
+      // wrists above shoulders (behind head zone)
+      const wristsHigh = lw.y < ls.y && rw.y < rs.y;
+      // wrists close together (fingers laced behind head)
+      const wristsClose = Math.abs(lw.x - rw.x) < 0.55 * shoulderW;
+      // elbows pulled wide — outside the shoulder line
+      const centerX = (ls.x + rs.x) / 2;
+      const elbowsWide = Math.abs(le.x - centerX) > Math.abs(ls.x - centerX) - 0.02 &&
+                        Math.abs(re_.x - centerX) > Math.abs(rs.x - centerX) - 0.02;
+      // and elbows roughly at shoulder height (not straight up)
+      const elbowsLevel = Math.abs(le.y - ls.y) < 0.18 && Math.abs(re_.y - rs.y) < 0.18;
+      return wristsHigh && wristsClose && elbowsWide && elbowsLevel;
+    }
+  },
+
+  {
+    tier: 3,
+    lymph: true,
+    hanzi: "環抱勢",
+    name:  "Self-Hug",
+    vibe:  "// self-hug era",
+    instruction: "wrap both arms around yourself. hands on opposite shoulders. axillary lymph hug.",
+    hold: 3.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lw || !rw) return false;
+      const chestY = (ls.y + rs.y) / 2;
+      const shoulderW = Math.abs(ls.x - rs.x);
+      // each wrist near the OPPOSITE shoulder
+      const lwAtR = Math.abs(lw.x - rs.x) < 0.30 * shoulderW + 0.05;
+      const rwAtL = Math.abs(rw.x - ls.x) < 0.30 * shoulderW + 0.05;
+      const atChest = Math.abs(lw.y - chestY) < 0.20 && Math.abs(rw.y - chestY) < 0.20;
+      return lwAtR && rwAtL && atChest;
+    }
+  },
+
+  {
+    tier: 3,
+    lymph: true,
+    hanzi: "側彎勢",
+    name:  "Side Reach",
+    vibe:  "// lengthen tf out",
+    instruction: "one arm reaches up and over to the OTHER side of your body. stretch that side. activate the lymph chain.",
+    hold: 3.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !lw || !rw) return false;
+      const centerX = (ls.x + rs.x) / 2;
+      // reaching arm: wrist clearly above its shoulder AND on the opposite side of centerline from its shoulder
+      const leftReach  = (ls.y - lw.y) > 0.05 && ((lw.x - centerX) * (ls.x - centerX) < 0);
+      const rightReach = (rs.y - rw.y) > 0.05 && ((rw.x - centerX) * (rs.x - centerX) < 0);
+      return leftReach || rightReach;
+    }
+  },
+
+  {
+    tier: 3,
+    lymph: true,
+    hanzi: "仙人掌",
+    name:  "Cactus Arms",
+    vibe:  "// drainage moment",
+    instruction: "arms in goalpost shape. elbows bent 90° at shoulder height. like high-fiving the sky on both sides.",
+    hold: 3.0,
+    match: (lm) => {
+      const ls = lm[11], rs = lm[12], le = lm[13], re_ = lm[14], lw = lm[15], rw = lm[16];
+      if (!ls || !rs || !le || !re_ || !lw || !rw) return false;
+      const shoulderW = Math.abs(ls.x - rs.x);
+      // elbows roughly at shoulder height
+      const elbowsLevel = Math.abs(le.y - ls.y) < 0.10 && Math.abs(re_.y - rs.y) < 0.10;
+      // wrists above elbows (forearm vertical-ish)
+      const wristsAboveElbows = (le.y - lw.y) > 0.05 && (re_.y - rw.y) > 0.05;
+      // elbows splayed outside shoulders horizontally
+      const centerX = (ls.x + rs.x) / 2;
+      const elbowsOut = Math.abs(le.x - centerX) > Math.abs(ls.x - centerX) - 0.02 &&
+                        Math.abs(re_.x - centerX) > Math.abs(rs.x - centerX) - 0.02;
+      // and wrist gap not too wide (forearms vertical, not in T-pose)
+      const notTooWide = Math.abs(lw.x - rw.x) < 2.0 * shoulderW;
+      return elbowsLevel && wristsAboveElbows && elbowsOut && notTooWide;
+    }
+  }
+];
+
+// ============ LEVELS ============
+const LEVELS = [
+  null, // index 0 unused
+  { id: 1, name: "starter pack",    hanzi: "初心", holdMult: 1.0 },
+  { id: 2, name: "getting cracked", hanzi: "練氣", holdMult: 1.0 },
+  { id: 3, name: "ascension arc",   hanzi: "飛升", holdMult: 1.0 },
+  { id: 4, name: "endgame mode",    hanzi: "大成", holdMult: 0.7 }
+];
+
+// ============ RANKS ============
+const RANKS = [
+  { qi: 1000, name: "Built Different", hanzi: "大師" },
+  { qi: 600,  name: "Goated",          hanzi: "仙境" },
+  { qi: 300,  name: "Cracked",         hanzi: "高手" },
+  { qi: 100,  name: "Locked In",       hanzi: "修煉" },
+  { qi: 0,    name: "NPC",             hanzi: "入門" }
+];
+const rankFor = (qi) => RANKS.find(r => qi >= r.qi);
+
+// ============ TOAST LINES ============
+const TOASTS = [
+  "let him cook 🔥",
+  "you ATE that 💅",
+  "no bc ur cracked",
+  "main character behavior",
+  "sheeeesh ✨",
+  "delulu paid off",
+  "absolute unit",
+  "we love to see it"
+];
+
+const CONFETTI_GLYPHS = ["🔥","✨","💫","⭐","🌸","💖","🍃"];
+
+// ============ DOM ============
+const $ = (id) => document.getElementById(id);
+const screenTitle  = $("screen-title");
+const screenLoader = $("screen-loader");
+const screenGame   = $("screen-game");
+const loaderMsg    = $("loaderMsg");
+const loaderHint   = $("loaderHint");
+const beginBtn     = $("beginBtn");
+const skipBtn      = $("skipBtn");
+const menuBtn      = $("menuBtn");
+const musicBtn     = $("musicBtn");
+
+const exNum   = $("exNum");
+const exLvTag = $("exLvTag");
+const exLymphTag = $("exLymphTag");
+const exHanzi = $("exHanzi");
+const exName  = $("exName");
+const exVibe  = $("exVibe");
+const exInstruction = $("exInstruction");
+const meterLabel = $("meterLabel");
+const meterTime  = $("meterTime");
+const meterTimeP2 = $("meterTimeP2");
+const meterFillP1 = $("meterFillP1");
+const meterFillP2 = $("meterFillP2");
+const meterRowP2  = $("meterRowP2");
+const meterBarP2  = $("meterBarP2");
+const tagP1 = $("tagP1");
+const tagP2 = $("tagP2");
+const cardP1 = $("cardP1");
+const cardP2 = $("cardP2");
+const qiP1 = $("qiP1");
+const qiP2 = $("qiP2");
+const rankP1 = $("rankP1");
+const rankP2 = $("rankP2");
+const rankHanziP1 = $("rankHanziP1");
+const rankHanziP2 = $("rankHanziP2");
+const toastStack = $("toastStack");
+
+// ============ MODE / LEVEL BUTTONS ============
+document.querySelectorAll(".mode-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    state.mode = btn.dataset.mode;
+  });
+});
+document.querySelectorAll(".level-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    state.level = parseInt(btn.dataset.level, 10);
+  });
+});
+
+beginBtn.addEventListener("click", () => start());
+skipBtn.addEventListener("click", () => advanceForm());
+menuBtn.addEventListener("click", () => quit());
+musicBtn.addEventListener("click", () => toggleMusic());
+
+// ============ MAIN ============
+async function start() {
+  beginBtn.disabled = true;
+  showScreen("loader");
+  loaderHint.classList.remove("error");
+  loaderHint.textContent = "stand 6ft back so the camera sees u 📸";
+  loaderMsg.textContent  = "loading the brain… 🧠";
+
+  try {
+    await initPoseLandmarker();
+  } catch (err) {
+    console.error(err);
+    return failLoad("couldn't load the model. check your internet.");
+  }
+
+  loaderMsg.textContent = "asking for camera perms… 📸";
+  try {
+    state.stream = await navigator.mediaDevices.getUserMedia({
+      video: { width: { ideal: 1280 }, height: { ideal: 720 } },
+      audio: false
+    });
+  } catch (err) {
+    console.error(err);
+    return failLoad("camera permission denied. allow it & try again.");
+  }
+
+  state.video = $("video");
+  state.video.srcObject = state.stream;
+  await new Promise(res => state.video.onloadedmetadata = res);
+  await state.video.play();
+
+  state.canvas = $("overlay");
+  state.canvas.width  = state.video.videoWidth;
+  state.canvas.height = state.video.videoHeight;
+  state.ctx = state.canvas.getContext("2d");
+  state.drawingUtils = new DrawingUtils(state.ctx);
+
+  // configure for chosen mode
+  await state.poseLandmarker.setOptions({ numPoses: state.mode === "duo" ? 2 : 1 });
+
+  // duo UI
+  const duo = state.mode === "duo";
+  tagP2.classList.toggle("hidden", !duo);
+  cardP2.style.display = duo ? "" : "none";
+  meterRowP2.style.display = duo ? "flex" : "none";
+  meterBarP2.style.display = duo ? "block" : "none";
+
+  // reset state — filter forms by level, apply hold multiplier
+  state.forms = EX.filter(ex => ex.tier <= state.level);
+  // shuffle so the order isn't always the same per level
+  state.forms = state.forms.slice().sort(() => Math.random() - 0.5);
+  state.holdMult = LEVELS[state.level].holdMult;
+  state.exIndex = 0;
+  state.players[0] = { qi: 0, hold: 0, advanced: false };
+  state.players[1] = { qi: 0, hold: 0, advanced: false };
+  renderHud();
+  renderForm();
+
+  state.running = true;
+  state.lastTickMs = performance.now();
+  showScreen("game");
+  startMusic();
+  loop();
+}
+
+function failLoad(msg) {
+  loaderMsg.textContent = "uhh ☹️";
+  loaderHint.textContent = msg;
+  loaderHint.classList.add("error");
+  setTimeout(() => {
+    showScreen("title");
+    beginBtn.disabled = false;
+  }, 2200);
+}
+
+function quit() {
+  state.running = false;
+  cancelAnimationFrame(state.rafId);
+  if (state.stream) {
+    state.stream.getTracks().forEach(t => t.stop());
+    state.stream = null;
+  }
+  pauseMusic();
+  beginBtn.disabled = false;
+  showScreen("title");
+}
+
+function showScreen(name) {
+  screenTitle.classList.toggle("hidden",  name !== "title");
+  screenLoader.classList.toggle("hidden", name !== "loader");
+  screenGame.classList.toggle("hidden",   name !== "game");
+}
+
+async function initPoseLandmarker() {
+  const fileset = await FilesetResolver.forVisionTasks(
+    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.6/wasm"
+  );
+  state.poseLandmarker = await PoseLandmarker.createFromOptions(fileset, {
+    baseOptions: {
+      modelAssetPath: "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
+      delegate: "GPU"
+    },
+    runningMode: "VIDEO",
+    numPoses: 1
+  });
+}
+
+// ============ GAME LOOP ============
+function loop() {
+  if (!state.running) return;
+  state.rafId = requestAnimationFrame(loop);
+
+  const now = performance.now();
+  if (state.video.currentTime !== state.lastVideoTime) {
+    state.lastVideoTime = state.video.currentTime;
+    state.poseLandmarker.detectForVideo(state.video, now, (result) => {
+      handleResult(result, now);
+    });
+  }
+}
+
+function handleResult(result, now) {
+  const dt = Math.min(0.1, (now - state.lastTickMs) / 1000);
+  state.lastTickMs = now;
+
+  // sort poses left→right by nose x so identities are stable per frame
+  const landmarksList = (result.landmarks || []).slice();
+  landmarksList.sort((a, b) => {
+    const ax = a[0]?.x ?? 0;
+    const bx = b[0]?.x ?? 0;
+    return ax - bx;
+  });
+
+  // draw — landmarks are in native (non-mirrored) coords, and the canvas itself
+  // is flipped via CSS (transform: scaleX(-1)), so we draw raw and let CSS mirror.
+  const { canvas, ctx, drawingUtils } = state;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const PCOLORS = [
+    { line: "#ff3b8a", fill: "#fef9f0" },
+    { line: "#c7f73a", fill: "#fef9f0" }
+  ];
+  landmarksList.forEach((lm, i) => {
+    const c = PCOLORS[i] || PCOLORS[0];
+    drawingUtils.drawConnectors(lm, PoseLandmarker.POSE_CONNECTIONS, {
+      color: c.line, lineWidth: 6
+    });
+    drawingUtils.drawLandmarks(lm, {
+      color: c.line, fillColor: c.fill, radius: 5, lineWidth: 2
+    });
+  });
+
+  // game logic
+  const ex = state.forms[state.exIndex];
+  const effHold = ex.hold * state.holdMult;
+  const playerCount = state.mode === "duo" ? 2 : 1;
+  const matched = [false, false];
+
+  for (let i = 0; i < playerCount; i++) {
+    const lm = landmarksList[i];
+    const p  = state.players[i];
+    let isMatch = false;
+    if (lm) {
+      try { isMatch = !!ex.match(lm); } catch (_) { isMatch = false; }
+    }
+    matched[i] = isMatch;
+
+    if (isMatch) {
+      p.hold = Math.min(effHold, p.hold + dt);
+    } else {
+      p.hold = Math.max(0, p.hold - dt * 0.5);
+    }
+
+    if (p.hold >= effHold && !p.advanced) {
+      completeRep(i);
+    }
+  }
+
+  // visual feedback
+  cardP1.classList.toggle("matching", matched[0]);
+  cardP2.classList.toggle("matching", matched[1]);
+
+  const anyMatched = matched[0] || (playerCount === 2 && matched[1]);
+  meterLabel.textContent = anyMatched ? "locked in 🔒" : "find the form";
+  meterFillP1.classList.toggle("locked", matched[0]);
+
+  meterFillP1.style.width = `${(state.players[0].hold / effHold) * 100}%`;
+  meterTime.textContent = `${state.players[0].hold.toFixed(1)} / ${effHold.toFixed(1)}s`;
+
+  if (playerCount === 2) {
+    meterFillP2.style.width = `${(state.players[1].hold / effHold) * 100}%`;
+    meterTimeP2.textContent = `${state.players[1].hold.toFixed(1)} / ${effHold.toFixed(1)}s`;
+  }
+}
+
+function completeRep(playerIdx) {
+  const ex = state.forms[state.exIndex];
+  const p  = state.players[playerIdx];
+  p.advanced = true;
+
+  const oldRank = rankFor(p.qi).name;
+  const gained  = Math.round(20 + ex.hold * 5);
+  p.qi += gained;
+  const newRank = rankFor(p.qi);
+  renderHud();
+
+  // toast for this player
+  const line = TOASTS[Math.floor(Math.random() * TOASTS.length)];
+  const who  = state.mode === "duo" ? `P${playerIdx + 1} ` : "";
+  showToast(`${who}+${gained} qi · ${line}`);
+
+  // rank up?
+  if (oldRank !== newRank.name) {
+    showToast(`RANK UP · ${state.mode === "duo" ? `P${playerIdx + 1}` : "U"} IS NOW ${newRank.name.toUpperCase()} 🏆`, true);
+  }
+
+  fountainConfetti();
+
+  // if first player to finish in duo, start advance timer
+  const otherIdx = 1 - playerIdx;
+  const playerCount = state.mode === "duo" ? 2 : 1;
+  const otherDone = playerCount === 2 ? state.players[otherIdx].advanced : true;
+
+  // advance the form once whoever finishes first triggers
+  // (but only schedule advance once)
+  if (!state.advanceScheduled) {
+    state.advanceScheduled = true;
+    setTimeout(() => advanceForm(), 700);
+  }
+}
+
+function advanceForm() {
+  if (!state.forms.length) return;
+  state.exIndex = (state.exIndex + 1) % state.forms.length;
+  state.players[0].hold = 0;
+  state.players[0].advanced = false;
+  state.players[1].hold = 0;
+  state.players[1].advanced = false;
+  state.advanceScheduled = false;
+  renderForm();
+  renderHud();
+}
+
+function renderForm() {
+  const ex = state.forms[state.exIndex];
+  if (!ex) return;
+  const effHold = ex.hold * state.holdMult;
+  exNum.textContent = `FORM ${String(state.exIndex + 1).padStart(2, "0")} / ${String(state.forms.length).padStart(2, "0")}`;
+  exLvTag.textContent = `LV ${state.level}`;
+  exLymphTag.classList.toggle("hidden", !ex.lymph);
+  exHanzi.textContent = ex.hanzi;
+  exName.textContent  = ex.name;
+  exVibe.textContent  = ex.vibe;
+  exInstruction.textContent = ex.instruction;
+  meterFillP1.style.width = "0%";
+  meterFillP2.style.width = "0%";
+  meterTime.textContent   = `0.0 / ${effHold.toFixed(1)}s`;
+  meterTimeP2.textContent = `0.0 / ${effHold.toFixed(1)}s`;
+}
+
+function renderHud() {
+  const r1 = rankFor(state.players[0].qi);
+  qiP1.textContent = `${state.players[0].qi} qi`;
+  rankP1.textContent = r1.name;
+  rankHanziP1.textContent = r1.hanzi;
+  if (state.mode === "duo") {
+    const r2 = rankFor(state.players[1].qi);
+    qiP2.textContent = `${state.players[1].qi} qi`;
+    rankP2.textContent = r2.name;
+    rankHanziP2.textContent = r2.hanzi;
+  }
+}
+
+// ============ TOAST + CONFETTI ============
+function showToast(text, big = false) {
+  const el = document.createElement("div");
+  el.className = "toast" + (big ? " big" : "");
+  el.textContent = text;
+  toastStack.appendChild(el);
+  setTimeout(() => {
+    el.classList.add("fading");
+    setTimeout(() => el.remove(), 320);
+  }, big ? 2400 : 1700);
+}
+
+function fountainConfetti() {
+  const N = 18;
+  for (let i = 0; i < N; i++) {
+    const el = document.createElement("div");
+    el.className = "confetti";
+    el.textContent = CONFETTI_GLYPHS[Math.floor(Math.random() * CONFETTI_GLYPHS.length)];
+    const dx = (Math.random() - 0.5) * window.innerWidth * 0.9;
+    const rot = (Math.random() - 0.5) * 720;
+    el.style.left = "50%";
+    el.style.top  = "0";
+    el.style.setProperty("--dx",  dx + "px");
+    el.style.setProperty("--rot", rot + "deg");
+    el.style.animationDelay = (Math.random() * 0.15) + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1500);
+  }
+}
+
+// ============ MUSIC (synthesized pentatonic ambient) ============
+// C major pentatonic across 2 octaves — the sonic shorthand for "Chinese style"
+// (gōngdiào / 宮調). Pure sine + triangle bells over a low drone, scheduled on
+// the AudioContext clock so timing is jitter-free.
+const SCALE = [
+  261.63, 293.66, 329.63, 392.00, 440.00,   // C4 D4 E4 G4 A4
+  523.25, 587.33, 659.25, 783.99, 880.00    // C5 D5 E5 G5 A5
+];
+const music = {
+  ctx: null,
+  master: null,
+  enabled: true,
+  schedTimer: null
+};
+
+function startMusic() {
+  if (music.ctx) {
+    if (music.ctx.state === "suspended") music.ctx.resume();
+    return;
+  }
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  music.ctx = new AC();
+
+  music.master = music.ctx.createGain();
+  music.master.gain.value = music.enabled ? 0.18 : 0;
+
+  // gentle low-pass for warmth
+  const filter = music.ctx.createBiquadFilter();
+  filter.type = "lowpass";
+  filter.frequency.value = 2600;
+  filter.Q.value = 0.4;
+  music.master.connect(filter);
+  filter.connect(music.ctx.destination);
+
+  // drone: low C + G, slowly modulated
+  for (const f of [65.41, 98.00]) {
+    const o = music.ctx.createOscillator();
+    o.type = "sine";
+    o.frequency.value = f;
+    const g = music.ctx.createGain();
+    g.gain.value = 0.07;
+    // slow LFO on gain
+    const lfo = music.ctx.createOscillator();
+    lfo.frequency.value = 0.11 + Math.random() * 0.07;
+    const lfoGain = music.ctx.createGain();
+    lfoGain.gain.value = 0.025;
+    lfo.connect(lfoGain).connect(g.gain);
+    lfo.start();
+    o.connect(g).connect(music.master);
+    o.start();
+  }
+
+  scheduleNotes();
+}
+
+function scheduleNotes() {
+  if (!music.ctx) return;
+  let t = music.ctx.currentTime + 0.1;
+  for (let i = 0; i < 8; i++) {
+    t += 0.55 + Math.random() * 0.55;
+    if (Math.random() < 0.85) {
+      playBellAt(t, SCALE[Math.floor(Math.random() * SCALE.length)]);
+    }
+    // occasional duet — same note, octave higher, soft
+    if (Math.random() < 0.18) {
+      playBellAt(t + 0.18, SCALE[Math.floor(Math.random() * SCALE.length)] * 2);
+    }
+  }
+  music.schedTimer = setTimeout(scheduleNotes, 4500);
+}
+
+function playBellAt(when, freq) {
+  const ctx = music.ctx;
+  if (!ctx) return;
+
+  // fundamental — triangle for a soft pluck
+  const osc = ctx.createOscillator();
+  osc.type = "triangle";
+  osc.frequency.value = freq;
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0, when);
+  gain.gain.linearRampToValueAtTime(0.20, when + 0.015);
+  gain.gain.exponentialRampToValueAtTime(0.001, when + 2.6);
+  osc.connect(gain).connect(music.master);
+  osc.start(when);
+  osc.stop(when + 2.7);
+
+  // bell-like 2nd harmonic
+  const osc2 = ctx.createOscillator();
+  osc2.type = "sine";
+  osc2.frequency.value = freq * 2;
+  const gain2 = ctx.createGain();
+  gain2.gain.setValueAtTime(0, when);
+  gain2.gain.linearRampToValueAtTime(0.07, when + 0.012);
+  gain2.gain.exponentialRampToValueAtTime(0.001, when + 1.4);
+  osc2.connect(gain2).connect(music.master);
+  osc2.start(when);
+  osc2.stop(when + 1.5);
+}
+
+function pauseMusic() {
+  if (music.ctx && music.ctx.state === "running") {
+    music.ctx.suspend();
+  }
+}
+
+function toggleMusic() {
+  music.enabled = !music.enabled;
+  if (music.master && music.ctx) {
+    music.master.gain.linearRampToValueAtTime(
+      music.enabled ? 0.18 : 0,
+      music.ctx.currentTime + 0.25
+    );
+  }
+  musicBtn.textContent = music.enabled ? "🔊 vibes on" : "🔇 muted";
+  musicBtn.classList.toggle("muted", !music.enabled);
+}
+
+// rotate loader copy for vibes
+let _loaderRotIdx = 0;
+const _loaderLines = ["summoning the chi…", "loading the brain… 🧠", "asking for camera perms… 📸"];
+setInterval(() => {
+  if (!screenLoader.classList.contains("hidden") && !loaderHint.classList.contains("error")) {
+    _loaderRotIdx = (_loaderRotIdx + 1) % _loaderLines.length;
+  }
+}, 1400);
+
+</script>
+</body>
+</html>

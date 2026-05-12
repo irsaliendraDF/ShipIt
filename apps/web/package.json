@@ -1,0 +1,37 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "node ./scripts/sync-games.js && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf .next .turbo",
+    "sync-games": "node ./scripts/sync-games.js"
+  },
+  "dependencies": {
+    "@shipit-fun/gesture-core": "*",
+    "@shipit-fun/ui": "*",
+    "@types/three": "^0.184.1",
+    "framer-motion": "^11.0.0",
+    "gsap": "^3.15.0",
+    "lucide-react": "^1.14.0",
+    "next": "^14.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.18",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.0",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.4.5"
+  }
+}

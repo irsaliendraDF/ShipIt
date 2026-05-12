@@ -1,0 +1,11 @@
+{
+  "slug": "your-experiment-slug",
+  "title": "Your Experiment Title",
+  "description": "One short sentence (max 120 chars) explaining what it does.",
+  "contributor": "yourhandle",
+  "tags": ["gesture"],
+  "status": "wip",
+  "tech": ["Vanilla JS", "Canvas API"],
+  "controls": "Plain-language description of how to play.",
+  "createdAt": "2026-05-09"
+}

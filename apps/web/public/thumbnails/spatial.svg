@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Spatial thumbnail">
+  <defs>
+    <linearGradient id="sp-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15101e"/>
+      <stop offset="100%" stop-color="#0d0a14"/>
+    </linearGradient>
+    <linearGradient id="sp-stroke" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00ffe1" stop-opacity="0.1"/>
+      <stop offset="50%" stop-color="#00ffe1" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#ff8a3d" stop-opacity="1"/>
+    </linearGradient>
+    <radialGradient id="sp-tip" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#ff8a3d" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ff8a3d" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="sp-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#sp-bg)"/>
+
+  <!-- Perspective floor grid -->
+  <g stroke="#00ffe1" stroke-opacity="0.18" stroke-width="1" fill="none">
+    <path d="M 0 380 L 800 380"/>
+    <path d="M 0 410 L 800 410"/>
+    <path d="M 0 440 L 800 440"/>
+    <!-- vanishing lines -->
+    <path d="M 100 450 L 360 280"/>
+    <path d="M 250 450 L 380 280"/>
+    <path d="M 400 450 L 400 280"/>
+    <path d="M 550 450 L 420 280"/>
+    <path d="M 700 450 L 440 280"/>
+  </g>
+  <rect width="800" height="450" fill="url(#sp-grid)"/>
+
+  <!-- Wireframe cube -->
+  <g stroke="#00ffe1" stroke-opacity="0.55" stroke-width="1.5" fill="none">
+    <!-- back face -->
+    <polygon points="290,170 410,170 410,290 290,290" stroke-opacity="0.3"/>
+    <!-- front face -->
+    <polygon points="320,200 470,200 470,320 320,320"/>
+    <!-- connectors -->
+    <line x1="290" y1="170" x2="320" y2="200"/>
+    <line x1="410" y1="170" x2="470" y2="200"/>
+    <line x1="290" y1="290" x2="320" y2="320"/>
+    <line x1="410" y1="290" x2="470" y2="320"/>
+  </g>
+
+  <!-- 3D ribbon stroke being drawn -->
+  <path d="M 150 280 Q 250 220, 360 250 T 540 200 Q 600 180, 660 130"
+        fill="none" stroke="url(#sp-stroke)" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+
+  <!-- Ghost trail behind stroke -->
+  <path d="M 150 280 Q 250 220, 360 250 T 540 200 Q 600 180, 660 130"
+        fill="none" stroke="#00ffe1" stroke-opacity="0.15" stroke-width="14"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Brush tip glow -->
+  <circle cx="660" cy="130" r="22" fill="url(#sp-tip)"/>
+  <circle cx="660" cy="130" r="5" fill="#ffffff"/>
+
+  <!-- Hand cursor (pinch indicator) -->
+  <g transform="translate(660 130)" stroke="#ff8a3d" stroke-width="1.5" fill="none" stroke-opacity="0.85">
+    <circle r="14"/>
+    <circle r="20" stroke-opacity="0.4"/>
+    <line x1="-26" y1="0" x2="-18" y2="0"/>
+    <line x1="18" y1="0" x2="26" y2="0"/>
+    <line x1="0" y1="-26" x2="0" y2="-18"/>
+    <line x1="0" y1="18" x2="0" y2="26"/>
+  </g>
+
+  <!-- HUD labels -->
+  <g font-family="ui-monospace, Menlo, monospace" font-size="13" fill="#00ffe1" fill-opacity="0.75" letter-spacing="2">
+    <text x="32" y="40">// SPATIAL</text>
+  </g>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#ffffff" fill-opacity="0.45" letter-spacing="2.5">
+    <text x="32" y="60">3D.DRAW.MODE</text>
+  </g>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#ff8a3d" fill-opacity="0.75" letter-spacing="2" text-anchor="end">
+    <text x="768" y="40">[ THREE.JS ]</text>
+    <text x="768" y="60" fill="#00ffe1" fill-opacity="0.65">PINCH:ON</text>
+  </g>
+
+  <!-- Corner brackets -->
+  <g stroke="#00ffe1" stroke-opacity="0.5" stroke-width="1.5" fill="none">
+    <path d="M 16 16 L 16 32 M 16 16 L 32 16"/>
+    <path d="M 784 16 L 784 32 M 784 16 L 768 16"/>
+    <path d="M 16 434 L 16 418 M 16 434 L 32 434"/>
+    <path d="M 784 434 L 784 418 M 784 434 L 768 434"/>
+  </g>
+</svg>

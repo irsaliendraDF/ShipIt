@@ -1,0 +1,28 @@
+{
+  "name": "shipit-fun",
+  "version": "0.1.0",
+  "private": true,
+  "description": "shipit.fun. a home for vibe coders building whimsical alternative entertainment together.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "turbo": "^1.13.0",
+    "typescript": "^5.4.5"
+  },
+  "packageManager": "npm@10.5.0",
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}

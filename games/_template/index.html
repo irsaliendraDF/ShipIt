@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>shipit.fun Experiment Template</title>
+    <style>
+      :root {
+        --bg: #fde9c8;
+        --fg: #1a1a1a;
+        --accent: #ff6fb5;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: "DM Sans", system-ui, sans-serif;
+        overflow: hidden;
+      }
+      .stage {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+      }
+      canvas {
+        display: block;
+        background: #faf7f0;
+        border: 1px solid rgba(26, 26, 26, 0.1);
+      }
+      .hud {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        color: var(--accent);
+        opacity: 0.85;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <canvas id="canvas" width="960" height="540"></canvas>
+    </div>
+    <div class="hud">// shipit.fun / template</div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

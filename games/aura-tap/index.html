@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AURA TAP</title>
+    <script type="module" crossorigin src="./assets/index-BNu4uk4Z.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BHUGBTmh.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="stage">
+        <video id="webcam" muted playsinline autoplay></video>
+        <canvas id="game" width="800" height="900"></canvas>
+        <div id="game-callout" class="game-callout"></div>
+
+        <div id="warmup-overlay" class="overlay hidden">
+          <div class="warmup-bottom">
+            <div class="trigger-counter">successful triggers: <b id="trigger-count">0</b></div>
+            <div id="warmup-prompt" class="warmup-prompt hidden"></div>
+            <div class="warmup-actions">
+              <button id="recalibrate-btn" class="btn btn-ghost btn-sm">RECALIBRATE</button>
+              <button id="loop-toggle" class="btn btn-ghost btn-sm">UNMUTE LOOP</button>
+            </div>
+          </div>
+          <div id="warmup-callout" class="warmup-callout"></div>
+        </div>
+      </div>
+
+      <div id="warmup-sides" class="warmup-sides hidden">
+        <button id="warmup-done" class="btn btn-ghost warmup-done">DONE</button>
+        <div class="warmup-side warmup-left">
+          <div class="hand-widget" data-slot="0">
+            <div class="hw-title">HAND 1</div>
+            <div class="hw-row"><span>state</span><b class="hw-state">—</b></div>
+            <div class="hw-row"><span>lane</span><b class="hw-lane">—</b></div>
+            <div class="hw-row"><span>score</span><b class="hw-score">—</b></div>
+          </div>
+        </div>
+        <div class="warmup-side warmup-right">
+          <div class="hand-widget" data-slot="1">
+            <div class="hw-title">HAND 2</div>
+            <div class="hw-row"><span>state</span><b class="hw-state">—</b></div>
+            <div class="hw-row"><span>lane</span><b class="hw-lane">—</b></div>
+            <div class="hw-row"><span>score</span><b class="hw-score">—</b></div>
+          </div>
+        </div>
+        <div class="health-widget warmup-health">
+          <div class="health-row"><span>fps</span><b id="health-fps">—</b></div>
+          <div class="health-row"><span>detect</span><b id="health-detect">—</b></div>
+          <div class="health-row"><span>track</span><b id="health-score">—</b></div>
+          <div id="health-tip" class="health-tip"></div>
+        </div>
+      </div>
+
+      <div id="songselect" class="songselect hidden">
+        <div class="songselect-bg"></div>
+        <div class="songselect-content">
+          <h2 class="songselect-title">pick your vibe</h2>
+          <div id="song-cards" class="song-cards"></div>
+          <button id="songselect-back" class="btn btn-ghost btn-sm">BACK</button>
+        </div>
+      </div>
+
+      <div id="boot" class="boot">
+        <h1 class="title">AURA TAP</h1>
+        <p class="subtitle">tap the beats. ascend.</p>
+        <div class="menu-buttons">
+          <button id="warmup-btn" class="btn btn-secondary">WARM UP</button>
+          <button id="start-btn" class="btn">START</button>
+        </div>
+        <p class="hint">keys: <kbd>D</kbd> <kbd>F</kbd> <kbd>J</kbd> <kbd>K</kbd> · webcam: fist → open</p>
+        <p id="boot-status" class="status"></p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "slug": "spatial",
+  "title": "Spatial",
+  "description": "Hand-gesture 3D drawing in real space. Pinch to draw, fist to clear, two hands to scale.",
+  "contributor": "thearcadecrew",
+  "tags": ["gesture", "mediapipe", "3d"],
+  "status": "live",
+  "tech": ["MediaPipe Hands", "Three.js", "cannon-es", "Vite"],
+  "controls": "Pinch (thumb + index) to start a stroke. Move your hand to draw in 3D. Fist to clear.",
+  "createdAt": "2026-05-10"
+}

@@ -1,0 +1,149 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  /* Disable any browser smoothing of pixel art */
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at top, #1f2a4a 0%, #0e1024 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'Press Start 2P', monospace;
+  padding: 20px;
+}
+
+/* ---------- Game Boy chassis ---------- */
+.gameboy {
+  background: linear-gradient(180deg, #d6d6c8 0%, #c0c0b2 100%);
+  border-radius: 12px 12px 70px 12px;
+  padding: 18px 22px 70px;
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 2px #b0b0a0,
+    inset 0 -4px 0 0 #9a9a8a;
+  width: max-content;
+  max-width: 100%;
+  position: relative;
+}
+
+.brand {
+  text-align: center;
+  font-size: 10px;
+  color: #2a2a4a;
+  margin-bottom: 10px;
+  letter-spacing: 3px;
+}
+
+.brand .accent { color: #c43020; }
+
+/* ---------- Screen frame: dark inset bezel ---------- */
+.screen-frame {
+  background: #1a1a1a;
+  padding: 16px 22px;
+  border-radius: 8px 8px 40px 8px;
+  text-align: center;
+  box-shadow:
+    inset 0 0 0 2px #555,
+    inset 0 0 0 6px #111,
+    0 0 0 2px #2a2a2a;
+  position: relative;
+}
+
+.screen-frame::before,
+.screen-frame::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6a3a3a;
+  box-shadow: inset 0 0 2px #2a0a0a;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.screen-frame::before { left: 8px; }
+.screen-frame::after  { right: 8px; }
+
+/* ---------- The actual game canvas ----------
+   Default dimensions are a fallback. JS in game.js (fitCanvas) sets
+   the actual size each load + on resize to the largest integer scale
+   of 160x144 that fits comfortably in the viewport. */
+#game {
+  background: #9bbc0f;
+  width: 480px;
+  height: 432px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  display: block;
+  margin: 0 auto;
+  outline: none;
+}
+
+/* Power LED (Game Boy red dot) */
+.power-led {
+  position: absolute;
+  bottom: 22px;
+  left: 24px;
+  font-size: 6px;
+  color: #555;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.power-led::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff8a4a, #c43020 60%, #6a1010);
+  box-shadow: 0 0 6px rgba(196, 48, 32, 0.5);
+}
+
+/* ---------- Faux button silhouettes (visual flavor only) ---------- */
+.faux-controls {
+  position: absolute;
+  bottom: 18px;
+  right: 22px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.faux-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #a8324a, #6a1d2e);
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6px;
+  color: #f8e8e8;
+}
+.faux-btn.b { background: linear-gradient(180deg, #324aa8, #1d2e6a); color: #e8eef8; }
+
+.controls {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 6px;
+  color: #444;
+  line-height: 1.8;
+  letter-spacing: 1px;
+}
+
+/* JS handles canvas scale per viewport. Media queries here only
+   touch chassis chrome at very small widths. */
+@media (max-width: 540px) {
+  .gameboy { padding: 14px 12px 56px; border-radius: 10px 10px 50px 10px; }
+  .screen-frame { padding: 12px 14px; }
+  .brand { font-size: 8px; letter-spacing: 2px; margin-bottom: 8px; }
+  .faux-controls { right: 14px; bottom: 14px; }
+  .power-led { left: 14px; bottom: 16px; }
+}

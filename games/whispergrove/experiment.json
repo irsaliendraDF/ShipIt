@@ -1,0 +1,11 @@
+{
+  "slug": "whispergrove",
+  "title": "WhisperGrove",
+  "description": "Raise Rosie the drake. A pixel-warm Tamagotchi web app of stats, spells, quests, and evolution.",
+  "contributor": "thearcadecrew",
+  "tags": ["game", "react"],
+  "status": "live",
+  "tech": ["React", "Vite", "Tailwind", "Zustand"],
+  "controls": "Click to feed, play, cast spells, and quest. Watch Rosie grow.",
+  "createdAt": "2026-05-09"
+}

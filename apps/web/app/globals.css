@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --cream: #fde9c8;
+  --offwhite: #faf7f0;
+  --bubblegum: #ff6fb5;
+  --orange: #ff7a3d;
+  --purple: #8b5cf6;
+  --jet: #1a1a1a;
+}
+
+html,
+body {
+  background: var(--cream);
+  color: var(--jet);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--bubblegum);
+  color: var(--cream);
+}
+
+@layer utilities {
+  .grain-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(26, 26, 26, 0.04) 0px,
+      rgba(26, 26, 26, 0.04) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: multiply;
+    opacity: 0.4;
+  }
+
+  .scanline-sweep::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 111, 181, 0.06) 50%,
+      transparent 100%
+    );
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+  }
+
+  .mesh-bg {
+    position: absolute;
+    inset: -10%;
+    background:
+      radial-gradient(circle at 18% 30%, rgba(255, 111, 181, 0.18), transparent 45%),
+      radial-gradient(circle at 82% 22%, rgba(255, 122, 61, 0.16), transparent 50%),
+      radial-gradient(circle at 50% 85%, rgba(139, 92, 246, 0.12), transparent 55%),
+      radial-gradient(circle at 65% 55%, rgba(255, 122, 61, 0.10), transparent 50%);
+    filter: blur(48px);
+    animation: meshDrift 18s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 24px rgba(255, 111, 181, 0.25);
+  }
+
+  .text-glow-warm {
+    text-shadow: 0 0 24px rgba(255, 122, 61, 0.35);
+  }
+
+  .border-grid {
+    background-image:
+      linear-gradient(to right, rgba(26, 26, 26, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(26, 26, 26, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .crt-curve {
+    box-shadow:
+      inset 0 0 80px rgba(255, 111, 181, 0.05),
+      inset 0 0 200px rgba(26, 26, 26, 0.05);
+  }
+
+  /* HUD-style corner brackets — pure CSS, no extra DOM needed */
+  .hud-corners {
+    position: relative;
+  }
+  .hud-corners::before,
+  .hud-corners::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: rgba(255, 111, 181, 0.55);
+    border-style: solid;
+    border-width: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  .hud-corners::before {
+    top: 8px;
+    left: 8px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+  .hud-corners::after {
+    bottom: 8px;
+    right: 8px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+  .hud-corners:hover::before,
+  .hud-corners:hover::after {
+    width: 22px;
+    height: 22px;
+    border-color: var(--bubblegum);
+  }
+
+  .hud-corners-warm::before,
+  .hud-corners-warm::after {
+    border-color: rgba(255, 122, 61, 0.55);
+  }
+  .hud-corners-warm:hover::before,
+  .hud-corners-warm:hover::after {
+    border-color: var(--orange);
+  }
+
+  .marquee-blink {
+    animation: marqueeBlink 1s steps(1) infinite;
+  }
+
+  /* Subtle CRT-style flicker on the hero headline */
+  .crt-flicker {
+    animation: flicker 4s linear infinite;
+  }
+
+  /* Pixelated bevel for arcade "press start" buttons */
+  .arcade-bevel {
+    box-shadow:
+      0 0 0 1px rgba(26, 26, 26, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -2px 0 rgba(26, 26, 26, 0.12);
+  }
+
+  .glow-teal {
+    box-shadow:
+      0 0 24px rgba(255, 111, 181, 0.25),
+      0 0 48px rgba(255, 111, 181, 0.12);
+  }
+
+  .glow-warm {
+    box-shadow:
+      0 0 24px rgba(255, 122, 61, 0.30),
+      0 0 48px rgba(255, 122, 61, 0.15);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "slug": "cosmic-identity",
+  "title": "Cosmic Identity",
+  "description": "Five frameworks (astrology, Chinese zodiac, numerology, Human Design, MBTI) into one cosmic profile.",
+  "contributor": "thearcadecrew",
+  "tags": ["ai", "tool"],
+  "status": "live",
+  "tech": ["Vanilla JS", "Vite", "Anthropic API", "Astrologer API"],
+  "controls": "Enter your birth info. Get a unified profile and compatibility report.",
+  "createdAt": "2026-05-10"
+}

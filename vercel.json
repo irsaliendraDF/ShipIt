@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "turbo run build --filter=web",
+  "devCommand": "turbo run dev --filter=web",
+  "installCommand": "npm install",
+  "outputDirectory": "apps/web/.next",
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/games/:slug/:path*",
+      "destination": "/games-static/:slug/:path*"
+    }
+  ]
+}
