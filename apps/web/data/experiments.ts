@@ -130,6 +130,19 @@ export const experiments: Experiment[] = [
     createdAt: '2026-05-12',
     externalUrl: 'https://tap-a-gram.vercel.app',
   },
+  {
+    slug: 'pocket-post',
+    title: 'Pocket Post',
+    description: 'A 90s pen-pal mailbox. Write a note, drop it in, share the tracking code, your friend picks it up.',
+    contributor: 'shipitfuncrew',
+    tags: ['tool', 'react'],
+    status: 'live',
+    tech: ['React', 'Vite', 'Supabase', 'lucide-react'],
+    controls: 'Sign your name, write a note (280 chars), pick a stamp, slap on stickers, drop it in the mailbox. Share the code. Recipient drops the code in to pick up the note.',
+    thumbnail: '/thumbnails/pocket-post.svg',
+    createdAt: '2026-05-12',
+    externalUrl: 'https://pocket-post-silk.vercel.app',
+  },
 ];
 
 export function getExperiment(slug: string): Experiment | undefined {
