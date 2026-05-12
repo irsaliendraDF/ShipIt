@@ -23,14 +23,6 @@ export function HeroSection() {
           credits: ∞
         </p>
       </div>
-      <div className="absolute top-24 right-6 lg:right-10 z-10 hidden sm:block text-right">
-        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-warm/80">
-          high_score
-        </p>
-        <p className="font-mono text-xs tracking-widest text-jet/80 mt-1">
-          1,000,000
-        </p>
-      </div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-10 text-center">
         <motion.p
@@ -40,7 +32,7 @@ export function HeroSection() {
           className="font-mono text-[11px] uppercase tracking-[0.4em] text-warm mb-8"
         >
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-warm mr-3 align-middle animate-pulseDot" />
-          status: open / now accepting weird builds
+          status: open / always shipping
         </motion.p>
 
         <h1 className="font-mono font-medium text-5xl sm:text-7xl md:text-8xl leading-[0.95] tracking-tight text-jet text-glow">

@@ -124,9 +124,9 @@ export function IntakeForm() {
           label="budget range"
           required
           options={[
-            { value: 'snack', label: 'snack tier (~$1,500)' },
-            { value: 'meal', label: 'meal tier (~$3,500)' },
-            { value: 'feast', label: 'feast tier (~$7,500+)' },
+            { value: 'skiff', label: 'skiff tier (~$1,500)' },
+            { value: 'schooner', label: 'schooner tier (~$3,500)' },
+            { value: 'galleon', label: 'galleon tier (~$7,500+)' },
             { value: 'unsure', label: 'not sure yet' },
           ]}
         />
@@ -159,7 +159,7 @@ export function IntakeForm() {
           disabled={state === 'submitting'}
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans font-semibold text-[16px] bg-orange text-cream rounded-full px-7 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(255,122,61,0.3)] transition-all disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none"
         >
-          {state === 'submitting' ? 'sending...' : 'send it →'}
+          {state === 'submitting' ? 'shipping...' : 'Ship it! ⚓'}
         </button>
       </div>
     </form>

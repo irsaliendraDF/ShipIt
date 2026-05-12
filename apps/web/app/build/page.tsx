@@ -11,7 +11,7 @@ const BOOK_A_CALL_URL = 'https://cal.com/irene-shipit-build';
 export const metadata: Metadata = {
   title: 'shipit.build, custom vibe-coded tools for service businesses',
   description:
-    'productized, white-label, vibe-coded tools shipped in weeks. snack, meal, or feast pricing tiers. fixed scope. no surprise invoices.',
+    'productized, white-label, vibe-coded tools shipped in weeks. skiff, schooner, or galleon pricing tiers. fixed scope. no surprise invoices.',
   openGraph: {
     title: 'shipit.build',
     description:
@@ -273,7 +273,7 @@ export default function BuildHomePage() {
             <ShippingLabel
               size="lg"
               tier="01"
-              labelHeader="TIER 01 · SNACK · CAD $1,500"
+              labelHeader="TIER 01 · SKIFF · CAD $1,500"
               title="the quick widget"
               oneLiner="single-feature tool, one user flow, ships in a week."
               bullets={[
@@ -290,7 +290,7 @@ export default function BuildHomePage() {
             <ShippingLabel
               size="lg"
               tier="02"
-              labelHeader="TIER 02 · MEAL · CAD $3,500"
+              labelHeader="TIER 02 · SCHOONER · CAD $3,500"
               title="the full feature"
               oneLiner="multi-step tool, 2-3 features, ships in two weeks."
               bullets={[
@@ -308,7 +308,7 @@ export default function BuildHomePage() {
             <ShippingLabel
               size="lg"
               tier="03"
-              labelHeader="TIER 03 · FEAST · CAD $7,500+"
+              labelHeader="TIER 03 · GALLEON · CAD $7,500+"
               title="the whole production"
               oneLiner="multi-flow custom build, 4-week turnaround."
               bullets={[
