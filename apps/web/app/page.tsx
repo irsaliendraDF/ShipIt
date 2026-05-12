@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ShaderBackground } from '@/components/ui/shader-background';
 import { HeroSection } from '@/components/HeroSection';
 import { ExperimentCarousel } from '@/components/ExperimentCarousel';
 import { SectionHeader } from '@/components/SectionHeader';
@@ -13,12 +12,9 @@ import { contributors } from '@/data/contributors';
 export default function HomePage() {
   return (
     <>
-      <ShaderBackground />
-
       <HeroSection />
 
-      {/* Translucent so the shader stays visible behind content as the user scrolls */}
-      <div className="relative z-[5] bg-cream/80 backdrop-blur-sm">
+      <div className="relative z-[5] bg-cream">
         <MarqueeStrip />
         <section className="relative py-24 lg:py-32">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
