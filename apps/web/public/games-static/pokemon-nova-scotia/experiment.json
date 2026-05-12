@@ -2,7 +2,7 @@
   "slug": "pokemon-nova-scotia",
   "title": "Pokemon Nova Scotia",
   "description": "A Game Boy-styled exploration of Nova Scotia. Arrow keys to walk, Z to talk.",
-  "contributor": "shipitfuncrew",
+  "contributor": "thearcadecrew",
   "tags": ["game"],
   "status": "live",
   "tech": ["Vanilla JS", "Canvas API", "HTML/CSS"],

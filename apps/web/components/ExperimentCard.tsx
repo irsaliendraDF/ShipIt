@@ -1,5 +1,6 @@
 'use client';
 
+import type { ElementType } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Badge } from '@shipit-fun/ui';
@@ -32,6 +33,13 @@ export function ExperimentCard({ experiment, index = 0, size = 'default' }: Prop
 
   const statusTone = experiment.status === 'live' ? 'live' : experiment.status === 'wip' ? 'wip' : 'archived';
 
+  const cardClassName = `block h-full bg-bg-elevated border border-jet/8 ${borderHover} transition-all duration-300 overflow-hidden relative ${hudClass}`;
+  const isExternal = !!experiment.externalUrl;
+  const Wrapper: ElementType = isExternal ? 'a' : Link;
+  const wrapperProps: Record<string, unknown> = isExternal
+    ? { href: experiment.externalUrl, target: '_blank', rel: 'noreferrer' }
+    : { href: `/experiments/${experiment.slug}` };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -40,10 +48,7 @@ export function ExperimentCard({ experiment, index = 0, size = 'default' }: Prop
       transition={{ duration: 0.5, delay: index * 0.06 }}
       className={`group relative ${sizeClasses}`}
     >
-      <Link
-        href={`/experiments/${experiment.slug}`}
-        className={`block h-full bg-bg-elevated border border-jet/8 ${borderHover} transition-all duration-300 overflow-hidden relative ${hudClass}`}
-      >
+      <Wrapper {...wrapperProps} className={cardClassName}>
         <div
           aria-hidden
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
@@ -133,7 +138,7 @@ export function ExperimentCard({ experiment, index = 0, size = 'default' }: Prop
             </span>
           </div>
         </div>
-      </Link>
+      </Wrapper>
     </motion.div>
   );
 }

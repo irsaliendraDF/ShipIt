@@ -22,18 +22,6 @@ export function BrandSwitcher() {
 
         <div className="flex items-center gap-1">
           <Link
-            href="/"
-            aria-current={!onBuild ? 'page' : undefined}
-            className={[
-              'px-3 py-1 transition-colors rounded-sm',
-              !onBuild
-                ? 'bg-bubblegum text-jet'
-                : 'text-cream/65 hover:text-bubblegum',
-            ].join(' ')}
-          >
-            🎨 .fun
-          </Link>
-          <Link
             href="/build"
             aria-current={onBuild ? 'page' : undefined}
             className={[
@@ -44,6 +32,18 @@ export function BrandSwitcher() {
             ].join(' ')}
           >
             🛠️ .build
+          </Link>
+          <Link
+            href="/"
+            aria-current={!onBuild ? 'page' : undefined}
+            className={[
+              'px-3 py-1 transition-colors rounded-sm',
+              !onBuild
+                ? 'bg-bubblegum text-jet'
+                : 'text-cream/65 hover:text-bubblegum',
+            ].join(' ')}
+          >
+            🎨 .fun
           </Link>
         </div>
       </div>

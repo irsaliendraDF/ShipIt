@@ -2,7 +2,7 @@
   "slug": "cinematic-gesture-fx",
   "title": "Cinematic Gesture FX",
   "description": "Trigger Iron Man repulsors, Dr. Strange portals, Spider-Man webs and more with hand gestures.",
-  "contributor": "shipitfuncrew",
+  "contributor": "thearcadecrew",
   "tags": ["gesture", "mediapipe", "fx"],
   "status": "live",
   "tech": ["MediaPipe Hands", "Three.js", "Vanilla JS"],

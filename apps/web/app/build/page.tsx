@@ -97,7 +97,7 @@ export default function BuildHomePage() {
               href={BOOK_A_CALL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] bg-jet text-cream rounded-full px-5 py-2.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(26,26,26,0.15)] transition-all"
+              className="inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] bg-purple text-cream rounded-full px-5 py-2.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(139,92,246,0.25)] transition-all"
             >
               book a call
             </a>
@@ -147,7 +147,7 @@ export default function BuildHomePage() {
               href={BOOK_A_CALL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center font-sans font-semibold text-[16px] bg-jet text-cream rounded-full px-6 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(26,26,26,0.15)] transition-all"
+              className="inline-flex items-center justify-center font-sans font-semibold text-[16px] bg-purple text-cream rounded-full px-6 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(139,92,246,0.25)] transition-all"
             >
               book a discovery call
             </a>
@@ -478,16 +478,16 @@ export default function BuildHomePage() {
       </section>
 
       {/* SECTION 10 — FOOTER */}
-      <footer className="bg-jet text-cream">
+      <footer className="bg-cream text-jet border-t border-jet/10">
         <div className="max-w-[1080px] mx-auto px-6 py-14 grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
             <div className="flex items-center gap-2.5">
               <ShipSprite size={32} />
-              <span className="font-sans font-semibold text-cream text-[18px]">
+              <span className="font-sans font-semibold text-jet text-[18px]">
                 shipit.build
               </span>
             </div>
-            <p className="mt-4 font-sans text-[13px] text-cream/50">© 2026 ShipIt!</p>
+            <p className="mt-4 font-sans text-[13px] text-jet/55">© 2026 ShipIt!</p>
           </div>
 
           <div>
@@ -498,7 +498,7 @@ export default function BuildHomePage() {
               <li>
                 <a
                   href="https://shipit.fun"
-                  className="font-sans text-[14px] text-cream hover:text-bubblegum transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-purple transition-colors"
                 >
                   shipit.fun →
                 </a>
@@ -517,7 +517,7 @@ export default function BuildHomePage() {
                   href="https://www.linkedin.com/in/irenesaliendra"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-[14px] text-cream hover:text-bubblegum transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-purple transition-colors"
                 >
                   linkedin →
                 </a>
@@ -526,7 +526,7 @@ export default function BuildHomePage() {
                 {/* TODO: confirm real contact email for footer */}
                 <a
                   href="mailto:irene@digitalflowconsulting.ca"
-                  className="font-sans text-[14px] text-cream hover:text-bubblegum transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-purple transition-colors"
                 >
                   email →
                 </a>
@@ -536,7 +536,7 @@ export default function BuildHomePage() {
                   href={BOOK_A_CALL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-[14px] text-cream hover:text-bubblegum transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-purple transition-colors"
                 >
                   book a call →
                 </a>

@@ -157,7 +157,7 @@ export function IntakeForm() {
         <button
           type="submit"
           disabled={state === 'submitting'}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans font-semibold text-[16px] bg-jet text-cream rounded-full px-7 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(26,26,26,0.15)] transition-all disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans font-semibold text-[16px] bg-purple text-cream rounded-full px-7 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(139,92,246,0.25)] transition-all disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none"
         >
           {state === 'submitting' ? 'sending...' : 'send it →'}
         </button>

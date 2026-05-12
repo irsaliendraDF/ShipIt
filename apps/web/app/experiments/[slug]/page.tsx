@@ -15,7 +15,7 @@ import { getContributor } from '@/data/contributors';
 type Props = { params: { slug: string } };
 
 export function generateStaticParams() {
-  return experiments.map((e) => ({ slug: e.slug }));
+  return experiments.filter((e) => !e.externalUrl).map((e) => ({ slug: e.slug }));
 }
 
 export function generateMetadata({ params }: Props) {

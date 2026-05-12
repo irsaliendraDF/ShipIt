@@ -25,6 +25,9 @@ export type Experiment = {
   github?: string;
   thumbnail?: string;
   createdAt?: string;
+  // If set, tile and carousel link out to this URL instead of /experiments/[slug].
+  // Used for experiments hosted on their own domain (e.g. a standalone Vercel deploy).
+  externalUrl?: string;
 };
 
 export const experiments: Experiment[] = [
@@ -113,6 +116,18 @@ export const experiments: Experiment[] = [
     controls: 'Enter your birth info. Get a unified profile and compatibility report.',
     thumbnail: '/thumbnails/cosmic-identity.svg',
     createdAt: '2026-05-09',
+  },
+  {
+    slug: 'tap-a-gram',
+    title: 'Tap-A-Gram',
+    description: 'Tap candies for 60 seconds, build a love note in chunky bricks, share via URL hash.',
+    contributor: 'shipitfuncrew',
+    tags: ['game', 'react'],
+    status: 'live',
+    tech: ['React', 'Vite', 'Tailwind', 'Web Audio API', 'Canvas API'],
+    controls: 'Pick a tone, type the names, tap good candies (and on-vibe bonuses) while dodging gray ones for 60s.',
+    createdAt: '2026-05-12',
+    externalUrl: 'https://tap-a-gram.vercel.app',
   },
 ];
 
