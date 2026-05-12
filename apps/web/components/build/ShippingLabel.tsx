@@ -120,7 +120,7 @@ export function ShippingLabel({
             href={cta.href}
             target={cta.href.startsWith('http') ? '_blank' : undefined}
             rel={cta.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-            className="inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] text-jet hover:text-purple transition-colors"
+            className="inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] text-jet hover:text-orange transition-colors"
           >
             {cta.label}
           </a>

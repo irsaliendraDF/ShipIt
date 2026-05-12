@@ -86,7 +86,7 @@ export function GradientButton({
         className="absolute inset-0 pointer-events-none animate-[gradientFlow_8s_ease_infinite]"
         style={{
           background:
-            'linear-gradient(120deg, #ff6fb5 0%, #e558a0 22%, #ff7a3d 50%, #ffb377 70%, #8b5cf6 88%, #ff6fb5 100%)',
+            'linear-gradient(120deg, #ff6fb5 0%, #e558a0 22%, #ff7a3d 50%, #ffb377 70%, #e558a0 88%, #ff6fb5 100%)',
           backgroundSize: '300% 300%',
         }}
       />
@@ -126,7 +126,7 @@ export function GradientButton({
             <stop offset="0%" stopColor="#ff6fb5">
               <animate
                 attributeName="stop-color"
-                values="#ff6fb5;#ff7a3d;#8b5cf6;#ff6fb5"
+                values="#ff6fb5;#ff7a3d;#e558a0;#ff6fb5"
                 dur="4s"
                 repeatCount="indefinite"
               />
@@ -134,15 +134,15 @@ export function GradientButton({
             <stop offset="50%" stopColor="#ff7a3d">
               <animate
                 attributeName="stop-color"
-                values="#ff7a3d;#8b5cf6;#ff6fb5;#ff7a3d"
+                values="#ff7a3d;#e558a0;#ff6fb5;#ff7a3d"
                 dur="4s"
                 repeatCount="indefinite"
               />
             </stop>
-            <stop offset="100%" stopColor="#8b5cf6">
+            <stop offset="100%" stopColor="#e558a0">
               <animate
                 attributeName="stop-color"
-                values="#8b5cf6;#ff6fb5;#ff7a3d;#8b5cf6"
+                values="#e558a0;#ff6fb5;#ff7a3d;#e558a0"
                 dur="4s"
                 repeatCount="indefinite"
               />
