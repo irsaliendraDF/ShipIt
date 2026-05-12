@@ -1,0 +1,28 @@
+name: PR experiment scan
+
+# Surfaces risky patterns (fetch, eval, localStorage, etc.) in any PR that
+# touches a community-contributed experiment. It's a maintainer aid, not a
+# gatekeeper — the workflow logs findings but doesn't auto-block the merge.
+
+on:
+  pull_request:
+    paths:
+      - 'games/**'
+      - 'apps/web/data/experiments.ts'
+      - 'apps/web/data/contributors.ts'
+
+jobs:
+  scan:
+    name: scan experiments for risky patterns
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out PR
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run experiment scanner
+        run: node scripts/scan-experiment.js

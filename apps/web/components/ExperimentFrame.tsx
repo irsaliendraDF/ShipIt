@@ -26,17 +26,23 @@ export function ExperimentFrame({ slug, title, controls, tags = [], externalUrl 
 
   const src = externalUrl ?? `/games-static/${slug}/index.html`;
 
-  // Cover all features the embedded apps might need. Including 'self' lets the
-  // parent delegate the feature to the same-origin iframe.
-  const allowAttr = [
-    "camera 'self'",
-    "microphone 'self'",
-    'autoplay',
-    'fullscreen',
-    'gyroscope',
-    'accelerometer',
-    "display-capture 'self'",
-  ].join('; ');
+  // Tag-driven permission gating: an experiment only gets a feature when its
+  // tags justify it. A maze game tagged `game` can't ask the user for camera
+  // or microphone access. Camera is unlocked for body / hand / FX tracking;
+  // mic is unlocked for voice / audio. Everything else is denied at the
+  // browser level via the Permissions Policy on the iframe.
+  const allowCamera = tags.some((t) => ['gesture', 'mediapipe', 'body', 'fx'].includes(t));
+  const allowMic = tags.some((t) => ['voice', 'audio'].includes(t));
+  const allowMotion = tags.some((t) => ['body', 'gesture'].includes(t));
+
+  const allowParts: string[] = ['autoplay', 'fullscreen'];
+  if (allowCamera) allowParts.push("camera 'self'");
+  if (allowMic) allowParts.push("microphone 'self'");
+  if (allowMotion) {
+    allowParts.push('gyroscope');
+    allowParts.push('accelerometer');
+  }
+  const allowAttr = allowParts.join('; ');
 
   return (
     <div className="relative w-full bg-bg-elevated border border-jet/10 overflow-hidden">

@@ -55,6 +55,19 @@ const OfferCard = React.forwardRef<HTMLAnchorElement, OfferCardProps>(({ offer }
         />
         {/* Subtle bottom-edge fade so the seam between image and card is softer */}
         <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-b from-transparent to-bg-elevated/70 pointer-events-none" />
+        {/* shipped-by chip — surfaces the contributor at gallery level */}
+        <div className="absolute bottom-2.5 left-2.5 z-10 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-cream/95 backdrop-blur-sm border border-jet/10">
+          <span
+            aria-hidden
+            className="w-3.5 h-3.5 rounded-full flex items-center justify-center font-mono text-[7px] font-bold text-jet"
+            style={{ background: brandColor }}
+          >
+            {initial}
+          </span>
+          <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-jet/75">
+            shipped by {offer.brandName}
+          </span>
+        </div>
       </div>
 
       {/* Bottom half: card content */}

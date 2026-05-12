@@ -93,6 +93,19 @@ export function ExperimentCard({ experiment, index = 0, size = 'default' }: Prop
           <div className="absolute top-3 right-3 z-10">
             <Badge tone={statusTone}>{experiment.status}</Badge>
           </div>
+          {/* shipped-by chip — makes the contributor visible at gallery level */}
+          <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2 px-2.5 py-1 rounded-full bg-cream/95 backdrop-blur-sm border border-jet/10 shadow-sm">
+            <span
+              aria-hidden
+              className="w-4 h-4 rounded-full flex items-center justify-center font-mono text-[8px] font-bold text-jet"
+              style={{ background: accent }}
+            >
+              {initial}
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-jet/75">
+              shipped by @{experiment.contributor}
+            </span>
+          </div>
         </div>
 
         <div className="p-6 relative">
