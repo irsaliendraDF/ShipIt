@@ -1,131 +1,156 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Cosmic Identity thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Cosmic Identity — astrology, zodiac, numerology, Human Design, MBTI">
   <defs>
-    <radialGradient id="ci-bg" cx="50%" cy="50%" r="80%">
-      <stop offset="0%" stop-color="#1c1726"/>
-      <stop offset="60%" stop-color="#15101e"/>
-      <stop offset="100%" stop-color="#08060e"/>
+    <linearGradient id="ci-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde9c8"/>
+      <stop offset="100%" stop-color="#faf7f0"/>
+    </linearGradient>
+    <radialGradient id="ci-sky" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#3a2766"/>
+      <stop offset="60%" stop-color="#2a1f3d"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
     </radialGradient>
-    <radialGradient id="ci-core" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="30%" stop-color="#ff8a3d" stop-opacity="0.95"/>
-      <stop offset="70%" stop-color="#ff6b35" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#ff8a3d" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="ci-star" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="40%" stop-color="#00ffe1"/>
-      <stop offset="100%" stop-color="#00ffe1" stop-opacity="0"/>
+    <radialGradient id="ci-planet" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ff7a3d"/>
+      <stop offset="100%" stop-color="#ff6fb5"/>
     </radialGradient>
   </defs>
 
   <rect width="800" height="450" fill="url(#ci-bg)"/>
 
-  <!-- Distant stars (random scattering) -->
-  <g fill="#ffffff" fill-opacity="0.5">
-    <circle cx="60" cy="80" r="1"/>
-    <circle cx="120" cy="120" r="0.8"/>
-    <circle cx="200" cy="60" r="1.2"/>
-    <circle cx="280" cy="100" r="0.8"/>
-    <circle cx="380" cy="50" r="1"/>
-    <circle cx="500" cy="80" r="1.4"/>
-    <circle cx="620" cy="60" r="0.8"/>
-    <circle cx="710" cy="110" r="1"/>
-    <circle cx="760" cy="50" r="1.2"/>
-    <circle cx="40" cy="200" r="0.8"/>
-    <circle cx="700" cy="220" r="0.8"/>
-    <circle cx="50" cy="350" r="1"/>
-    <circle cx="150" cy="380" r="1.2"/>
-    <circle cx="280" cy="370" r="0.8"/>
-    <circle cx="500" cy="380" r="1"/>
-    <circle cx="650" cy="350" r="0.8"/>
-    <circle cx="740" cy="380" r="1.2"/>
-    <circle cx="760" cy="280" r="1"/>
+  <!-- night sky panel -->
+  <rect x="80" y="60" width="640" height="330" rx="14" fill="url(#ci-sky)" stroke="#1a1a1a" stroke-width="3"/>
+
+  <!-- star field -->
+  <g fill="#fde9c8">
+    <circle cx="130" cy="100" r="1.5"/>
+    <circle cx="170" cy="160" r="1"/>
+    <circle cx="220" cy="110" r="1.2"/>
+    <circle cx="290" cy="90" r="1.5"/>
+    <circle cx="350" cy="135" r="1"/>
+    <circle cx="430" cy="95" r="1.5"/>
+    <circle cx="500" cy="140" r="1"/>
+    <circle cx="560" cy="100" r="1.2"/>
+    <circle cx="620" cy="150" r="1.5"/>
+    <circle cx="680" cy="105" r="1"/>
+    <circle cx="150" cy="280" r="1.2"/>
+    <circle cx="250" cy="320" r="1"/>
+    <circle cx="380" cy="335" r="1.5"/>
+    <circle cx="510" cy="310" r="1"/>
+    <circle cx="640" cy="280" r="1.5"/>
+    <circle cx="690" cy="350" r="1.2"/>
   </g>
 
-  <!-- Orbital rings around center -->
-  <g fill="none" transform="translate(400 225)">
-    <ellipse cx="0" cy="0" rx="200" ry="55" stroke="#00ffe1" stroke-opacity="0.25" stroke-width="1"/>
-    <ellipse cx="0" cy="0" rx="170" ry="170" stroke="#ff8a3d" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="2 6"/>
-    <ellipse cx="0" cy="0" rx="120" ry="120" stroke="#00ffe1" stroke-opacity="0.4" stroke-width="1.2"/>
-    <ellipse cx="0" cy="0" rx="80" ry="22" stroke="#ff8a3d" stroke-opacity="0.6" stroke-width="1.2" transform="rotate(-15)"/>
+  <!-- bright stars (4-point twinkle) -->
+  <g stroke="#fde9c8" stroke-width="1" fill="#fde9c8">
+    <g transform="translate(170 220)">
+      <path d="M 0 -8 L 2 -2 L 8 0 L 2 2 L 0 8 L -2 2 L -8 0 L -2 -2 Z"/>
+    </g>
+    <g transform="translate(630 220)">
+      <path d="M 0 -8 L 2 -2 L 8 0 L 2 2 L 0 8 L -2 2 L -8 0 L -2 -2 Z"/>
+    </g>
+    <g transform="translate(280 360)">
+      <path d="M 0 -6 L 1.5 -1.5 L 6 0 L 1.5 1.5 L 0 6 L -1.5 1.5 L -6 0 L -1.5 -1.5 Z"/>
+    </g>
   </g>
 
-  <!-- Center: cosmic core -->
+  <!-- zodiac wheel — centered -->
   <g transform="translate(400 225)">
-    <circle r="60" fill="url(#ci-core)"/>
-    <circle r="14" fill="#ffffff"/>
-    <circle r="6" fill="#ff8a3d"/>
+    <!-- outer wheel ring -->
+    <circle r="135" fill="none" stroke="#ff6fb5" stroke-width="2.5"/>
+    <circle r="110" fill="none" stroke="#ff7a3d" stroke-width="2"/>
+    <circle r="85" fill="none" stroke="#ff6fb5" stroke-width="1.5" stroke-dasharray="4 5"/>
+    <!-- 12 spokes -->
+    <g stroke="#fde9c8" stroke-width="1.5" opacity="0.85">
+      <line x1="0" y1="-135" x2="0" y2="-85"/>
+      <line x1="67" y1="-117" x2="42" y2="-73"/>
+      <line x1="117" y1="-67" x2="73" y2="-42"/>
+      <line x1="135" y1="0" x2="85" y2="0"/>
+      <line x1="117" y1="67" x2="73" y2="42"/>
+      <line x1="67" y1="117" x2="42" y2="73"/>
+      <line x1="0" y1="135" x2="0" y2="85"/>
+      <line x1="-67" y1="117" x2="-42" y2="73"/>
+      <line x1="-117" y1="67" x2="-73" y2="42"/>
+      <line x1="-135" y1="0" x2="-85" y2="0"/>
+      <line x1="-117" y1="-67" x2="-73" y2="-42"/>
+      <line x1="-67" y1="-117" x2="-42" y2="-73"/>
+    </g>
+    <!-- zodiac glyph dots in the houses -->
+    <g fill="#ff7a3d" stroke="#1a1a1a" stroke-width="1">
+      <circle cx="0" cy="-110" r="5"/>
+      <circle cx="55" cy="-95" r="5"/>
+      <circle cx="95" cy="-55" r="5"/>
+      <circle cx="110" cy="0" r="5"/>
+      <circle cx="95" cy="55" r="5"/>
+      <circle cx="55" cy="95" r="5"/>
+      <circle cx="0" cy="110" r="5"/>
+      <circle cx="-55" cy="95" r="5"/>
+      <circle cx="-95" cy="55" r="5"/>
+      <circle cx="-110" cy="0" r="5"/>
+      <circle cx="-95" cy="-55" r="5"/>
+      <circle cx="-55" cy="-95" r="5"/>
+    </g>
+    <!-- inner planet -->
+    <circle r="38" fill="url(#ci-planet)" stroke="#1a1a1a" stroke-width="2"/>
+    <!-- planet ring -->
+    <ellipse cx="0" cy="0" rx="55" ry="14" fill="none" stroke="#fde9c8" stroke-width="2" opacity="0.85"/>
+    <ellipse cx="0" cy="0" rx="55" ry="14" fill="none" stroke="#ff6fb5" stroke-width="1" opacity="0.7"/>
+    <!-- center symbol -->
+    <circle r="6" fill="#fde9c8"/>
+    <circle r="2" fill="#1a1a1a"/>
   </g>
 
-  <!-- Constellation: 5 framework points connected -->
-  <!-- Five labeled stars positioned around the core -->
-  <g>
-    <!-- Astrology -->
-    <g transform="translate(220 130)">
-      <circle r="12" fill="url(#ci-star)"/>
-      <circle r="3.5" fill="#00ffe1"/>
+  <!-- constellation lines on left -->
+  <g stroke="#ff7a3d" stroke-width="1.5" fill="#ff7a3d" opacity="0.9">
+    <line x1="130" y1="200" x2="160" y2="245"/>
+    <line x1="160" y1="245" x2="200" y2="270"/>
+    <line x1="200" y1="270" x2="180" y2="320"/>
+    <line x1="180" y1="320" x2="220" y2="350"/>
+    <circle cx="130" cy="200" r="3"/>
+    <circle cx="160" cy="245" r="3"/>
+    <circle cx="200" cy="270" r="3"/>
+    <circle cx="180" cy="320" r="3"/>
+    <circle cx="220" cy="350" r="3"/>
+  </g>
+
+  <!-- five-framework chips around the wheel -->
+  <g font-family="ui-monospace, Menlo, monospace" font-size="9" font-weight="700" text-anchor="middle">
+    <g>
+      <rect x="555" y="115" width="68" height="20" rx="10" fill="#ff6fb5" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="589" y="129" fill="#1a1a1a">ASTRO</text>
     </g>
-    <!-- Chinese zodiac -->
-    <g transform="translate(620 140)">
-      <circle r="10" fill="url(#ci-star)"/>
-      <circle r="3" fill="#00ffe1"/>
+    <g>
+      <rect x="595" y="170" width="78" height="20" rx="10" fill="#ff7a3d" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="634" y="184" fill="#1a1a1a">ZODIAC</text>
     </g>
-    <!-- Numerology -->
-    <g transform="translate(680 320)">
-      <circle r="11" fill="url(#ci-star)"/>
-      <circle r="3" fill="#00ffe1"/>
+    <g>
+      <rect x="595" y="225" width="88" height="20" rx="10" fill="#fde9c8" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="639" y="239" fill="#1a1a1a">NUMERO</text>
     </g>
-    <!-- Human Design -->
-    <g transform="translate(380 360)">
-      <circle r="11" fill="url(#ci-star)"/>
-      <circle r="3.2" fill="#00ffe1"/>
+    <g>
+      <rect x="585" y="280" width="98" height="20" rx="10" fill="#ff6fb5" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="634" y="294" fill="#1a1a1a">HUMAN DSGN</text>
     </g>
-    <!-- MBTI -->
-    <g transform="translate(150 320)">
-      <circle r="10" fill="url(#ci-star)"/>
-      <circle r="3" fill="#00ffe1"/>
+    <g>
+      <rect x="595" y="335" width="68" height="20" rx="10" fill="#ff7a3d" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="629" y="349" fill="#1a1a1a">MBTI</text>
     </g>
   </g>
 
-  <!-- Constellation lines connecting frameworks (a pentagram-ish shape through core) -->
-  <g stroke="#00ffe1" stroke-opacity="0.55" stroke-width="1" fill="none">
-    <line x1="220" y1="130" x2="620" y2="140"/>
-    <line x1="620" y1="140" x2="680" y2="320"/>
-    <line x1="680" y1="320" x2="380" y2="360"/>
-    <line x1="380" y1="360" x2="150" y2="320"/>
-    <line x1="150" y1="320" x2="220" y2="130"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="13" fill="#1a1a1a" letter-spacing="2">
+    <text x="32" y="42" font-weight="700">// COSMIC.ID</text>
+    <text x="32" y="62" font-size="11" fill-opacity="0.65">5.frameworks</text>
   </g>
-  <g stroke="#ff8a3d" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="3 3" fill="none">
-    <line x1="220" y1="130" x2="400" y2="225"/>
-    <line x1="620" y1="140" x2="400" y2="225"/>
-    <line x1="680" y1="320" x2="400" y2="225"/>
-    <line x1="380" y1="360" x2="400" y2="225"/>
-    <line x1="150" y1="320" x2="400" y2="225"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#1a1a1a" letter-spacing="2" text-anchor="end">
+    <text x="768" y="42" font-weight="700">[ ANTHROPIC ]</text>
+    <text x="768" y="62" fill-opacity="0.65">astrologer.api</text>
   </g>
 
-  <!-- Tiny labels next to constellation points -->
-  <g font-family="ui-monospace, Menlo, monospace" font-size="9" fill="#00ffe1" fill-opacity="0.8" letter-spacing="1.5">
-    <text x="240" y="116">ASTRO</text>
-    <text x="638" y="126">ZODIAC</text>
-    <text x="640" y="346" text-anchor="end">NUM</text>
-    <text x="396" y="384" text-anchor="middle">HD</text>
-    <text x="170" y="346" text-anchor="end">MBTI</text>
+  <rect x="80" y="402" width="640" height="32" rx="6" fill="#1a1a1a"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#fde9c8" letter-spacing="3" text-anchor="middle">
+    <text x="400" y="422" font-weight="700">ASTRO + ZODIAC + NUMEROLOGY + HUMAN DESIGN + MBTI</text>
   </g>
 
-  <!-- HUD labels -->
-  <g font-family="ui-monospace, Menlo, monospace" font-size="13" fill="#00ffe1" fill-opacity="0.75" letter-spacing="2">
-    <text x="32" y="40">// COSMIC_IDENTITY</text>
-  </g>
-  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#ffffff" fill-opacity="0.45" letter-spacing="2.5">
-    <text x="32" y="60">5.FRAMEWORKS</text>
-  </g>
-  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#ff8a3d" fill-opacity="0.75" letter-spacing="2" text-anchor="end">
-    <text x="768" y="40">[ AI.SYNTHESIS ]</text>
-    <text x="768" y="60" fill="#00ffe1" fill-opacity="0.65">CHART:READY</text>
-  </g>
-
-  <!-- Corner brackets -->
-  <g stroke="#00ffe1" stroke-opacity="0.5" stroke-width="1.5" fill="none">
+  <g stroke="#1a1a1a" stroke-width="1.5" fill="none">
     <path d="M 16 16 L 16 32 M 16 16 L 32 16"/>
     <path d="M 784 16 L 784 32 M 784 16 L 768 16"/>
     <path d="M 16 434 L 16 418 M 16 434 L 32 434"/>

@@ -36,12 +36,23 @@ function Row() {
 
 export function MarqueeStrip() {
   return (
-    <div className="relative z-10 bg-jet border-y border-jet overflow-hidden py-3">
-      <div className="flex animate-[scroll_30s_linear_infinite] whitespace-nowrap">
-        <Row />
-        <Row />
-        <Row />
-        <Row />
+    <div className="relative z-10 py-6">
+      {/* Glowing halo behind the strip — bubblegum + orange wash */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-40 blur-3xl opacity-90"
+        style={{
+          background:
+            'radial-gradient(ellipse at 20% 50%, rgba(139,92,246,0.7), transparent 55%), radial-gradient(ellipse at 80% 50%, rgba(139,92,246,0.7), transparent 55%), radial-gradient(ellipse at 50% 50%, rgba(255,111,181,0.5), transparent 60%)',
+        }}
+      />
+      <div className="relative bg-jet overflow-hidden py-3 rounded-sm">
+        <div className="flex animate-[scroll_30s_linear_infinite] whitespace-nowrap">
+          <Row />
+          <Row />
+          <Row />
+          <Row />
+        </div>
       </div>
       <style>{`
         @keyframes scroll {

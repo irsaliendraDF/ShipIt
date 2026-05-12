@@ -1,114 +1,119 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Aura Tap thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Aura Tap — hand-tracked rhythm game">
   <defs>
-    <radialGradient id="at-bg" cx="50%" cy="55%" r="80%">
-      <stop offset="0%" stop-color="#1c1726"/>
-      <stop offset="60%" stop-color="#15101e"/>
-      <stop offset="100%" stop-color="#08060e"/>
+    <linearGradient id="at-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde9c8"/>
+      <stop offset="100%" stop-color="#faf7f0"/>
+    </linearGradient>
+    <linearGradient id="at-panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#2a1f3d"/>
+    </linearGradient>
+    <radialGradient id="at-aura" cx="50%" cy="85%" r="55%">
+      <stop offset="0%" stop-color="#ff6fb5" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#ff6fb5" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="at-aura" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#00ffe1" stop-opacity="0.55"/>
-      <stop offset="50%" stop-color="#ff8a3d" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#ff8a3d" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="at-note" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="40%" stop-color="#00ffe1"/>
-      <stop offset="100%" stop-color="#00ffe1" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="at-note-warm" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="40%" stop-color="#ff8a3d"/>
-      <stop offset="100%" stop-color="#ff8a3d" stop-opacity="0"/>
-    </radialGradient>
-    <pattern id="at-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
-    </pattern>
-    <filter id="at-blur" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4"/>
-    </filter>
   </defs>
 
   <rect width="800" height="450" fill="url(#at-bg)"/>
-  <rect width="800" height="450" fill="url(#at-grid)"/>
 
-  <!-- Aura halo around figure -->
-  <ellipse cx="400" cy="240" rx="240" ry="200" fill="url(#at-aura)" filter="url(#at-blur)"/>
+  <!-- dark stage panel -->
+  <rect x="80" y="60" width="640" height="330" rx="14" fill="url(#at-panel)" stroke="#1a1a1a" stroke-width="3"/>
+  <ellipse cx="400" cy="370" rx="280" ry="120" fill="url(#at-aura)"/>
 
-  <!-- Two beat tracks (left + right hand lanes) -->
-  <g stroke="#ffffff" stroke-opacity="0.08" stroke-width="1" stroke-dasharray="2 8">
-    <line x1="240" y1="60" x2="240" y2="400"/>
-    <line x1="560" y1="60" x2="560" y2="400"/>
-  </g>
-
-  <!-- Notes streaming in (rhythm dots) -->
-  <g>
-    <!-- left lane teal notes -->
-    <circle cx="240" cy="100" r="14" fill="url(#at-note)"/>
-    <circle cx="240" cy="100" r="5" fill="#ffffff"/>
-    <circle cx="240" cy="170" r="11" fill="url(#at-note)" opacity="0.85"/>
-    <circle cx="240" cy="170" r="3" fill="#ffffff"/>
-    <circle cx="240" cy="240" r="9" fill="url(#at-note)" opacity="0.6"/>
-    <!-- right lane warm notes -->
-    <circle cx="560" cy="120" r="14" fill="url(#at-note-warm)"/>
-    <circle cx="560" cy="120" r="5" fill="#ffffff"/>
-    <circle cx="560" cy="200" r="11" fill="url(#at-note-warm)" opacity="0.85"/>
-    <circle cx="560" cy="200" r="3" fill="#ffffff"/>
-    <circle cx="560" cy="280" r="9" fill="url(#at-note-warm)" opacity="0.6"/>
+  <!-- 3 lanes -->
+  <g stroke="#fde9c8" stroke-opacity="0.15" stroke-width="1">
+    <line x1="230" y1="80" x2="230" y2="290"/>
+    <line x1="290" y1="80" x2="290" y2="290"/>
+    <line x1="400" y1="80" x2="400" y2="290"/>
+    <line x1="460" y1="80" x2="460" y2="290"/>
+    <line x1="570" y1="80" x2="570" y2="290"/>
+    <line x1="630" y1="80" x2="630" y2="290"/>
   </g>
 
-  <!-- Hit zones (the bottom rings where you tap) -->
-  <g fill="none" stroke-width="2">
-    <circle cx="240" cy="370" r="28" stroke="#00ffe1" stroke-opacity="0.7"/>
-    <circle cx="240" cy="370" r="34" stroke="#00ffe1" stroke-opacity="0.25"/>
-    <circle cx="560" cy="370" r="28" stroke="#ff8a3d" stroke-opacity="0.75"/>
-    <circle cx="560" cy="370" r="34" stroke="#ff8a3d" stroke-opacity="0.25"/>
+  <!-- falling rhythm notes with strong outlines -->
+  <g stroke="#1a1a1a" stroke-width="2">
+    <rect x="230" y="100" width="60" height="26" rx="4" fill="#ff6fb5"/>
+    <rect x="230" y="160" width="60" height="26" rx="4" fill="#ff6fb5" opacity="0.7"/>
+    <rect x="230" y="220" width="60" height="26" rx="4" fill="#ff6fb5" opacity="0.45"/>
+    <rect x="400" y="120" width="60" height="26" rx="4" fill="#ff7a3d"/>
+    <rect x="400" y="200" width="60" height="26" rx="4" fill="#ff7a3d" opacity="0.65"/>
+    <rect x="570" y="100" width="60" height="26" rx="4" fill="#8b5cf6"/>
+    <rect x="570" y="170" width="60" height="26" rx="4" fill="#8b5cf6" opacity="0.7"/>
+    <rect x="570" y="240" width="60" height="26" rx="4" fill="#8b5cf6" opacity="0.4"/>
   </g>
 
-  <!-- Hand silhouettes hovering over hit zones -->
-  <g fill="#00ffe1" fill-opacity="0.22" stroke="#00ffe1" stroke-width="1.2" stroke-opacity="0.85">
-    <!-- Left hand: simple palm with 5 finger dots -->
-    <ellipse cx="240" cy="370" rx="18" ry="22"/>
-    <circle cx="222" cy="354" r="3"/>
-    <circle cx="232" cy="346" r="3"/>
-    <circle cx="244" cy="344" r="3"/>
-    <circle cx="254" cy="350" r="3"/>
-    <circle cx="259" cy="362" r="3"/>
-  </g>
-  <g fill="#ff8a3d" fill-opacity="0.22" stroke="#ff8a3d" stroke-width="1.2" stroke-opacity="0.85">
-    <ellipse cx="560" cy="370" rx="18" ry="22"/>
-    <circle cx="542" cy="354" r="3"/>
-    <circle cx="552" cy="346" r="3"/>
-    <circle cx="564" cy="344" r="3"/>
-    <circle cx="574" cy="350" r="3"/>
-    <circle cx="579" cy="362" r="3"/>
+  <!-- hit line -->
+  <line x1="100" y1="305" x2="700" y2="305" stroke="#fde9c8" stroke-width="2" stroke-dasharray="6 6" opacity="0.6"/>
+
+  <!-- hit burst rings -->
+  <g transform="translate(260 305)">
+    <circle r="20" fill="none" stroke="#fde9c8" stroke-width="3"/>
+    <circle r="32" fill="none" stroke="#ff6fb5" stroke-width="2" opacity="0.7"/>
+    <circle r="46" fill="none" stroke="#ff7a3d" stroke-width="1.5" opacity="0.4"/>
   </g>
 
-  <!-- "AURA" callout in center -->
-  <g font-family="ui-monospace, Menlo, monospace" text-anchor="middle">
-    <text x="400" y="220" font-size="56" font-weight="700" fill="#ffffff" letter-spacing="8" opacity="0.9">AURA</text>
-    <text x="400" y="252" font-size="14" font-weight="700" fill="#ff8a3d" letter-spacing="6">▲ TAP ▲</text>
-    <text x="400" y="280" font-size="10" fill="#00ffe1" letter-spacing="4" opacity="0.75">MOTHER IS MOTHERING</text>
+  <!-- hand silhouette in cream against dark panel -->
+  <g transform="translate(400 360)">
+    <path d="M -55 30 Q -60 -50, -25 -65 L -22 -25 L -10 -78 L 5 -78 L 8 -25 L 22 -85 L 38 -82 L 35 -25 L 50 -68 L 62 -60 L 50 10 Q 45 50, 0 55 Q -42 55, -55 30 Z"
+            fill="#fde9c8" stroke="#1a1a1a" stroke-width="2"/>
+    <g fill="#ff7a3d" stroke="#1a1a1a" stroke-width="1.2">
+      <circle cx="-45" cy="20" r="3.5"/>
+      <circle cx="-25" cy="-30" r="3.5"/>
+      <circle cx="-15" cy="-58" r="3.5"/>
+      <circle cx="-2" cy="-65" r="3.5"/>
+      <circle cx="15" cy="-68" r="3.5"/>
+      <circle cx="32" cy="-65" r="3.5"/>
+      <circle cx="45" cy="-50" r="3.5"/>
+      <circle cx="50" cy="-10" r="3.5"/>
+      <circle cx="40" cy="35" r="3.5"/>
+      <circle cx="0" cy="40" r="3.5"/>
+    </g>
+    <g stroke="#ff6fb5" stroke-width="2" fill="none">
+      <line x1="-45" y1="20" x2="-25" y2="-30"/>
+      <line x1="-25" y1="-30" x2="-15" y2="-58"/>
+      <line x1="-25" y1="-30" x2="-2" y2="-65"/>
+      <line x1="-25" y1="-30" x2="15" y2="-68"/>
+      <line x1="-25" y1="-30" x2="32" y2="-65"/>
+      <line x1="0" y1="40" x2="-45" y2="20"/>
+      <line x1="0" y1="40" x2="40" y2="35"/>
+      <line x1="40" y1="35" x2="50" y2="-10"/>
+      <line x1="50" y1="-10" x2="45" y2="-50"/>
+      <line x1="45" y1="-50" x2="32" y2="-65"/>
+    </g>
   </g>
 
-  <!-- Combo / score readout -->
-  <g font-family="ui-monospace, Menlo, monospace" font-size="11" letter-spacing="2" fill-opacity="0.85">
-    <text x="400" y="60" text-anchor="middle" fill="#ff8a3d">COMBO ×128</text>
+  <!-- equalizer bars in cream -->
+  <g fill="#fde9c8">
+    <rect x="98" y="180" width="6" height="80"/>
+    <rect x="110" y="150" width="6" height="110"/>
+    <rect x="122" y="200" width="6" height="60"/>
+    <rect x="134" y="120" width="6" height="140"/>
+    <rect x="146" y="180" width="6" height="80"/>
+  </g>
+  <g fill="#ff7a3d">
+    <rect x="652" y="140" width="6" height="120"/>
+    <rect x="664" y="180" width="6" height="80"/>
+    <rect x="676" y="120" width="6" height="140"/>
+    <rect x="688" y="200" width="6" height="60"/>
+    <rect x="700" y="160" width="6" height="100"/>
   </g>
 
-  <!-- HUD labels -->
-  <g font-family="ui-monospace, Menlo, monospace" font-size="13" fill="#ff8a3d" fill-opacity="0.85" letter-spacing="2">
-    <text x="32" y="40">// AURA_TAP</text>
+  <!-- HUD labels in jet -->
+  <g font-family="ui-monospace, Menlo, monospace" font-size="13" fill="#1a1a1a" letter-spacing="2">
+    <text x="32" y="42" font-weight="700">// AURA TAP</text>
+    <text x="32" y="62" font-size="11" fill-opacity="0.65">rhythm.hand</text>
   </g>
-  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#ffffff" fill-opacity="0.45" letter-spacing="2.5">
-    <text x="32" y="60">RHYTHM.HANDS</text>
-  </g>
-  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#00ffe1" fill-opacity="0.75" letter-spacing="2" text-anchor="end">
-    <text x="768" y="40">[ MEDIAPIPE ]</text>
-    <text x="768" y="60" fill="#ff8a3d" fill-opacity="0.75">PERFECT</text>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#1a1a1a" letter-spacing="2" text-anchor="end">
+    <text x="768" y="42" font-weight="700">[ HAND.TRACK ]</text>
+    <text x="768" y="62" fill-opacity="0.65">combo x12</text>
   </g>
 
-  <!-- Corner brackets -->
-  <g stroke="#ff8a3d" stroke-opacity="0.5" stroke-width="1.5" fill="none">
+  <rect x="80" y="402" width="640" height="32" rx="6" fill="#1a1a1a"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#fde9c8" letter-spacing="3" text-anchor="middle">
+    <text x="400" y="422" font-weight="700">TAP NOTES WITH YOUR HANDS. CATCH THE BEAT.</text>
+  </g>
+
+  <g stroke="#1a1a1a" stroke-width="1.5" fill="none">
     <path d="M 16 16 L 16 32 M 16 16 L 32 16"/>
     <path d="M 784 16 L 784 32 M 784 16 L 768 16"/>
     <path d="M 16 434 L 16 418 M 16 434 L 32 434"/>

@@ -116,19 +116,6 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 6, 0] }}
-          transition={{
-            opacity: { duration: 0.6, delay: 1.6 },
-            y: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
-          }}
-          className="font-mono text-[10px] uppercase tracking-[0.3em] text-jet/45"
-        >
-          ↓ start scrolling
-        </motion.div>
-      </div>
     </section>
   );
 }

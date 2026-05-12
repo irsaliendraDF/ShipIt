@@ -2,10 +2,10 @@
   "slug": "qigong",
   "title": "Qi Gong",
   "description": "Ancient cultivation, but make it for the timeline. Pose-tracked qigong with solo and duo modes.",
-  "contributor": "thearcadecrew",
+  "contributor": "shipitfuncrew",
   "tags": ["body", "mediapipe", "game"],
   "status": "live",
   "tech": ["MediaPipe Tasks Vision", "Vanilla JS", "HTML/CSS"],
-  "controls": "Stand 6ft back from the webcam. Pick a level (starter pack → endgame mode). Solo or duo. Move your body to cultivate qi.",
+  "controls": "Stand 6ft back from the webcam. Pick a level (starter pack â†’ endgame mode). Solo or duo. Move your body to cultivate qi.",
   "createdAt": "2026-05-10"
 }

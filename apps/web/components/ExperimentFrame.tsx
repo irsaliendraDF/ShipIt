@@ -71,7 +71,7 @@ export function ExperimentFrame({ slug, title, controls, tags = [] }: Props) {
           allowFullScreen
         />
         {showControls && controls && (
-          <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none">
+          <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 pointer-events-none">
             <div className="pointer-events-auto inline-flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-bg-elevated/90 backdrop-blur-md border border-accent/30 px-4 py-3 max-w-2xl">
               <div className="min-w-0">
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent mb-1">

@@ -12,7 +12,7 @@ export type Contributor = {
 
 export const contributors: Contributor[] = [
   {
-    handle: 'thearcadecrew',
+    handle: 'shipitfuncrew',
     name: 'the shipit.fun crew',
     bio: 'founding crew. builds gesture-controlled, body-tracked, and AI-augmented browser experiments. backed by Digital Flow Consulting.',
     avatarColor: '#ff6fb5',

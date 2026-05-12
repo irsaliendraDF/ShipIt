@@ -18,7 +18,6 @@ export function BrandSwitcher() {
           <span className="text-cream/85 group-hover:text-bubblegum transition-colors">
             🚢 ShipIt!
           </span>
-          <span className="hidden sm:inline text-cream/40">/ brand architecture</span>
         </Link>
 
         <div className="flex items-center gap-1">

@@ -2,7 +2,7 @@
   "slug": "cosmic-identity",
   "title": "Cosmic Identity",
   "description": "Five frameworks (astrology, Chinese zodiac, numerology, Human Design, MBTI) into one cosmic profile.",
-  "contributor": "thearcadecrew",
+  "contributor": "shipitfuncrew",
   "tags": ["ai", "tool"],
   "status": "live",
   "tech": ["Vanilla JS", "Vite", "Anthropic API", "Astrologer API"],

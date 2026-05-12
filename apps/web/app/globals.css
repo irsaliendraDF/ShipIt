@@ -81,11 +81,11 @@ body {
   }
 
   .text-glow {
-    text-shadow: 0 0 24px rgba(255, 111, 181, 0.25);
+    /* removed text-shadow per brand cleanup */
   }
 
   .text-glow-warm {
-    text-shadow: 0 0 24px rgba(255, 122, 61, 0.35);
+    /* removed text-shadow per brand cleanup */
   }
 
   .border-grid {
@@ -96,9 +96,7 @@ body {
   }
 
   .crt-curve {
-    box-shadow:
-      inset 0 0 80px rgba(255, 111, 181, 0.05),
-      inset 0 0 200px rgba(26, 26, 26, 0.05);
+    /* removed inset jet shadow per brand cleanup */
   }
 
   /* HUD-style corner brackets — pure CSS, no extra DOM needed */
@@ -154,12 +152,9 @@ body {
     animation: flicker 4s linear infinite;
   }
 
-  /* Pixelated bevel for arcade "press start" buttons */
+  /* Pixelated bevel for arcade "press start" buttons — jet shadows removed */
   .arcade-bevel {
-    box-shadow:
-      0 0 0 1px rgba(26, 26, 26, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4),
-      inset 0 -2px 0 rgba(26, 26, 26, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
 
   .glow-teal {

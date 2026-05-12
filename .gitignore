@@ -7,8 +7,9 @@ node_modules
 .next
 out
 dist
-build
 .turbo
+# Note: `build` is not ignored — apps/web/app/build is the shipit.build route
+# and apps/web/components/build holds its components.
 
 # debug
 npm-debug.log*

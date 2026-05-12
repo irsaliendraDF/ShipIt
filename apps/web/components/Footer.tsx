@@ -1,6 +1,13 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export function Footer() {
+  const pathname = usePathname();
+  // shipit.build (/build) has its own footer rendered inside the page.
+  if ((pathname ?? '').startsWith('/build')) return null;
+
   return (
     <footer className="relative z-10 border-t border-jet/10 mt-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">

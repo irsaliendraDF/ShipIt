@@ -1,91 +1,111 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Spatial thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Spatial — hand-gesture 3D drawing in real space">
   <defs>
-    <linearGradient id="sp-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#15101e"/>
-      <stop offset="100%" stop-color="#0d0a14"/>
+    <linearGradient id="sp-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fde9c8"/>
+      <stop offset="100%" stop-color="#faf7f0"/>
     </linearGradient>
-    <linearGradient id="sp-stroke" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00ffe1" stop-opacity="0.1"/>
-      <stop offset="50%" stop-color="#00ffe1" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="#ff8a3d" stop-opacity="1"/>
+    <linearGradient id="sp-panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a1f3d"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
     </linearGradient>
-    <radialGradient id="sp-tip" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="60%" stop-color="#ff8a3d" stop-opacity="0.85"/>
-      <stop offset="100%" stop-color="#ff8a3d" stop-opacity="0"/>
-    </radialGradient>
-    <pattern id="sp-grid" width="50" height="50" patternUnits="userSpaceOnUse">
-      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
-    </pattern>
   </defs>
 
   <rect width="800" height="450" fill="url(#sp-bg)"/>
 
-  <!-- Perspective floor grid -->
-  <g stroke="#00ffe1" stroke-opacity="0.18" stroke-width="1" fill="none">
-    <path d="M 0 380 L 800 380"/>
-    <path d="M 0 410 L 800 410"/>
-    <path d="M 0 440 L 800 440"/>
-    <!-- vanishing lines -->
-    <path d="M 100 450 L 360 280"/>
-    <path d="M 250 450 L 380 280"/>
-    <path d="M 400 450 L 400 280"/>
-    <path d="M 550 450 L 420 280"/>
-    <path d="M 700 450 L 440 280"/>
-  </g>
-  <rect width="800" height="450" fill="url(#sp-grid)"/>
+  <!-- dark stage panel -->
+  <rect x="80" y="60" width="640" height="330" rx="14" fill="url(#sp-panel)" stroke="#1a1a1a" stroke-width="3"/>
 
-  <!-- Wireframe cube -->
-  <g stroke="#00ffe1" stroke-opacity="0.55" stroke-width="1.5" fill="none">
-    <!-- back face -->
-    <polygon points="290,170 410,170 410,290 290,290" stroke-opacity="0.3"/>
-    <!-- front face -->
-    <polygon points="320,200 470,200 470,320 320,320"/>
-    <!-- connectors -->
-    <line x1="290" y1="170" x2="320" y2="200"/>
-    <line x1="410" y1="170" x2="470" y2="200"/>
-    <line x1="290" y1="290" x2="320" y2="320"/>
-    <line x1="410" y1="290" x2="470" y2="320"/>
+  <!-- perspective grid floor in cream -->
+  <g stroke="#fde9c8" stroke-opacity="0.25" stroke-width="1" fill="none">
+    <line x1="100" y1="370" x2="700" y2="370"/>
+    <line x1="160" y1="330" x2="640" y2="330"/>
+    <line x1="210" y1="295" x2="590" y2="295"/>
+    <line x1="250" y1="270" x2="550" y2="270"/>
+    <line x1="280" y1="250" x2="520" y2="250"/>
+    <line x1="100" y1="370" x2="400" y2="230"/>
+    <line x1="200" y1="370" x2="400" y2="230"/>
+    <line x1="300" y1="370" x2="400" y2="230"/>
+    <line x1="400" y1="370" x2="400" y2="230"/>
+    <line x1="500" y1="370" x2="400" y2="230"/>
+    <line x1="600" y1="370" x2="400" y2="230"/>
+    <line x1="700" y1="370" x2="400" y2="230"/>
   </g>
 
-  <!-- 3D ribbon stroke being drawn -->
-  <path d="M 150 280 Q 250 220, 360 250 T 540 200 Q 600 180, 660 130"
-        fill="none" stroke="url(#sp-stroke)" stroke-width="4"
-        stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
-
-  <!-- Ghost trail behind stroke -->
-  <path d="M 150 280 Q 250 220, 360 250 T 540 200 Q 600 180, 660 130"
-        fill="none" stroke="#00ffe1" stroke-opacity="0.15" stroke-width="14"
-        stroke-linecap="round" stroke-linejoin="round"/>
-
-  <!-- Brush tip glow -->
-  <circle cx="660" cy="130" r="22" fill="url(#sp-tip)"/>
-  <circle cx="660" cy="130" r="5" fill="#ffffff"/>
-
-  <!-- Hand cursor (pinch indicator) -->
-  <g transform="translate(660 130)" stroke="#ff8a3d" stroke-width="1.5" fill="none" stroke-opacity="0.85">
-    <circle r="14"/>
-    <circle r="20" stroke-opacity="0.4"/>
-    <line x1="-26" y1="0" x2="-18" y2="0"/>
-    <line x1="18" y1="0" x2="26" y2="0"/>
-    <line x1="0" y1="-26" x2="0" y2="-18"/>
-    <line x1="0" y1="18" x2="0" y2="26"/>
+  <!-- 3D ribbon stroke - bold pink with cream highlight -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M 200 200 Q 250 120, 360 130 Q 480 145, 510 220 Q 525 295, 430 310 Q 320 320, 290 250 Q 270 195, 340 175 Q 410 170, 440 220"
+          stroke="#8b5cf6" stroke-width="16"/>
+    <path d="M 200 200 Q 250 120, 360 130 Q 480 145, 510 220 Q 525 295, 430 310 Q 320 320, 290 250 Q 270 195, 340 175 Q 410 170, 440 220"
+          stroke="#ff6fb5" stroke-width="10"/>
+    <path d="M 200 200 Q 250 120, 360 130 Q 480 145, 510 220 Q 525 295, 430 310 Q 320 320, 290 250 Q 270 195, 340 175 Q 410 170, 440 220"
+          stroke="#fde9c8" stroke-width="3"/>
   </g>
 
-  <!-- HUD labels -->
-  <g font-family="ui-monospace, Menlo, monospace" font-size="13" fill="#00ffe1" fill-opacity="0.75" letter-spacing="2">
-    <text x="32" y="40">// SPATIAL</text>
-  </g>
-  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#ffffff" fill-opacity="0.45" letter-spacing="2.5">
-    <text x="32" y="60">3D.DRAW.MODE</text>
-  </g>
-  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#ff8a3d" fill-opacity="0.75" letter-spacing="2" text-anchor="end">
-    <text x="768" y="40">[ THREE.JS ]</text>
-    <text x="768" y="60" fill="#00ffe1" fill-opacity="0.65">PINCH:ON</text>
+  <!-- wireframe cube -->
+  <g stroke="#ff7a3d" stroke-width="2" fill="#ff7a3d" fill-opacity="0.15">
+    <polygon points="540,150 620,130 660,170 580,190"/>
+    <polygon points="540,150 620,130 620,190 540,210" fill-opacity="0.08"/>
+    <g fill="none">
+      <line x1="540" y1="210" x2="580" y2="250"/>
+      <line x1="620" y1="190" x2="660" y2="230"/>
+      <line x1="540" y1="210" x2="620" y2="190"/>
+      <line x1="580" y1="250" x2="660" y2="230"/>
+      <line x1="660" y1="170" x2="660" y2="230"/>
+    </g>
   </g>
 
-  <!-- Corner brackets -->
-  <g stroke="#00ffe1" stroke-opacity="0.5" stroke-width="1.5" fill="none">
+  <!-- pinching hand on right -->
+  <g transform="translate(460 285)">
+    <rect x="-12" y="60" width="120" height="80" rx="6" fill="#fde9c8" stroke="#1a1a1a" stroke-width="2"/>
+    <path d="M -28 30 Q -38 -20, -8 -35 Q 18 -42, 35 -25 Q 50 5, 38 50 Q 25 65, -5 65 Q -25 60, -28 30 Z"
+          fill="#fde9c8" stroke="#1a1a1a" stroke-width="2"/>
+    <!-- index -->
+    <path d="M -32 -10 Q -55 -35, -75 -55" stroke="#fde9c8" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <path d="M -32 -10 Q -55 -35, -75 -55" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <!-- thumb -->
+    <path d="M -20 -30 Q -45 -55, -68 -65" stroke="#fde9c8" stroke-width="15" stroke-linecap="round" fill="none"/>
+    <path d="M -20 -30 Q -45 -55, -68 -65" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <!-- pinch glow -->
+    <circle cx="-75" cy="-60" r="16" fill="#ff7a3d" opacity="0.6"/>
+    <circle cx="-75" cy="-60" r="8" fill="#ff7a3d" stroke="#1a1a1a" stroke-width="1.5"/>
+    <circle cx="-75" cy="-60" r="3" fill="#fde9c8"/>
+    <!-- MediaPipe landmark dots -->
+    <g fill="#ff6fb5" stroke="#1a1a1a" stroke-width="1">
+      <circle cx="0" cy="40" r="3"/>
+      <circle cx="-15" cy="20" r="3"/>
+      <circle cx="-25" cy="-5" r="3"/>
+      <circle cx="20" cy="0" r="3"/>
+      <circle cx="30" cy="20" r="3"/>
+    </g>
+  </g>
+
+  <!-- XYZ axes corner -->
+  <g transform="translate(135 365)" stroke-width="3" fill="none">
+    <line x1="0" y1="0" x2="40" y2="0" stroke="#ff6fb5"/>
+    <line x1="0" y1="0" x2="0" y2="-40" stroke="#ff7a3d"/>
+    <line x1="0" y1="0" x2="-25" y2="20" stroke="#8b5cf6"/>
+    <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#fde9c8" font-weight="700">
+      <text x="44" y="4">x</text>
+      <text x="-4" y="-44">y</text>
+      <text x="-36" y="28">z</text>
+    </g>
+  </g>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="13" fill="#1a1a1a" letter-spacing="2">
+    <text x="32" y="42" font-weight="700">// SPATIAL</text>
+    <text x="32" y="62" font-size="11" fill-opacity="0.65">pinch.to.draw</text>
+  </g>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#1a1a1a" letter-spacing="2" text-anchor="end">
+    <text x="768" y="42" font-weight="700">[ THREE.JS ]</text>
+    <text x="768" y="62" fill-opacity="0.65">cannon.physics</text>
+  </g>
+
+  <rect x="80" y="402" width="640" height="32" rx="6" fill="#1a1a1a"/>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="11" fill="#fde9c8" letter-spacing="3" text-anchor="middle">
+    <text x="400" y="422" font-weight="700">PINCH TO DRAW IN 3D SPACE. FIST TO CLEAR.</text>
+  </g>
+
+  <g stroke="#1a1a1a" stroke-width="1.5" fill="none">
     <path d="M 16 16 L 16 32 M 16 16 L 32 16"/>
     <path d="M 784 16 L 784 32 M 784 16 L 768 16"/>
     <path d="M 16 434 L 16 418 M 16 434 L 32 434"/>

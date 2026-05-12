@@ -2,7 +2,7 @@
   "slug": "aura-tap",
   "title": "Aura Tap",
   "description": "Hand-tracked rhythm game. Tap notes to the beat with your aura.",
-  "contributor": "thearcadecrew",
+  "contributor": "shipitfuncrew",
   "tags": ["gesture", "mediapipe", "game", "audio"],
   "status": "live",
   "tech": ["MediaPipe Tasks Vision", "Canvas API", "Web Audio API", "Vite"],

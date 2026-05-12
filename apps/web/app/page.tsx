@@ -7,7 +7,6 @@ import { ContributorCard } from '@/components/ContributorCard';
 import { BuiltWith } from '@/components/BuiltWith';
 import { GradientButton } from '@/components/ui/gradient-button';
 import { MarqueeStrip } from '@/components/MarqueeStrip';
-import { StickerScatter } from '@/components/StickerScatter';
 import { experiments } from '@/data/experiments';
 import { contributors } from '@/data/contributors';
 
@@ -66,19 +65,6 @@ export default function HomePage() {
         </section>
 
         <BuiltWith />
-
-        <section className="relative py-20 lg:py-24 border-t border-jet/10">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <SectionHeader
-              eyebrow="Stickers / vol. 01"
-              title="the patch collection."
-              description="weird little sprites that show up on cassettes, profile pages, and stickers. fork mine, i'll fork yours."
-            />
-            <div className="mt-10">
-              <StickerScatter />
-            </div>
-          </div>
-        </section>
 
         <section className="relative py-24 lg:py-32 border-t border-jet/10">
           <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">

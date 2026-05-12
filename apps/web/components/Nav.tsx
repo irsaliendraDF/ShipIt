@@ -74,6 +74,9 @@ export function Nav() {
   const router = useRouter();
   const active = activeLabelFor(pathname ?? '/');
 
+  // shipit.build (/build) has its own minimal nav rendered inside the page.
+  if ((pathname ?? '').startsWith('/build')) return null;
+
   return (
     <header className="fixed top-8 inset-x-0 z-50 bg-cream/70 backdrop-blur-md border-b border-jet/10">
       <nav className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
