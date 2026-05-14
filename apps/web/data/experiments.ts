@@ -46,6 +46,7 @@ export const experiments: Experiment[] = [
     controls: 'Stand 6ft back. Pick a level (starter pack → endgame mode). Solo or duo. Move your body to cultivate qi.',
     thumbnail: '/thumbnails/qigong.svg',
     createdAt: '2026-05-10',
+    github: 'https://github.com/irsaliendraDF/ShipIt/tree/main/games/qigong',
   },
   {
     slug: 'aura-tap',
@@ -58,6 +59,7 @@ export const experiments: Experiment[] = [
     controls: 'Pick a song, then tap notes by raising your hands in time. Webcam required.',
     thumbnail: '/thumbnails/aura-tap.svg',
     createdAt: '2026-05-10',
+    github: 'https://github.com/irsaliendraDF/ShipIt/tree/main/games/aura-tap',
   },
   {
     slug: 'pokemon-nova-scotia',
@@ -70,6 +72,7 @@ export const experiments: Experiment[] = [
     controls: 'Arrow keys to walk. Z = A (talk/confirm). X = B.',
     thumbnail: '/thumbnails/pokemon-nova-scotia.svg',
     createdAt: '2026-05-10',
+    github: 'https://github.com/irsaliendraDF/ShipIt/tree/main/games/pokemon-nova-scotia',
   },
   {
     slug: 'cinematic-gesture-fx',
@@ -83,6 +86,7 @@ export const experiments: Experiment[] = [
       'Open palm = Iron Man repulsor. Pinch + pull = Dr. Strange portal. Hands clap = shockwave. Point = laser. Spider-Man web shooter and more.',
     thumbnail: '/thumbnails/cinematic-gesture-fx.svg',
     createdAt: '2026-05-09',
+    github: 'https://github.com/irsaliendraDF/cinematic-gesture-fx',
   },
   {
     slug: 'spatial',
@@ -95,6 +99,7 @@ export const experiments: Experiment[] = [
     controls: 'Pinch (thumb + index) to start a stroke. Move your hand to draw in 3D. Fist to clear.',
     thumbnail: '/thumbnails/spatial.svg',
     createdAt: '2026-05-09',
+    github: 'https://github.com/irsaliendraDF/spatial',
   },
   {
     slug: 'whispergrove',
@@ -107,6 +112,7 @@ export const experiments: Experiment[] = [
     controls: 'Click to feed, play, cast spells, and quest. Watch Rosie grow.',
     thumbnail: '/thumbnails/whispergrove.svg',
     createdAt: '2026-05-09',
+    github: 'https://github.com/irsaliendraDF/whispergrove',
   },
   {
     slug: 'cosmic-identity',
@@ -120,6 +126,7 @@ export const experiments: Experiment[] = [
     controls: 'Enter your birth info. Get a unified profile and compatibility report.',
     thumbnail: '/thumbnails/cosmic-identity.svg',
     createdAt: '2026-05-09',
+    github: 'https://github.com/irsaliendraDF/cosmic-identity',
   },
   {
     slug: 'tap-a-gram',
@@ -133,6 +140,7 @@ export const experiments: Experiment[] = [
     thumbnail: '/thumbnails/tap-a-gram.svg',
     createdAt: '2026-05-12',
     externalUrl: 'https://tap-a-gram.vercel.app',
+    github: 'https://github.com/irsaliendraDF/tap-a-gram',
   },
   {
     slug: 'pocket-post',
@@ -146,6 +154,7 @@ export const experiments: Experiment[] = [
     thumbnail: '/thumbnails/pocket-post.svg',
     createdAt: '2026-05-12',
     externalUrl: 'https://pocket-post-silk.vercel.app',
+    github: 'https://github.com/irsaliendraDF/pocket-post',
   },
 ];
 

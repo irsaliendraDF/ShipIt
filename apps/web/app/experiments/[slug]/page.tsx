@@ -40,10 +40,11 @@ export default function ExperimentPage({ params }: Props) {
   const accent = contributor?.avatarColor ?? '#ff6fb5';
   const initial = (contributor?.name ?? exp.contributor).slice(0, 1).toUpperCase();
   const statusTone = exp.status === 'live' ? 'live' : exp.status === 'wip' ? 'wip' : 'archived';
-  // In-repo experiments live at games/<slug>. Externally-hosted ones don't.
-  const sourceUrl = exp.externalUrl
-    ? undefined
-    : `https://github.com/irsaliendraDF/ShipIt/tree/main/games/${exp.slug}`;
+  // Every experiment now has a source repo. Use the registry-supplied github
+  // URL when set (per-game standalone repos), otherwise fall back to the
+  // monorepo subfolder for inline-only experiments.
+  const sourceUrl =
+    exp.github ?? `https://github.com/irsaliendraDF/ShipIt/tree/main/games/${exp.slug}`;
 
   return (
     <div className="pt-24 pb-24">

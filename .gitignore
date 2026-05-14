@@ -33,3 +33,6 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# Standalone source projects for individual games (each has its own git remote)
+source/
