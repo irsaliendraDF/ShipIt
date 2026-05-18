@@ -43,10 +43,9 @@ const SEED_WORDS: Word[] = [
   { text: 'restless', count: 2 },
 ];
 
-// Almost everything reads horizontally; an occasional gentle tilt keeps it
-// from feeling like a typeset paragraph. 90° rotations are out — they make
-// the cloud silhouette break.
-const ROTATION_RING = [0, 0, 0, 0, -8, 0, 0, 8, 0, 0, -8, 0, 0, 8];
+// Everything reads horizontally. Variation comes from font size and
+// opacity, not rotation — tilted words made the cloud look jumbled.
+const ROTATION_RING = [0];
 const MIN_FONT = 13;
 const MAX_FONT = 48;
 const CHAR_WIDTH_RATIO = 0.62; // generous estimate for italic Fraunces
