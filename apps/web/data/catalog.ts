@@ -67,6 +67,7 @@ export const catalog: CatalogTool[] = [
     description:
       'question-based archetype assessment with personalized results, recommendations, and social share. classic "what\'s your X type" lead-gen tool.',
     sprite: 'SPARK',
+    hasPreview: true,
   },
   {
     slug: 'diagnostic-scorecard',
@@ -97,6 +98,7 @@ export const catalog: CatalogTool[] = [
     description:
       'animated card-deck randomizer for prompts, icebreakers, names, random decisions. lightweight, fast to ship.',
     sprite: 'SPARK',
+    hasPreview: true,
   },
 
   // Animated Frameworks
@@ -118,6 +120,7 @@ export const catalog: CatalogTool[] = [
     description:
       'editable animated sales funnel with live calculations and exportable visuals. for sales, RevOps, and marketing consultants.',
     sprite: 'BUILD',
+    hasPreview: true,
   },
   {
     slug: 'customer-journey',

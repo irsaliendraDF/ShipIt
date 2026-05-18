@@ -3,6 +3,9 @@ import { SpinningWheelTemplate } from './SpinningWheelTemplate';
 import { InteractiveQuizTemplate } from './InteractiveQuizTemplate';
 import { PyramidFrameworkTemplate } from './PyramidFrameworkTemplate';
 import { Matrix2x2Template } from './Matrix2x2Template';
+import { RandomPickerTemplate } from './RandomPickerTemplate';
+import { PersonalityAssessmentTemplate } from './PersonalityAssessmentTemplate';
+import { SalesFunnelTemplate } from './SalesFunnelTemplate';
 
 /**
  * Registry of slugs that have an interactive preview template.
@@ -13,6 +16,9 @@ export const TEMPLATE_REGISTRY: Record<string, ComponentType> = {
   'interactive-quiz': InteractiveQuizTemplate,
   'pyramid-framework': PyramidFrameworkTemplate,
   '2x2-matrix': Matrix2x2Template,
+  'random-picker': RandomPickerTemplate,
+  'personality-assessment': PersonalityAssessmentTemplate,
+  'sales-funnel': SalesFunnelTemplate,
 };
 
 export function getTemplate(slug: string): ComponentType | null {
