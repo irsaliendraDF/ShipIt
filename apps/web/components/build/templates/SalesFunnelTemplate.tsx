@@ -15,10 +15,10 @@ const DEFAULT_STAGES: Stage[] = [
 // Funnel geometry. Each tier's width is driven by its value relative to the
 // top stage, so editing numbers reshapes the funnel live. MIN_WIDTH stops
 // near-zero stages from collapsing into a sliver.
-const FUNNEL_MAX_WIDTH = 580;
-const FUNNEL_MIN_WIDTH = 80;
-const FUNNEL_HEIGHT = 480;
-const FUNNEL_PADDING_X = 40;
+const FUNNEL_MAX_WIDTH = 720;
+const FUNNEL_MIN_WIDTH = 100;
+const FUNNEL_HEIGHT = 560;
+const FUNNEL_PADDING_X = 10;
 const SVG_WIDTH = FUNNEL_MAX_WIDTH + FUNNEL_PADDING_X * 2;
 const CENTER_X = FUNNEL_PADDING_X + FUNNEL_MAX_WIDTH / 2;
 
@@ -63,11 +63,11 @@ export function SalesFunnelTemplate() {
     : '0';
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_300px] gap-8 items-start max-w-[1080px] mx-auto">
-      <div className="relative mx-auto w-full">
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8 items-start max-w-[1080px] mx-auto">
+      <div className="relative w-full">
         <svg
-          viewBox={`0 0 ${SVG_WIDTH} ${FUNNEL_HEIGHT + 20}`}
-          className="w-full max-w-[680px] mx-auto"
+          viewBox={`0 0 ${SVG_WIDTH} ${FUNNEL_HEIGHT + 10}`}
+          className="w-full h-auto"
         >
           {stages.map((stage, i) => {
             const topY = i * tierHeight;
@@ -86,9 +86,9 @@ export function SalesFunnelTemplate() {
                 />
                 <text
                   x={CENTER_X}
-                  y={midY - 4}
+                  y={midY - 6}
                   fill={i < 2 ? '#ffffff' : '#1a1a1a'}
-                  fontSize="15"
+                  fontSize="18"
                   fontFamily="'DM Sans', sans-serif"
                   fontWeight="600"
                   textAnchor="middle"
@@ -97,9 +97,9 @@ export function SalesFunnelTemplate() {
                 </text>
                 <text
                   x={CENTER_X}
-                  y={midY + 18}
+                  y={midY + 22}
                   fill={i < 2 ? '#ffffff' : '#1a1a1a'}
-                  fontSize="13"
+                  fontSize="16"
                   fontFamily="'DM Sans', sans-serif"
                   fontWeight="400"
                   textAnchor="middle"
