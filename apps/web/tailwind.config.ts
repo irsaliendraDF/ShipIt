@@ -50,6 +50,9 @@ const config: Config = {
         bubblegum: '#ff6fb5',
         orange: '#ff7a3d',
         purple: '#8b5cf6',
+        // Deep purple used as the on-light text accent on shipit.build,
+        // where the lighter riso `purple` lacks contrast for pre-headers.
+        'deep-purple': '#5b21b6',
       },
       fontFamily: {
         // `mono` now points at Fraunces (display serif). Most of the v0 components

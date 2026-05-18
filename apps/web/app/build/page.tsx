@@ -131,7 +131,7 @@ export default function BuildHomePage() {
         />
 
         <div className="relative max-w-[980px] mx-auto px-6 py-20 lg:py-0 lg:min-h-[90vh] flex flex-col justify-center">
-          <p className="font-pixel text-[11px] uppercase text-orange tracking-[0.18em] leading-[1.2]">
+          <p className="font-pixel text-[11px] uppercase text-deep-purple tracking-[0.18em] leading-[1.2]">
             PRODUCTIZED VIBE-CODED TOOLS
           </p>
 
@@ -204,7 +204,7 @@ export default function BuildHomePage() {
       {/* HOW IT WORKS — pick, brand, ship */}
       <section className="py-16 lg:py-24 bg-offwhite border-t border-jet/8">
         <div className="max-w-[1080px] mx-auto px-6">
-          <p className="font-pixel text-[11px] uppercase text-orange tracking-[0.18em]">
+          <p className="font-pixel text-[11px] uppercase text-deep-purple tracking-[0.18em]">
             THE PROCESS
           </p>
           <h2 className="mt-4 font-display font-normal text-jet text-[32px] sm:text-[36px] leading-[1.15] max-w-[820px]">
@@ -257,7 +257,7 @@ export default function BuildHomePage() {
               if (!tools.length) return null;
               return (
                 <div key={cat}>
-                  <p className="font-pixel text-[10px] uppercase text-orange/70 tracking-[0.22em] text-center mb-6">
+                  <p className="font-pixel text-[10px] uppercase text-deep-purple/70 tracking-[0.22em] text-center mb-6">
                     · {CATEGORY_LABEL[cat]} ·
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -275,7 +275,7 @@ export default function BuildHomePage() {
       {/* PRICING — 4 options */}
       <section className="py-16 lg:py-24 bg-offwhite border-t border-jet/8">
         <div className="max-w-[1080px] mx-auto px-6">
-          <p className="font-pixel text-[11px] uppercase text-orange tracking-[0.18em]">
+          <p className="font-pixel text-[11px] uppercase text-deep-purple tracking-[0.18em]">
             THE MANIFEST
           </p>
           <h2 className="mt-4 font-display font-normal text-jet text-[32px] sm:text-[36px] leading-[1.15] max-w-[820px]">
@@ -466,7 +466,7 @@ export default function BuildHomePage() {
       {/* ABOUT — two-person crew (preserved per Irene's earlier direction) */}
       <section id="about" className="py-16 lg:py-24 bg-offwhite border-t border-jet/8">
         <div className="max-w-[1080px] mx-auto px-6">
-          <p className="font-pixel text-[11px] uppercase text-orange tracking-[0.18em]">
+          <p className="font-pixel text-[11px] uppercase text-deep-purple tracking-[0.18em]">
             WHO BUILDS THIS
           </p>
           <h2 className="mt-4 font-display font-normal text-jet text-[28px] sm:text-[32px] leading-[1.15] max-w-[820px]">
@@ -582,14 +582,14 @@ export default function BuildHomePage() {
           </div>
 
           <div>
-            <p className="font-pixel text-[9px] uppercase text-orange tracking-[0.18em]">
+            <p className="font-pixel text-[9px] uppercase text-deep-purple tracking-[0.18em]">
               family
             </p>
             <ul className="mt-4 space-y-2">
               <li>
                 <a
                   href="https://shipit.fun"
-                  className="font-sans text-[14px] text-jet hover:text-orange transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-deep-purple transition-colors"
                 >
                   shipit.fun →
                 </a>
@@ -598,7 +598,7 @@ export default function BuildHomePage() {
           </div>
 
           <div>
-            <p className="font-pixel text-[9px] uppercase text-orange tracking-[0.18em]">
+            <p className="font-pixel text-[9px] uppercase text-deep-purple tracking-[0.18em]">
               find me
             </p>
             <ul className="mt-4 space-y-2">
@@ -608,7 +608,7 @@ export default function BuildHomePage() {
                   href="https://www.linkedin.com/in/irenesaliendra"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-[14px] text-jet hover:text-orange transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-deep-purple transition-colors"
                 >
                   linkedin →
                 </a>
@@ -617,7 +617,7 @@ export default function BuildHomePage() {
                 {/* TODO: confirm real contact email for footer */}
                 <a
                   href="mailto:irene@digitalflowconsulting.ca"
-                  className="font-sans text-[14px] text-jet hover:text-orange transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-deep-purple transition-colors"
                 >
                   email →
                 </a>
@@ -627,7 +627,7 @@ export default function BuildHomePage() {
                   href={BOOK_A_CALL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-[14px] text-jet hover:text-orange transition-colors"
+                  className="font-sans text-[14px] text-jet hover:text-deep-purple transition-colors"
                 >
                   book a call →
                 </a>

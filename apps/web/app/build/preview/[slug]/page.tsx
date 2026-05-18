@@ -126,19 +126,29 @@ export default function PreviewPage({ params }: { params: { slug: string } }) {
       </section>
 
       {/* WHAT YOU SEE / WHAT YOU GET */}
-      <section className="py-12 border-t border-jet/8 bg-offwhite">
-        <div className="max-w-[820px] mx-auto px-6 text-center">
-          <p className="font-pixel text-[10px] uppercase text-purple tracking-[0.18em]">
-            WHAT YOU&apos;RE LOOKING AT
-          </p>
-          <h2 className="mt-3 font-display italic text-[26px] sm:text-[30px] text-jet leading-tight">
-            this is the working template. yours arrives branded.
-          </h2>
-          <p className="mt-5 font-sans text-[16px] text-jet/75 leading-relaxed">
-            everything above is real, interactive code. fill the form below with your colors,
-            logo, and content (questions, wedges, tiers, items, whatever this tool needs), and
-            we ship the white-labeled version on your domain in 2 days.
-          </p>
+      <section className="py-10 border-t border-jet/8 bg-offwhite">
+        <div className="max-w-[680px] mx-auto px-6">
+          <div
+            className="relative rounded-2xl border border-purple/30 px-6 py-6 sm:px-8 sm:py-7 text-center"
+            style={{
+              background:
+                'linear-gradient(135deg, #ffffff 0%, rgba(139,92,246,0.10) 100%)',
+              boxShadow:
+                '0 0 32px rgba(139, 92, 246, 0.28), 0 0 64px rgba(139, 92, 246, 0.16), 0 2px 0 rgba(139, 92, 246, 0.08)',
+            }}
+          >
+            <p className="font-pixel text-[10px] uppercase text-deep-purple tracking-[0.18em]">
+              WHAT YOU&apos;RE LOOKING AT
+            </p>
+            <h2 className="mt-2 font-display italic text-[22px] sm:text-[26px] text-jet leading-tight">
+              this is the working template. yours arrives branded.
+            </h2>
+            <p className="mt-3 font-sans text-[15px] text-jet/75 leading-relaxed">
+              everything above is real, interactive code. fill the form below with your
+              colors, logo, and content, and we ship the white-labeled version on your
+              domain in 2 days.
+            </p>
+          </div>
         </div>
       </section>
 

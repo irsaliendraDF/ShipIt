@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { SparkSprite } from './Sprites';
 import { catalog } from '@/data/catalog';
 import { supabase, type IntakeSubmissionInsert } from '@/lib/supabase';
+import { GradientButton } from '@/components/ui/gradient-button';
 
 // Optional Formspree fallback: if NEXT_PUBLIC_SUPABASE_* env vars aren't
 // configured (e.g. preview deploys without env), the form falls back to
@@ -132,7 +133,7 @@ export function IntakeForm() {
         </p>
         <a
           href="#top"
-          className="mt-7 inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] text-jet border border-jet/30 rounded-full px-5 py-2.5 hover:border-orange hover:text-orange transition-colors"
+          className="mt-7 inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] text-jet border border-jet/30 rounded-full px-5 py-2.5 hover:border-orange hover:text-deep-purple transition-colors"
         >
           back to top
         </a>
@@ -178,7 +179,7 @@ export function IntakeForm() {
 
         <div>
           <label htmlFor="kind" className="block font-sans text-[14px] font-medium text-jet mb-2">
-            what are you picking?<span aria-hidden="true" className="text-orange ml-1">*</span>
+            what are you picking?<span aria-hidden="true" className="text-deep-purple ml-1">*</span>
           </label>
           <select
             id="kind"
@@ -207,7 +208,7 @@ export function IntakeForm() {
           <fieldset className="space-y-3">
             <legend className="font-sans text-[14px] font-medium text-jet">
               which tool{kind === 'bundle' ? 's' : ''}?
-              <span aria-hidden="true" className="text-orange ml-1">*</span>
+              <span aria-hidden="true" className="text-deep-purple ml-1">*</span>
             </legend>
             <p className="font-sans text-[13px] text-jet/60">
               {kind === 'single'
@@ -277,7 +278,7 @@ export function IntakeForm() {
 
         <fieldset>
           <legend className="font-sans text-[14px] font-medium text-jet">
-            branding ready to send?<span aria-hidden="true" className="text-orange ml-1">*</span>
+            branding ready to send?<span aria-hidden="true" className="text-deep-purple ml-1">*</span>
           </legend>
           <div className="mt-2 space-y-2">
             <Radio
@@ -313,13 +314,14 @@ export function IntakeForm() {
       </div>
 
       <div className="mt-8 flex justify-center">
-        <button
+        <GradientButton
           type="submit"
+          size="lg"
+          variant="build"
           disabled={state === 'submitting'}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans font-semibold text-[16px] bg-orange text-cream rounded-full px-7 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(255,122,61,0.3)] transition-all disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none"
         >
-          {state === 'submitting' ? 'shipping...' : 'Ship it! ⚓'}
-        </button>
+          {state === 'submitting' ? 'Shipping…' : 'Ship it'}
+        </GradientButton>
       </div>
     </form>
   );
@@ -339,7 +341,7 @@ function Field({ id, name, label, type, placeholder, required }: FieldProps) {
     <div>
       <label htmlFor={id} className="block font-sans text-[14px] font-medium text-jet mb-2">
         {label}
-        {required && <span aria-hidden="true" className="text-orange ml-1">*</span>}
+        {required && <span aria-hidden="true" className="text-deep-purple ml-1">*</span>}
       </label>
       <input
         id={id}
@@ -360,7 +362,7 @@ function TextareaField({ id, name, label, rows, placeholder, required }: Textare
     <div>
       <label htmlFor={id} className="block font-sans text-[14px] font-medium text-jet mb-2">
         {label}
-        {required && <span aria-hidden="true" className="text-orange ml-1">*</span>}
+        {required && <span aria-hidden="true" className="text-deep-purple ml-1">*</span>}
       </label>
       <textarea
         id={id}
@@ -387,7 +389,7 @@ function SelectField({ id, name, label, options, required }: SelectFieldProps) {
     <div>
       <label htmlFor={id} className="block font-sans text-[14px] font-medium text-jet mb-2">
         {label}
-        {required && <span aria-hidden="true" className="text-orange ml-1">*</span>}
+        {required && <span aria-hidden="true" className="text-deep-purple ml-1">*</span>}
       </label>
       <select
         id={id}
