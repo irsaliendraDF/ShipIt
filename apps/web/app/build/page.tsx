@@ -1,5 +1,18 @@
 import type { Metadata } from 'next';
 import { Code2, Box, User, Lock } from 'lucide-react';
+
+function LinkedinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z" />
+    </svg>
+  );
+}
 import { ShipSprite, BuildSprite, SparkSprite, BoltSprite } from '@/components/build/Sprites';
 import { ShippingLabel } from '@/components/build/ShippingLabel';
 import { IntakeForm } from '@/components/build/IntakeForm';
@@ -500,6 +513,16 @@ export default function BuildHomePage() {
                   <p className="mt-1 font-pixel text-[9px] uppercase text-purple tracking-[0.18em]">
                     SALES · STRATEGY · BUILDS
                   </p>
+                  <a
+                    href="https://www.linkedin.com/in/irsaliendra/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Irene Saliendra on LinkedIn"
+                    className="mt-2 inline-flex items-center gap-1.5 text-jet/55 hover:text-deep-purple transition-colors"
+                  >
+                    <LinkedinIcon className="w-4 h-4" />
+                    <span className="font-sans text-[12px]">linkedin</span>
+                  </a>
                 </div>
               </div>
               <p className="mt-5 font-sans text-[15px] text-jet/80 leading-relaxed">
@@ -532,6 +555,16 @@ export default function BuildHomePage() {
                   <p className="mt-1 font-pixel text-[9px] uppercase text-purple tracking-[0.18em]">
                     MARKETING · BRAND · STORY
                   </p>
+                  <a
+                    href="https://www.linkedin.com/in/chidosamantha/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Chido Samantha on LinkedIn"
+                    className="mt-2 inline-flex items-center gap-1.5 text-jet/55 hover:text-deep-purple transition-colors"
+                  >
+                    <LinkedinIcon className="w-4 h-4" />
+                    <span className="font-sans text-[12px]">linkedin</span>
+                  </a>
                 </div>
               </div>
               <p className="mt-5 font-sans text-[15px] text-jet/80 leading-relaxed">
