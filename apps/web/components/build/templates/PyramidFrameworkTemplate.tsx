@@ -84,18 +84,53 @@ export function PyramidFrameworkTemplate() {
                   transition: 'opacity 0.3s, filter 0.3s',
                 }}
               />
-              <text
-                x={APEX_X}
-                y={i * TIER_HEIGHT + TIER_HEIGHT / 2 + 4}
-                fill={i < 2 ? '#ffffff' : '#1a1a1a'}
-                fontSize={i === 0 ? '10' : '13'}
-                fontFamily="'DM Sans', sans-serif"
-                fontWeight="600"
-                textAnchor="middle"
-                style={{ pointerEvents: 'none' }}
-              >
-                {tier.label}
-              </text>
+              {i === 0 ? (
+                // Apex is too narrow to hold the label inline — render a leader
+                // line that points out to a callout label on the right.
+                (() => {
+                  const baseRightX =
+                    APEX_X + ((i + 1) / TIERS.length) * PYRAMID_WIDTH / 2;
+                  const midY = TIER_HEIGHT / 2;
+                  const leaderEndX = baseRightX + 18;
+                  return (
+                    <g>
+                      <line
+                        x1={baseRightX}
+                        y1={midY}
+                        x2={leaderEndX}
+                        y2={midY}
+                        stroke="#1a1a1a"
+                        strokeWidth="1"
+                      />
+                      <text
+                        x={leaderEndX + 5}
+                        y={midY + 4}
+                        fill="#1a1a1a"
+                        fontSize="13"
+                        fontFamily="'DM Sans', sans-serif"
+                        fontWeight="600"
+                        textAnchor="start"
+                        style={{ pointerEvents: 'none' }}
+                      >
+                        {tier.label}
+                      </text>
+                    </g>
+                  );
+                })()
+              ) : (
+                <text
+                  x={APEX_X}
+                  y={i * TIER_HEIGHT + TIER_HEIGHT / 2 + 4}
+                  fill={i < 2 ? '#ffffff' : '#1a1a1a'}
+                  fontSize="13"
+                  fontFamily="'DM Sans', sans-serif"
+                  fontWeight="600"
+                  textAnchor="middle"
+                  style={{ pointerEvents: 'none' }}
+                >
+                  {tier.label}
+                </text>
+              )}
             </g>
           );
         })}
