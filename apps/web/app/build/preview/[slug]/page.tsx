@@ -110,14 +110,25 @@ export default function PreviewPage({ params }: { params: { slug: string } }) {
       {/* THE TEMPLATE */}
       <section className="py-14 sm:py-20">
         <div className="max-w-[1080px] mx-auto px-6">
-          <Template />
+          <div
+            className="relative border-2 border-dashed border-jet/30 rounded-2xl bg-white px-6 py-10 sm:px-10 sm:py-14"
+            style={{ boxShadow: '0 2px 0 rgba(26,26,26,0.04)' }}
+          >
+            <span className="absolute -top-3 left-6 inline-flex items-center gap-1.5 bg-jet text-cream font-pixel text-[9px] uppercase tracking-[0.22em] rounded-full px-3 py-1.5">
+              ▾ DEMO TEMPLATE
+            </span>
+            <span className="absolute -top-3 right-6 inline-flex items-center gap-1.5 bg-cream text-jet/60 border border-jet/15 font-pixel text-[9px] uppercase tracking-[0.18em] rounded-full px-3 py-1.5">
+              unbranded preview
+            </span>
+            <Template />
+          </div>
         </div>
       </section>
 
       {/* WHAT YOU SEE / WHAT YOU GET */}
-      <section className="py-12 border-t border-jet/8 bg-cream">
+      <section className="py-12 border-t border-jet/8 bg-offwhite">
         <div className="max-w-[820px] mx-auto px-6 text-center">
-          <p className="font-pixel text-[10px] uppercase text-orange tracking-[0.18em]">
+          <p className="font-pixel text-[10px] uppercase text-purple tracking-[0.18em]">
             WHAT YOU&apos;RE LOOKING AT
           </p>
           <h2 className="mt-3 font-display italic text-[26px] sm:text-[30px] text-jet leading-tight">
@@ -152,7 +163,7 @@ export default function PreviewPage({ params }: { params: { slug: string } }) {
       </section>
 
       {/* OTHER TOOLS */}
-      <section className="py-12 border-t border-jet/8 bg-cream">
+      <section className="py-12 border-t border-jet/8 bg-offwhite">
         <div className="max-w-[1080px] mx-auto px-6">
           <p className="font-pixel text-[10px] uppercase text-purple tracking-[0.18em] text-center">
             OTHER TEMPLATES YOU CAN PREVIEW
@@ -164,7 +175,7 @@ export default function PreviewPage({ params }: { params: { slug: string } }) {
                 <Link
                   key={t.slug}
                   href={`/build/preview/${t.slug}`}
-                  className="inline-flex items-center gap-2 bg-offwhite border border-jet/15 rounded-full px-4 py-2 font-sans text-[14px] text-jet hover:border-purple hover:text-purple transition-colors"
+                  className="inline-flex items-center gap-2 bg-white border border-purple/25 rounded-full px-4 py-2 font-sans text-[14px] text-jet hover:border-purple hover:text-purple transition-colors"
                 >
                   {spriteFor(t.sprite, 16)}
                   {t.name}

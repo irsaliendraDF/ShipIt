@@ -14,14 +14,25 @@ const WEDGES = [
 ];
 
 const PALETTE = [
-  '#8b5cf6',
-  '#ffb377',
-  '#a78bfa',
-  '#ff7a3d',
-  '#8b5cf6',
-  '#ffb377',
-  '#a78bfa',
-  '#ff7a3d',
+  '#1a1a1a',
+  '#e5e5e5',
+  '#1a1a1a',
+  '#e5e5e5',
+  '#1a1a1a',
+  '#e5e5e5',
+  '#1a1a1a',
+  '#e5e5e5',
+];
+
+const TEXT_PALETTE = [
+  '#ffffff',
+  '#1a1a1a',
+  '#ffffff',
+  '#1a1a1a',
+  '#ffffff',
+  '#1a1a1a',
+  '#ffffff',
+  '#1a1a1a',
 ];
 
 const RADIUS = 160;
@@ -71,7 +82,7 @@ export function SpinningWheelTemplate() {
       <div className="relative">
         <svg
           viewBox="0 0 360 360"
-          className="w-[320px] h-[320px] sm:w-[360px] sm:h-[360px] drop-shadow-[0_8px_24px_rgba(139,92,246,0.25)]"
+          className="w-[320px] h-[320px] sm:w-[360px] sm:h-[360px] drop-shadow-[0_8px_24px_rgba(26,26,26,0.18)]"
         >
           <g
             style={{
@@ -85,11 +96,11 @@ export function SpinningWheelTemplate() {
               const labelPos = polar(labelAngle, RADIUS * 0.62);
               return (
                 <g key={label}>
-                  <path d={slicePath(i)} fill={PALETTE[i]} stroke="#fde9c8" strokeWidth="2" />
+                  <path d={slicePath(i)} fill={PALETTE[i]} stroke="#ffffff" strokeWidth="2" />
                   <text
                     x={labelPos.x}
                     y={labelPos.y}
-                    fill="#fde9c8"
+                    fill={TEXT_PALETTE[i]}
                     fontSize="13"
                     fontFamily="'DM Sans', sans-serif"
                     fontWeight="600"
@@ -104,7 +115,7 @@ export function SpinningWheelTemplate() {
             })}
           </g>
           <circle cx={CENTER} cy={CENTER} r="22" fill="#1a1a1a" />
-          <circle cx={CENTER} cy={CENTER} r="14" fill="#fde9c8" />
+          <circle cx={CENTER} cy={CENTER} r="14" fill="#ffffff" />
         </svg>
         <div
           aria-hidden="true"
@@ -131,7 +142,7 @@ export function SpinningWheelTemplate() {
       <div className="min-h-[48px] flex items-center">
         {winner && !spinning && (
           <p className="font-display italic text-[24px] text-jet">
-            you got <span className="text-purple">{winner}</span> ✨
+            you got <span className="underline decoration-jet/40 decoration-2 underline-offset-4">{winner}</span> ✨
           </p>
         )}
       </div>

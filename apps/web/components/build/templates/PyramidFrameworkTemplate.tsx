@@ -12,27 +12,27 @@ const TIERS: Tier[] = [
   {
     label: 'self-actualization',
     detail: 'meaningful work, creative flow, the things you do because they matter to you.',
-    color: '#8b5cf6',
+    color: '#1a1a1a',
   },
   {
     label: 'esteem',
     detail: 'recognition, mastery, confidence. earned, not borrowed.',
-    color: '#a78bfa',
+    color: '#4a4a4a',
   },
   {
     label: 'belonging',
     detail: 'family, friends, the people you choose to spend a tuesday with.',
-    color: '#ff7a3d',
+    color: '#7a7a7a',
   },
   {
     label: 'safety',
     detail: 'a roof, a paycheque, knowing your body and bank account are okay.',
-    color: '#ffb377',
+    color: '#b0b0b0',
   },
   {
     label: 'physiological',
     detail: 'food, water, sleep. the floor everything else is built on.',
-    color: '#ffd6b3',
+    color: '#dcdcdc',
   },
 ];
 
@@ -62,7 +62,7 @@ export function PyramidFrameworkTemplate() {
     <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-10 items-center max-w-[920px] mx-auto">
       <svg
         viewBox={`0 0 ${PYRAMID_WIDTH} ${PYRAMID_HEIGHT}`}
-        className="w-[360px] sm:w-[440px] mx-auto drop-shadow-[0_8px_24px_rgba(139,92,246,0.20)]"
+        className="w-[360px] sm:w-[440px] mx-auto drop-shadow-[0_8px_24px_rgba(26,26,26,0.18)]"
       >
         {TIERS.map((tier, i) => {
           const isActive = i === active;
@@ -76,10 +76,10 @@ export function PyramidFrameworkTemplate() {
               <path
                 d={tierPath(i)}
                 fill={tier.color}
-                stroke="#fde9c8"
+                stroke="#ffffff"
                 strokeWidth="2"
                 style={{
-                  opacity: isActive ? 1 : 0.55,
+                  opacity: isActive ? 1 : 0.6,
                   filter: isActive ? 'brightness(1.05)' : 'none',
                   transition: 'opacity 0.3s, filter 0.3s',
                 }}
@@ -87,7 +87,7 @@ export function PyramidFrameworkTemplate() {
               <text
                 x={APEX_X}
                 y={i * TIER_HEIGHT + TIER_HEIGHT / 2 + 4}
-                fill="#1a1a1a"
+                fill={i < 2 ? '#ffffff' : '#1a1a1a'}
                 fontSize={i === 0 ? '10' : '13'}
                 fontFamily="'DM Sans', sans-serif"
                 fontWeight="600"
@@ -101,8 +101,8 @@ export function PyramidFrameworkTemplate() {
         })}
       </svg>
 
-      <div className="bg-cream border border-jet/10 rounded-2xl p-6 sm:p-7 min-h-[200px]">
-        <p className="font-pixel text-[10px] uppercase text-purple tracking-[0.18em]">
+      <div className="bg-white border border-jet/15 rounded-2xl p-6 sm:p-7 min-h-[200px]">
+        <p className="font-pixel text-[10px] uppercase text-jet/60 tracking-[0.18em]">
           TIER {TIERS.length - active}
         </p>
         <h3 className="mt-3 font-display italic text-[26px] sm:text-[28px] text-jet leading-tight">

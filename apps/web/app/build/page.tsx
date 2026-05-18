@@ -45,8 +45,12 @@ function CatalogCard({ tool }: { tool: CatalogTool }) {
   return (
     <a
       href={href}
-      className="group relative flex flex-col bg-offwhite border border-jet/10 rounded-2xl p-5 min-h-[200px] hover:-translate-y-[3px] hover:border-purple/50 transition-all duration-200"
-      style={{ boxShadow: '0 2px 0 rgba(26,26,26,0.04)' }}
+      className="group relative flex flex-col border border-purple/25 rounded-2xl p-5 min-h-[200px] hover:-translate-y-[3px] hover:border-purple/60 transition-all duration-200"
+      style={{
+        background:
+          'linear-gradient(135deg, #ffffff 0%, rgba(139, 92, 246, 0.08) 100%)',
+        boxShadow: '0 2px 0 rgba(139, 92, 246, 0.06)',
+      }}
     >
       {tool.hasPreview && (
         <span className="absolute -top-2 -right-2 inline-flex items-center gap-1 font-pixel text-[8px] uppercase tracking-[0.18em] bg-purple text-cream rounded-full px-2.5 py-1">
@@ -390,8 +394,15 @@ export default function BuildHomePage() {
       {/* WHAT THIS IS NOT */}
       <section className="py-12 lg:py-16">
         <div className="max-w-[820px] mx-auto px-6">
-          <div className="border-2 border-jet/15 rounded-2xl bg-cream p-6 lg:p-8">
-            <p className="font-pixel text-[10px] uppercase text-orange tracking-[0.18em]">
+          <div
+            className="border-2 border-purple/25 rounded-2xl p-6 lg:p-8"
+            style={{
+              background:
+                'linear-gradient(135deg, #ffffff 0%, rgba(139, 92, 246, 0.08) 100%)',
+              boxShadow: '0 2px 0 rgba(139, 92, 246, 0.06)',
+            }}
+          >
+            <p className="font-pixel text-[10px] uppercase text-purple tracking-[0.18em]">
               BEFORE YOU BOOK
             </p>
             <h2 className="mt-2 font-display font-normal text-jet text-[22px] sm:text-[24px] leading-tight">
@@ -400,7 +411,7 @@ export default function BuildHomePage() {
 
             <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
               <li className="flex items-start gap-3">
-                <Box className="w-5 h-5 text-orange flex-shrink-0 mt-[3px]" aria-hidden="true" />
+                <Box className="w-5 h-5 text-purple flex-shrink-0 mt-[3px]" aria-hidden="true" />
                 <div>
                   <p className="font-sans font-semibold text-[15px] text-jet leading-snug">
                     not a SaaS product
@@ -411,7 +422,7 @@ export default function BuildHomePage() {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <Code2 className="w-5 h-5 text-orange flex-shrink-0 mt-[3px]" aria-hidden="true" />
+                <Code2 className="w-5 h-5 text-purple flex-shrink-0 mt-[3px]" aria-hidden="true" />
                 <div>
                   <p className="font-sans font-semibold text-[15px] text-jet leading-snug">
                     not a no-code platform
@@ -422,7 +433,7 @@ export default function BuildHomePage() {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <User className="w-5 h-5 text-orange flex-shrink-0 mt-[3px]" aria-hidden="true" />
+                <User className="w-5 h-5 text-purple flex-shrink-0 mt-[3px]" aria-hidden="true" />
                 <div>
                   <p className="font-sans font-semibold text-[15px] text-jet leading-snug">
                     not a marketplace
@@ -433,7 +444,7 @@ export default function BuildHomePage() {
                 </div>
               </li>
               <li className="flex items-start gap-3">
-                <Lock className="w-5 h-5 text-orange flex-shrink-0 mt-[3px]" aria-hidden="true" />
+                <Lock className="w-5 h-5 text-purple flex-shrink-0 mt-[3px]" aria-hidden="true" />
                 <div>
                   <p className="font-sans font-semibold text-[15px] text-jet leading-snug">
                     not a freelance gig
@@ -445,7 +456,7 @@ export default function BuildHomePage() {
               </li>
             </ul>
 
-            <p className="mt-7 pt-5 border-t border-jet/10 font-sans italic text-[14px] text-jet/75 leading-relaxed">
+            <p className="mt-7 pt-5 border-t border-purple/15 font-sans italic text-[14px] text-jet/75 leading-relaxed">
               it&apos;s a productized service with a catalog. that&apos;s the whole thing.
             </p>
           </div>
@@ -467,19 +478,26 @@ export default function BuildHomePage() {
           </p>
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <article className="bg-cream border border-jet/10 rounded-2xl p-6 lg:p-7">
+            <article
+              className="border border-purple/25 rounded-2xl p-6 lg:p-7"
+              style={{
+                background:
+                  'linear-gradient(135deg, #ffffff 0%, rgba(139, 92, 246, 0.08) 100%)',
+                boxShadow: '0 2px 0 rgba(139, 92, 246, 0.06)',
+              }}
+            >
               <div className="flex items-center gap-4">
                 {/* TODO: replace with real headshot at /public/team/irene.jpg */}
                 <div
                   className="w-20 h-20 rounded-full flex-shrink-0 flex items-center justify-center font-display text-[28px] text-cream"
-                  style={{ background: '#ff7a3d' }}
+                  style={{ background: '#8b5cf6' }}
                   aria-label="Irene headshot placeholder"
                 >
                   IS
                 </div>
                 <div>
                   <h3 className="font-display text-[22px] text-jet leading-tight">irene saliendra</h3>
-                  <p className="mt-1 font-pixel text-[9px] uppercase text-orange tracking-[0.18em]">
+                  <p className="mt-1 font-pixel text-[9px] uppercase text-purple tracking-[0.18em]">
                     SALES · STRATEGY · BUILDS
                   </p>
                 </div>
@@ -492,19 +510,26 @@ export default function BuildHomePage() {
               </p>
             </article>
 
-            <article className="bg-cream border border-jet/10 rounded-2xl p-6 lg:p-7">
+            <article
+              className="border border-purple/25 rounded-2xl p-6 lg:p-7"
+              style={{
+                background:
+                  'linear-gradient(135deg, #ffffff 0%, rgba(139, 92, 246, 0.08) 100%)',
+                boxShadow: '0 2px 0 rgba(139, 92, 246, 0.06)',
+              }}
+            >
               <div className="flex items-center gap-4">
                 {/* TODO: replace with real headshot at /public/team/chido.jpg */}
                 <div
                   className="w-20 h-20 rounded-full flex-shrink-0 flex items-center justify-center font-display text-[28px] text-cream"
-                  style={{ background: '#ff6fb5' }}
+                  style={{ background: '#a78bfa' }}
                   aria-label="Chido headshot placeholder"
                 >
                   C
                 </div>
                 <div>
                   <h3 className="font-display text-[22px] text-jet leading-tight">chido</h3>
-                  <p className="mt-1 font-pixel text-[9px] uppercase text-bubblegum tracking-[0.18em]">
+                  <p className="mt-1 font-pixel text-[9px] uppercase text-purple tracking-[0.18em]">
                     MARKETING · BRAND · STORY
                   </p>
                 </div>

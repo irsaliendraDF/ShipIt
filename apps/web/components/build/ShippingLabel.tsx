@@ -51,26 +51,30 @@ export function ShippingLabel({
 
   return (
     <article
-      className="relative flex flex-col h-full bg-cream border border-jet/10 rounded-2xl p-6 pt-7"
-      style={{ boxShadow: '0 2px 0 rgba(26,26,26,0.04)' }}
+      className="relative flex flex-col h-full border border-purple/25 rounded-2xl p-6 pt-7"
+      style={{
+        background:
+          'linear-gradient(135deg, #ffffff 0%, rgba(139, 92, 246, 0.08) 100%)',
+        boxShadow: '0 2px 0 rgba(139, 92, 246, 0.06)',
+      }}
     >
       {pill && (
-        <span className="absolute -top-3 left-6 px-2.5 py-1 rounded-sm bg-orange text-cream font-pixel text-[9px] tracking-[0.18em] uppercase">
+        <span className="absolute -top-3 left-6 px-2.5 py-1 rounded-sm bg-purple text-cream font-pixel text-[9px] tracking-[0.18em] uppercase">
           {pill.label}
         </span>
       )}
 
       <div className="flex items-start justify-between mb-4">
         {/* tier number badge */}
-        <div className="w-9 h-9 rounded-md bg-cream border border-orange text-orange font-pixel text-[10px] flex items-center justify-center">
+        <div className="w-9 h-9 rounded-md bg-white border border-purple text-purple font-pixel text-[10px] flex items-center justify-center">
           {tier}
         </div>
         {/* top-right sprite */}
         {sprite && <div className="flex-shrink-0">{sprite}</div>}
       </div>
 
-      {/* orange label header strip */}
-      <div className="bg-orange py-1.5 px-2 rounded-sm mb-4">
+      {/* purple label header strip */}
+      <div className="bg-purple py-1.5 px-2 rounded-sm mb-4">
         <p className="font-pixel text-[9px] uppercase tracking-[0.1em] text-cream leading-none">
           {labelHeader}
         </p>
@@ -95,7 +99,7 @@ export function ShippingLabel({
             <li key={b} className="flex items-start gap-2">
               <span
                 aria-hidden="true"
-                className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-orange flex-shrink-0"
+                className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-purple flex-shrink-0"
               />
               <span>{b}</span>
             </li>
@@ -114,13 +118,13 @@ export function ShippingLabel({
           <div
             aria-hidden="true"
             className="mb-3"
-            style={{ borderTop: '1px dashed rgba(255, 122, 61, 0.5)' }}
+            style={{ borderTop: '1px dashed rgba(139, 92, 246, 0.5)' }}
           />
           <a
             href={cta.href}
             target={cta.href.startsWith('http') ? '_blank' : undefined}
             rel={cta.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-            className="inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] text-jet hover:text-orange transition-colors"
+            className="inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] text-jet hover:text-purple transition-colors"
           >
             {cta.label}
           </a>

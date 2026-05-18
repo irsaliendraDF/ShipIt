@@ -21,10 +21,10 @@ const QUADRANT_DESCRIPTIONS: Record<Exclude<QuadrantId, 'pool'>, string> = {
 };
 
 const QUADRANT_COLOR: Record<Exclude<QuadrantId, 'pool'>, string> = {
-  q1: '#8b5cf6',
-  q2: '#a78bfa',
-  q3: '#ff7a3d',
-  q4: '#ffb377',
+  q1: '#1a1a1a',
+  q2: '#4a4a4a',
+  q3: '#7a7a7a',
+  q4: '#b0b0b0',
 };
 
 const DEFAULT_ITEMS: Item[] = [
@@ -73,7 +73,7 @@ export function Matrix2x2Template() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 max-w-[1080px] mx-auto">
       <div className="relative">
-        <p className="text-center font-pixel text-[10px] uppercase text-purple tracking-[0.18em] mb-2">
+        <p className="text-center font-pixel text-[10px] uppercase text-jet/60 tracking-[0.18em] mb-2">
           ↑ important
         </p>
         <div className="grid grid-cols-2 gap-2">
@@ -84,7 +84,7 @@ export function Matrix2x2Template() {
                 key={q}
                 onDragOver={allowDrop}
                 onDrop={(e) => handleDrop(e, q)}
-                className="relative bg-cream border-2 border-dashed border-jet/15 rounded-2xl p-4 min-h-[180px] transition-colors hover:border-jet/30"
+                className="relative bg-white border-2 border-dashed border-jet/20 rounded-2xl p-4 min-h-[180px] transition-colors hover:border-jet/40"
                 style={{ borderColor: dragging ? QUADRANT_COLOR[q] + '80' : undefined }}
               >
                 <div className="flex items-baseline gap-2 mb-3">
@@ -106,7 +106,7 @@ export function Matrix2x2Template() {
                       key={item.id}
                       draggable
                       onDragStart={(e) => handleDragStart(e, item.id)}
-                      className="font-sans text-[13px] text-jet bg-offwhite border border-jet/10 rounded-md px-2.5 py-1.5 cursor-grab active:cursor-grabbing hover:border-purple/50"
+                      className="font-sans text-[13px] text-jet bg-cream border border-jet/15 rounded-md px-2.5 py-1.5 cursor-grab active:cursor-grabbing hover:border-jet/50"
                     >
                       {item.label}
                     </div>
@@ -129,15 +129,15 @@ export function Matrix2x2Template() {
       <div
         onDragOver={allowDrop}
         onDrop={(e) => handleDrop(e, 'pool')}
-        className="bg-cream border border-jet/10 rounded-2xl p-5"
+        className="bg-white border border-jet/15 rounded-2xl p-5"
       >
         <div className="flex items-center justify-between mb-4">
-          <p className="font-pixel text-[10px] uppercase text-purple tracking-[0.18em]">
+          <p className="font-pixel text-[10px] uppercase text-jet/60 tracking-[0.18em]">
             ITEMS · drag to sort
           </p>
           <button
             onClick={reset}
-            className="font-pixel text-[9px] uppercase text-jet/55 hover:text-purple tracking-[0.18em]"
+            className="font-pixel text-[9px] uppercase text-jet/55 hover:text-jet tracking-[0.18em]"
           >
             reset
           </button>
@@ -148,7 +148,7 @@ export function Matrix2x2Template() {
               key={item.id}
               draggable
               onDragStart={(e) => handleDragStart(e, item.id)}
-              className="font-sans text-[14px] text-jet bg-offwhite border border-jet/10 rounded-md px-3 py-2 cursor-grab active:cursor-grabbing hover:border-purple/50"
+              className="font-sans text-[14px] text-jet bg-cream border border-jet/15 rounded-md px-3 py-2 cursor-grab active:cursor-grabbing hover:border-jet/50"
             >
               {item.label}
             </div>
