@@ -78,7 +78,7 @@ export function Nav() {
   if ((pathname ?? '').startsWith('/build')) return null;
 
   return (
-    <header className="fixed top-8 inset-x-0 z-50 bg-cream/70 backdrop-blur-md border-b border-jet/10">
+    <header className="fixed top-0 inset-x-0 z-50 bg-cream/70 backdrop-blur-md border-b border-jet/10">
       <nav className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
           <span className="font-mono text-accent text-base italic tracking-tight">

@@ -69,7 +69,7 @@ export default function BuildHomePage() {
   return (
     <div id="top" className="bg-offwhite text-jet min-h-screen scroll-smooth">
       {/* NAV */}
-      <header className="sticky top-8 z-40 bg-offwhite/85 backdrop-blur-md border-b border-jet/8">
+      <header className="sticky top-0 z-40 bg-offwhite/85 backdrop-blur-md border-b border-jet/8">
         <div className="max-w-[1080px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
           <a href="#top" className="flex items-center gap-2.5 flex-shrink-0">
             <ShipSprite size={24} />
