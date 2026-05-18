@@ -12,34 +12,33 @@ const DEFAULT_STAGES: Stage[] = [
   { label: 'paying customers', value: 64, tone: '#c8c8c8' },
 ];
 
-const FUNNEL_TOP_WIDTH = 480;
-const FUNNEL_BOTTOM_WIDTH = 120;
-const FUNNEL_HEIGHT = 360;
+// Funnel geometry. Each tier's width is driven by its value relative to the
+// top stage, so editing numbers reshapes the funnel live. MIN_WIDTH stops
+// near-zero stages from collapsing into a sliver.
+const FUNNEL_MAX_WIDTH = 580;
+const FUNNEL_MIN_WIDTH = 80;
+const FUNNEL_HEIGHT = 480;
 const FUNNEL_PADDING_X = 40;
+const SVG_WIDTH = FUNNEL_MAX_WIDTH + FUNNEL_PADDING_X * 2;
+const CENTER_X = FUNNEL_PADDING_X + FUNNEL_MAX_WIDTH / 2;
 
 function formatNumber(n: number): string {
   if (n >= 1000) return (n / 1000).toFixed(n >= 10000 ? 0 : 1) + 'k';
   return n.toString();
 }
 
-function stagePath(index: number, total: number): string {
-  const tierHeight = FUNNEL_HEIGHT / total;
-  const topY = index * tierHeight;
-  const bottomY = topY + tierHeight;
-  // Linear interpolation between FUNNEL_TOP_WIDTH (at top) and
-  // FUNNEL_BOTTOM_WIDTH (at very bottom of last tier).
-  const widthAt = (y: number) => {
-    const t = y / FUNNEL_HEIGHT;
-    return FUNNEL_TOP_WIDTH + (FUNNEL_BOTTOM_WIDTH - FUNNEL_TOP_WIDTH) * t;
-  };
-  const topWidth = widthAt(topY);
-  const bottomWidth = widthAt(bottomY);
-  const centerX = FUNNEL_PADDING_X + FUNNEL_TOP_WIDTH / 2;
+function widthFor(value: number, topValue: number): number {
+  if (topValue <= 0) return FUNNEL_MIN_WIDTH;
+  const ratio = Math.max(0, Math.min(1, value / topValue));
+  return FUNNEL_MIN_WIDTH + (FUNNEL_MAX_WIDTH - FUNNEL_MIN_WIDTH) * ratio;
+}
+
+function stagePath(topWidth: number, bottomWidth: number, topY: number, bottomY: number): string {
   return [
-    `M ${centerX - topWidth / 2} ${topY}`,
-    `L ${centerX + topWidth / 2} ${topY}`,
-    `L ${centerX + bottomWidth / 2} ${bottomY}`,
-    `L ${centerX - bottomWidth / 2} ${bottomY}`,
+    `M ${CENTER_X - topWidth / 2} ${topY}`,
+    `L ${CENTER_X + topWidth / 2} ${topY}`,
+    `L ${CENTER_X + bottomWidth / 2} ${bottomY}`,
+    `L ${CENTER_X - bottomWidth / 2} ${bottomY}`,
     'Z',
   ].join(' ');
 }
@@ -57,33 +56,39 @@ export function SalesFunnelTemplate() {
 
   const total = stages.length;
   const tierHeight = FUNNEL_HEIGHT / total;
-  const svgWidth = FUNNEL_TOP_WIDTH + FUNNEL_PADDING_X * 2;
+  const topValue = stages[0]?.value ?? 1;
+  const tierWidths = stages.map((s) => widthFor(s.value, topValue));
   const overallRate = stages.length
     ? ((stages[stages.length - 1]!.value / stages[0]!.value) * 100).toFixed(2)
     : '0';
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 items-start max-w-[1080px] mx-auto">
-      <div className="relative mx-auto">
+    <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_300px] gap-8 items-start max-w-[1080px] mx-auto">
+      <div className="relative mx-auto w-full">
         <svg
-          viewBox={`0 0 ${svgWidth} ${FUNNEL_HEIGHT + 20}`}
-          className="w-full max-w-[560px] mx-auto"
+          viewBox={`0 0 ${SVG_WIDTH} ${FUNNEL_HEIGHT + 20}`}
+          className="w-full max-w-[680px] mx-auto"
         >
           {stages.map((stage, i) => {
-            const midY = i * tierHeight + tierHeight / 2;
+            const topY = i * tierHeight;
+            const bottomY = topY + tierHeight;
+            const midY = topY + tierHeight / 2;
+            const topWidth = i === 0 ? tierWidths[0]! : tierWidths[i - 1]!;
+            const bottomWidth = tierWidths[i]!;
             return (
               <g key={stage.label}>
                 <path
-                  d={stagePath(i, total)}
+                  d={stagePath(topWidth, bottomWidth, topY, bottomY)}
                   fill={stage.tone}
                   stroke="#ffffff"
                   strokeWidth="2"
+                  style={{ transition: 'd 0.3s ease-out' }}
                 />
                 <text
-                  x={FUNNEL_PADDING_X + FUNNEL_TOP_WIDTH / 2}
-                  y={midY - 3}
+                  x={CENTER_X}
+                  y={midY - 4}
                   fill={i < 2 ? '#ffffff' : '#1a1a1a'}
-                  fontSize="13"
+                  fontSize="15"
                   fontFamily="'DM Sans', sans-serif"
                   fontWeight="600"
                   textAnchor="middle"
@@ -91,10 +96,10 @@ export function SalesFunnelTemplate() {
                   {stage.label}
                 </text>
                 <text
-                  x={FUNNEL_PADDING_X + FUNNEL_TOP_WIDTH / 2}
-                  y={midY + 15}
+                  x={CENTER_X}
+                  y={midY + 18}
                   fill={i < 2 ? '#ffffff' : '#1a1a1a'}
-                  fontSize="11"
+                  fontSize="13"
                   fontFamily="'DM Sans', sans-serif"
                   fontWeight="400"
                   textAnchor="middle"
