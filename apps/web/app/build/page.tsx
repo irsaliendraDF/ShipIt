@@ -74,11 +74,11 @@ export default function BuildHomePage() {
       <header className="sticky top-0 z-40 bg-offwhite/85 backdrop-blur-md border-b border-jet/8">
         <div className="max-w-[1080px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 flex-shrink-0">
+            <BrandSwitcher />
             <a href="#top" className="flex items-center gap-2.5">
               <ShipSprite size={24} />
               <span className="font-sans font-semibold text-jet text-[17px]">shipit.build</span>
             </a>
-            <BrandSwitcher />
           </div>
           <nav className="flex items-center gap-2 sm:gap-4">
             <a

@@ -82,13 +82,13 @@ export function Nav() {
     <header className="fixed top-0 inset-x-0 z-50 bg-cream/70 backdrop-blur-md border-b border-jet/10">
       <nav className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3 flex-shrink-0">
+          <BrandSwitcher />
           <Link href="/" className="flex items-center gap-2 group">
             <span className="font-mono text-accent text-base italic tracking-tight">
               <span className="inline-block w-2 h-2 bg-warm rounded-full mr-2 align-middle animate-pulseDot" />
               shipit.fun
             </span>
           </Link>
-          <BrandSwitcher />
         </div>
 
         {/* Menu absolutely centered in the navbar — independent of logo/LIVE widths */}
