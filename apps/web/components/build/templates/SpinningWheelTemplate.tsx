@@ -3,14 +3,14 @@
 import { useState } from 'react';
 
 const WEDGES = [
-  'free coffee',
+  'coffee',
   '10% off',
   'try again',
-  'mystery prize',
-  'free shipping',
-  '$20 credit',
-  'better luck',
-  'big winner',
+  'mystery',
+  'shipping',
+  '$20',
+  'no luck',
+  'big win',
 ];
 
 const PALETTE = [
@@ -78,11 +78,11 @@ export function SpinningWheelTemplate() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex flex-col items-center gap-8">
       <div className="relative">
         <svg
           viewBox="0 0 360 360"
-          className="w-[320px] h-[320px] sm:w-[360px] sm:h-[360px] drop-shadow-[0_8px_24px_rgba(26,26,26,0.18)]"
+          className="w-[360px] h-[360px] sm:w-[480px] sm:h-[480px] lg:w-[560px] lg:h-[560px] drop-shadow-[0_8px_24px_rgba(26,26,26,0.18)]"
         >
           <g
             style={{
@@ -93,20 +93,24 @@ export function SpinningWheelTemplate() {
           >
             {WEDGES.map((label, i) => {
               const labelAngle = i * SLICE_ANGLE + SLICE_ANGLE / 2;
-              const labelPos = polar(labelAngle, RADIUS * 0.62);
+              const labelPos = polar(labelAngle, RADIUS * 0.66);
+              // Flip text 180° when it would otherwise display upside-down
+              // (bottom half of the wheel) so every wedge reads left-to-right.
+              const textRotation =
+                labelAngle > 90 && labelAngle < 270 ? labelAngle + 180 : labelAngle;
               return (
                 <g key={label}>
-                  <path d={slicePath(i)} fill={PALETTE[i]} stroke="#ffffff" strokeWidth="2" />
+                  <path d={slicePath(i)} fill={PALETTE[i]} stroke="#ffffff" strokeWidth="3" />
                   <text
                     x={labelPos.x}
                     y={labelPos.y}
                     fill={TEXT_PALETTE[i]}
-                    fontSize="13"
+                    fontSize="18"
                     fontFamily="'DM Sans', sans-serif"
-                    fontWeight="600"
+                    fontWeight="700"
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    transform={`rotate(${labelAngle}, ${labelPos.x}, ${labelPos.y})`}
+                    transform={`rotate(${textRotation}, ${labelPos.x}, ${labelPos.y})`}
                   >
                     {label}
                   </text>
@@ -114,18 +118,18 @@ export function SpinningWheelTemplate() {
               );
             })}
           </g>
-          <circle cx={CENTER} cy={CENTER} r="22" fill="#1a1a1a" />
-          <circle cx={CENTER} cy={CENTER} r="14" fill="#ffffff" />
+          <circle cx={CENTER} cy={CENTER} r="28" fill="#1a1a1a" />
+          <circle cx={CENTER} cy={CENTER} r="18" fill="#ffffff" />
         </svg>
         <div
           aria-hidden="true"
-          className="absolute left-1/2 -top-1 -translate-x-1/2"
+          className="absolute left-1/2 -top-2 -translate-x-1/2"
           style={{
             width: 0,
             height: 0,
-            borderLeft: '14px solid transparent',
-            borderRight: '14px solid transparent',
-            borderTop: '24px solid #1a1a1a',
+            borderLeft: '18px solid transparent',
+            borderRight: '18px solid transparent',
+            borderTop: '30px solid #1a1a1a',
             filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.2))',
           }}
         />
