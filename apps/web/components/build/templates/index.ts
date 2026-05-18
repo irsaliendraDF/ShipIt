@@ -6,6 +6,9 @@ import { Matrix2x2Template } from './Matrix2x2Template';
 import { RandomPickerTemplate } from './RandomPickerTemplate';
 import { PersonalityAssessmentTemplate } from './PersonalityAssessmentTemplate';
 import { SalesFunnelTemplate } from './SalesFunnelTemplate';
+import { CustomerJourneyTemplate } from './CustomerJourneyTemplate';
+import { WordCloudTemplate } from './WordCloudTemplate';
+import { DiagnosticScorecardTemplate } from './DiagnosticScorecardTemplate';
 
 /**
  * Registry of slugs that have an interactive preview template.
@@ -19,6 +22,9 @@ export const TEMPLATE_REGISTRY: Record<string, ComponentType> = {
   'random-picker': RandomPickerTemplate,
   'personality-assessment': PersonalityAssessmentTemplate,
   'sales-funnel': SalesFunnelTemplate,
+  'customer-journey': CustomerJourneyTemplate,
+  'word-cloud': WordCloudTemplate,
+  'diagnostic-scorecard': DiagnosticScorecardTemplate,
 };
 
 export function getTemplate(slug: string): ComponentType | null {

@@ -77,6 +77,7 @@ export const catalog: CatalogTool[] = [
     description:
       'multi-axis scored assessment with personalized scorecard, recommendations, branded PDF export. premium lead-gen for consultants.',
     sprite: 'BUILD',
+    hasPreview: true,
   },
 
   // Decision Wheels
@@ -130,6 +131,7 @@ export const catalog: CatalogTool[] = [
     description:
       'interactive journey map with stages, touchpoints, emotion curve, pain markers. UX consultant deliverable, made live.',
     sprite: 'SHIP',
+    hasPreview: true,
   },
   {
     slug: 'pyramid-framework',
@@ -160,6 +162,7 @@ export const catalog: CatalogTool[] = [
     description:
       'live audience word cloud, real-time aggregation, branded backdrop, PNG export for recaps. workshop and conference staple.',
     sprite: 'SPARK',
+    hasPreview: true,
   },
 ];
 
