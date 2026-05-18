@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import { Fraunces, DM_Sans, Press_Start_2P } from 'next/font/google';
-import { BrandSwitcher } from '@/components/BrandSwitcher';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
 import './globals.css';
@@ -48,7 +47,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${fraunces.variable} ${dmSans.variable} ${pressStart.variable}`}>
       <body className="bg-bg text-jet font-sans antialiased min-h-screen flex flex-col">
         <div className="grain-overlay" aria-hidden="true" />
-        <BrandSwitcher />
         <Nav />
         <main className="flex-1 relative z-10">{children}</main>
         <Footer />

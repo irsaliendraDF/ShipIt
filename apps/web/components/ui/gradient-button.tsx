@@ -13,11 +13,17 @@ import { useRef, useState, type CSSProperties, type MouseEvent, type ReactNode }
  */
 
 type Size = 'sm' | 'md' | 'lg';
+type Variant = 'fun' | 'build';
 
 type Props = {
   children: ReactNode;
   onClick?: (e: MouseEvent<HTMLElement>) => void;
   size?: Size;
+  /**
+   * Color scheme. `'fun'` (default) = bubblegum + sunset orange (shipit.fun).
+   * `'build'` = riso purple + light orange (shipit.build).
+   */
+  variant?: Variant;
   className?: string;
   disabled?: boolean;
   type?: 'button' | 'submit';
@@ -34,10 +40,53 @@ const sizeStyles: Record<Size, string> = {
   lg: 'h-14 px-9 text-sm',
 };
 
+type VariantPalette = {
+  gradient: string;
+  shadowIdle: string;
+  shadowHover: string;
+  haloBackground: string;
+  borderStops: [string, string, string];
+  borderAnim: [string, string, string];
+};
+
+const variantPalettes: Record<Variant, VariantPalette> = {
+  fun: {
+    gradient:
+      'linear-gradient(120deg, #ff6fb5 0%, #e558a0 22%, #ff7a3d 50%, #ffb377 70%, #e558a0 88%, #ff6fb5 100%)',
+    shadowIdle: '0 0 14px rgba(255, 111, 181, 0.20)',
+    shadowHover:
+      '0 0 32px rgba(255, 122, 61, 0.35), 0 0 60px rgba(255, 111, 181, 0.25)',
+    haloBackground:
+      'radial-gradient(circle at var(--mx) var(--my), rgba(255,122,61,0.45), rgba(255,111,181,0.30) 40%, transparent 70%)',
+    borderStops: ['#ff6fb5', '#ff7a3d', '#e558a0'],
+    borderAnim: [
+      '#ff6fb5;#ff7a3d;#e558a0;#ff6fb5',
+      '#ff7a3d;#e558a0;#ff6fb5;#ff7a3d',
+      '#e558a0;#ff6fb5;#ff7a3d;#e558a0',
+    ],
+  },
+  build: {
+    gradient:
+      'linear-gradient(120deg, #8b5cf6 0%, #a78bfa 22%, #ffb377 50%, #ffc69e 70%, #a78bfa 88%, #8b5cf6 100%)',
+    shadowIdle: '0 0 14px rgba(139, 92, 246, 0.22)',
+    shadowHover:
+      '0 0 32px rgba(255, 179, 119, 0.35), 0 0 60px rgba(139, 92, 246, 0.28)',
+    haloBackground:
+      'radial-gradient(circle at var(--mx) var(--my), rgba(255,179,119,0.45), rgba(139,92,246,0.30) 40%, transparent 70%)',
+    borderStops: ['#8b5cf6', '#ffb377', '#a78bfa'],
+    borderAnim: [
+      '#8b5cf6;#ffb377;#a78bfa;#8b5cf6',
+      '#ffb377;#a78bfa;#8b5cf6;#ffb377',
+      '#a78bfa;#8b5cf6;#ffb377;#a78bfa',
+    ],
+  },
+};
+
 export function GradientButton({
   children,
   onClick,
   size = 'md',
+  variant = 'fun',
   className = '',
   disabled = false,
   type = 'button',
@@ -49,6 +98,8 @@ export function GradientButton({
   const ref = useRef<HTMLElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [mouse, setMouse] = useState({ x: 50, y: 50 });
+  const palette = variantPalettes[variant];
+  const gradientId = `gb-border-${variant}`;
 
   const handleMove = (e: MouseEvent<HTMLElement>) => {
     if (disabled || !ref.current) return;
@@ -61,9 +112,7 @@ export function GradientButton({
   const styleVars: CSSProperties & Record<'--mx' | '--my', string> = {
     '--mx': `${mouse.x}%`,
     '--my': `${mouse.y}%`,
-    boxShadow: isHovered
-      ? '0 0 32px rgba(255, 122, 61, 0.35), 0 0 60px rgba(255, 111, 181, 0.25)'
-      : '0 0 14px rgba(255, 111, 181, 0.20)',
+    boxShadow: isHovered ? palette.shadowHover : palette.shadowIdle,
   };
 
   const sharedClassName = [
@@ -85,8 +134,7 @@ export function GradientButton({
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none animate-[gradientFlow_8s_ease_infinite]"
         style={{
-          background:
-            'linear-gradient(120deg, #ff6fb5 0%, #e558a0 22%, #ff7a3d 50%, #ffb377 70%, #e558a0 88%, #ff6fb5 100%)',
+          background: palette.gradient,
           backgroundSize: '300% 300%',
         }}
       />
@@ -108,8 +156,7 @@ export function GradientButton({
         className="absolute -inset-2 pointer-events-none rounded-md transition-opacity duration-300"
         style={{
           opacity: isHovered ? 1 : 0,
-          background:
-            'radial-gradient(circle at var(--mx) var(--my), rgba(255,122,61,0.45), rgba(255,111,181,0.30) 40%, transparent 70%)',
+          background: palette.haloBackground,
           filter: 'blur(20px)',
         }}
       />
@@ -122,27 +169,27 @@ export function GradientButton({
         preserveAspectRatio="none"
       >
         <defs>
-          <linearGradient id="gb-border" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#ff6fb5">
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={palette.borderStops[0]}>
               <animate
                 attributeName="stop-color"
-                values="#ff6fb5;#ff7a3d;#e558a0;#ff6fb5"
+                values={palette.borderAnim[0]}
                 dur="4s"
                 repeatCount="indefinite"
               />
             </stop>
-            <stop offset="50%" stopColor="#ff7a3d">
+            <stop offset="50%" stopColor={palette.borderStops[1]}>
               <animate
                 attributeName="stop-color"
-                values="#ff7a3d;#e558a0;#ff6fb5;#ff7a3d"
+                values={palette.borderAnim[1]}
                 dur="4s"
                 repeatCount="indefinite"
               />
             </stop>
-            <stop offset="100%" stopColor="#e558a0">
+            <stop offset="100%" stopColor={palette.borderStops[2]}>
               <animate
                 attributeName="stop-color"
-                values="#e558a0;#ff6fb5;#ff7a3d;#e558a0"
+                values={palette.borderAnim[2]}
                 dur="4s"
                 repeatCount="indefinite"
               />
@@ -155,7 +202,7 @@ export function GradientButton({
           width="98"
           height="98"
           fill="none"
-          stroke="url(#gb-border)"
+          stroke={`url(#${gradientId})`}
           strokeWidth="2"
           strokeDasharray="400"
           strokeDashoffset={isHovered ? 0 : 400}

@@ -3,6 +3,8 @@ import { Code2, Box, User, Lock } from 'lucide-react';
 import { ShipSprite, BuildSprite, SparkSprite, BoltSprite } from '@/components/build/Sprites';
 import { ShippingLabel } from '@/components/build/ShippingLabel';
 import { IntakeForm } from '@/components/build/IntakeForm';
+import { BrandSwitcher } from '@/components/BrandSwitcher';
+import { GradientButton } from '@/components/ui/gradient-button';
 import {
   catalog,
   catalogByCategory,
@@ -71,25 +73,29 @@ export default function BuildHomePage() {
       {/* NAV */}
       <header className="sticky top-0 z-40 bg-offwhite/85 backdrop-blur-md border-b border-jet/8">
         <div className="max-w-[1080px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
-          <a href="#top" className="flex items-center gap-2.5 flex-shrink-0">
-            <ShipSprite size={24} />
-            <span className="font-sans font-semibold text-jet text-[17px]">shipit.build</span>
-          </a>
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <a href="#top" className="flex items-center gap-2.5">
+              <ShipSprite size={24} />
+              <span className="font-sans font-semibold text-jet text-[17px]">shipit.build</span>
+            </a>
+            <BrandSwitcher />
+          </div>
           <nav className="flex items-center gap-2 sm:gap-4">
             <a
               href="#catalog"
-              className="hidden sm:inline-flex font-sans text-[15px] text-jet hover:text-orange transition-colors px-3 py-2"
+              className="hidden sm:inline-flex font-sans text-[15px] text-jet hover:text-purple transition-colors px-3 py-2"
             >
               catalog
             </a>
-            <a
+            <GradientButton
+              size="sm"
+              variant="build"
               href={BOOK_A_CALL_URL}
               target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-sans font-semibold text-[15px] bg-orange text-cream rounded-full px-5 py-2.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(255,122,61,0.3)] transition-all"
+              ariaLabel="Book a call"
             >
-              book a call
-            </a>
+              Book a call
+            </GradientButton>
           </nav>
         </div>
       </header>
@@ -130,21 +136,18 @@ export default function BuildHomePage() {
             to your clients. fixed prices. fast turnarounds. no engineering hire required.
           </p>
 
-          <div className="mt-9 flex flex-col sm:flex-row gap-3 sm:items-center">
-            <a
-              href="#catalog"
-              className="inline-flex items-center justify-center font-sans font-semibold text-[16px] bg-orange text-cream rounded-full px-6 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(255,122,61,0.3)] transition-all"
-            >
-              browse the catalog
-            </a>
-            <a
+          <div className="mt-9 flex flex-col sm:flex-row gap-4 sm:items-center">
+            <GradientButton size="lg" variant="build" href="#catalog">
+              ▶ Browse the catalog
+            </GradientButton>
+            <GradientButton
+              size="lg"
+              variant="build"
               href={BOOK_A_CALL_URL}
               target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center font-sans font-semibold text-[16px] bg-transparent text-jet border border-jet/30 rounded-full px-[23px] py-[13px] hover:border-orange hover:text-orange transition-colors"
             >
-              book a discovery call
-            </a>
+              Book a discovery call
+            </GradientButton>
           </div>
 
           <div
@@ -364,14 +367,16 @@ export default function BuildHomePage() {
             </p>
           </div>
 
-          <a
-            href={BOOK_A_CALL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center justify-center font-sans font-semibold text-[16px] bg-orange text-cream rounded-full px-6 py-3.5 hover:-translate-y-[1px] hover:shadow-[0_4px_0_rgba(255,122,61,0.3)] transition-all"
-          >
-            book a discovery call →
-          </a>
+          <div className="mt-8">
+            <GradientButton
+              size="lg"
+              variant="build"
+              href={BOOK_A_CALL_URL}
+              target="_blank"
+            >
+              Book a discovery call →
+            </GradientButton>
+          </div>
         </div>
       </section>
 
