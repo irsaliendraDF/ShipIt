@@ -106,7 +106,7 @@ export function Matrix2x2Template() {
                       key={item.id}
                       draggable
                       onDragStart={(e) => handleDragStart(e, item.id)}
-                      className="font-sans text-[13px] text-jet bg-cream border border-jet/15 rounded-md px-2.5 py-1.5 cursor-grab active:cursor-grabbing hover:border-jet/50"
+                      className="font-sans text-[13px] text-jet bg-white border border-jet/15 rounded-md px-2.5 py-1.5 cursor-grab active:cursor-grabbing hover:border-jet/50"
                     >
                       {item.label}
                     </div>
@@ -148,7 +148,7 @@ export function Matrix2x2Template() {
               key={item.id}
               draggable
               onDragStart={(e) => handleDragStart(e, item.id)}
-              className="font-sans text-[14px] text-jet bg-cream border border-jet/15 rounded-md px-3 py-2 cursor-grab active:cursor-grabbing hover:border-jet/50"
+              className="font-sans text-[14px] text-jet bg-white border border-jet/15 rounded-md px-3 py-2 cursor-grab active:cursor-grabbing hover:border-jet/50"
             >
               {item.label}
             </div>
