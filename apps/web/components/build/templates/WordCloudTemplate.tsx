@@ -1,8 +1,26 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FormEvent,
+} from 'react';
 
 type Word = { text: string; count: number };
+
+type Placed = Word & {
+  x: number;
+  y: number;
+  rotation: number;
+  fontSize: number;
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+};
 
 const SEED_WORDS: Word[] = [
   { text: 'curious', count: 12 },
@@ -25,40 +43,133 @@ const SEED_WORDS: Word[] = [
   { text: 'restless', count: 2 },
 ];
 
+const ROTATION_RING = [0, 0, 0, -12, 12, 0, 0, 90, 0, 0, -12, 0, 0, 12, -90];
+const MIN_FONT = 14;
+const MAX_FONT = 54;
+const BOX_PADDING = 8;
+
 function fontSizeFor(count: number, maxCount: number): number {
   const ratio = maxCount > 0 ? count / maxCount : 0;
-  return 14 + Math.round(ratio * 42); // 14px → 56px so the heaviest words really anchor
+  return MIN_FONT + Math.round(ratio * (MAX_FONT - MIN_FONT));
 }
 
 function opacityFor(count: number, maxCount: number): number {
-  return 0.5 + (count / maxCount) * 0.5;
+  return 0.55 + (count / maxCount) * 0.45;
 }
 
-const ROTATION_RING = [0, 0, 0, 0, -12, 12, 90, -90, 0, 0, 0, -8, 8];
+function rotationFor(index: number): number {
+  return ROTATION_RING[index % ROTATION_RING.length] ?? 0;
+}
 
-// Sunflower spiral placement. Heaviest word lands at center; each subsequent
-// word steps outward by golden-angle increments so they spread organically
-// instead of stacking. Positions are percentages of the cloud container.
-function placeWords(sortedByWeight: Word[]) {
-  return sortedByWeight.map((w, i) => {
-    if (i === 0) {
-      return { ...w, x: 50, y: 50, rotation: 0 };
+/**
+ * Place each word along an Archimedean spiral outward from the center.
+ * Each candidate position is rejected if its bounding box overlaps any
+ * already-placed word or falls outside the container. If no position
+ * works at the chosen font size, the word shrinks and tries again.
+ */
+function layoutCloud(
+  sortedWords: Word[],
+  maxCount: number,
+  width: number,
+  height: number,
+): Placed[] {
+  if (width <= 0 || height <= 0) return [];
+  const cx = width / 2;
+  const cy = height / 2;
+  const placed: Placed[] = [];
+
+  for (let idx = 0; idx < sortedWords.length; idx++) {
+    const word = sortedWords[idx]!;
+    const rotation = rotationFor(idx);
+    let fontSize = fontSizeFor(word.count, maxCount);
+    let result: Placed | null = null;
+
+    while (fontSize >= MIN_FONT && !result) {
+      const rad = (rotation * Math.PI) / 180;
+      // Approximate text box for italic Fraunces at this font size.
+      const baseW = word.text.length * fontSize * 0.5;
+      const baseH = fontSize * 0.95;
+      const cosR = Math.abs(Math.cos(rad));
+      const sinR = Math.abs(Math.sin(rad));
+      const boxW = baseW * cosR + baseH * sinR + BOX_PADDING;
+      const boxH = baseW * sinR + baseH * cosR + BOX_PADDING;
+
+      for (let i = 0; i < 600; i++) {
+        const t = i * 0.32;
+        const r = i * 1.6;
+        const x = cx + r * Math.cos(t);
+        const y = cy + r * Math.sin(t) * 0.85; // squash vertically a hair
+        const left = x - boxW / 2;
+        const top = y - boxH / 2;
+        const right = x + boxW / 2;
+        const bottom = y + boxH / 2;
+        if (left < 4 || right > width - 4 || top < 4 || bottom > height - 4) {
+          continue;
+        }
+        let overlaps = false;
+        for (const p of placed) {
+          if (
+            left < p.right &&
+            right > p.left &&
+            top < p.bottom &&
+            bottom > p.top
+          ) {
+            overlaps = true;
+            break;
+          }
+        }
+        if (!overlaps) {
+          result = {
+            ...word,
+            x,
+            y,
+            rotation,
+            fontSize,
+            left,
+            top,
+            right,
+            bottom,
+          };
+          break;
+        }
+      }
+      if (!result) fontSize -= 4;
     }
-    const goldenAngle = i * 137.5077;
-    const angleRad = (goldenAngle * Math.PI) / 180;
-    // Square-root growth keeps inner words tight, outer words spread.
-    const radius = Math.sqrt(i) * 9;
-    const x = 50 + Math.cos(angleRad) * radius;
-    const y = 50 + Math.sin(angleRad) * radius * 0.78; // slight vertical squash
-    const rotation = ROTATION_RING[i % ROTATION_RING.length] ?? 0;
-    return { ...w, x, y, rotation };
-  });
+
+    if (result) placed.push(result);
+  }
+
+  return placed;
 }
 
 export function WordCloudTemplate() {
   const [words, setWords] = useState<Word[]>(SEED_WORDS);
   const [input, setInput] = useState('');
   const [recent, setRecent] = useState<string[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+
+  // Measure the cloud container once it mounts, and again whenever the
+  // viewport resizes (the container's own width scales with the grid).
+  useLayoutEffect(() => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setSize({ w: rect.width, h: rect.height });
+  }, []);
+
+  useEffect(() => {
+    function measure() {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      setSize((prev) =>
+        prev.w === rect.width && prev.h === rect.height
+          ? prev
+          : { w: rect.width, h: rect.height },
+      );
+    }
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
 
   function addWord(e: FormEvent) {
     e.preventDefault();
@@ -83,25 +194,34 @@ export function WordCloudTemplate() {
   }
 
   const maxCount = Math.max(...words.map((w) => w.count));
-  const sorted = [...words].sort((a, b) => b.count - a.count);
-  const placed = placeWords(sorted);
+  const sorted = useMemo(
+    () => [...words].sort((a, b) => b.count - a.count),
+    [words],
+  );
+  const layout = useMemo(
+    () => layoutCloud(sorted, maxCount, size.w, size.h),
+    [sorted, maxCount, size.w, size.h],
+  );
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6 items-start max-w-[1080px] mx-auto">
       {/* The cloud */}
-      <div className="relative bg-white border border-jet/15 rounded-2xl overflow-hidden h-[460px] sm:h-[520px]">
-        {placed.map((w) => (
+      <div
+        ref={containerRef}
+        className="relative bg-white border border-jet/15 rounded-2xl overflow-hidden h-[460px] sm:h-[520px]"
+      >
+        {layout.map((w) => (
           <span
             key={w.text}
             className="absolute font-display italic text-jet leading-none whitespace-nowrap select-none"
             style={{
-              left: `${w.x}%`,
-              top: `${w.y}%`,
-              fontSize: `${fontSizeFor(w.count, maxCount)}px`,
+              left: `${w.x}px`,
+              top: `${w.y}px`,
+              fontSize: `${w.fontSize}px`,
               opacity: opacityFor(w.count, maxCount),
               transform: `translate(-50%, -50%) rotate(${w.rotation}deg)`,
               transition:
-                'left 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), top 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), font-size 0.4s ease-out, opacity 0.4s ease-out, transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1)',
+                'left 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), top 0.55s cubic-bezier(0.22, 0.61, 0.36, 1), font-size 0.45s ease-out, opacity 0.45s ease-out, transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1)',
             }}
           >
             {w.text}
