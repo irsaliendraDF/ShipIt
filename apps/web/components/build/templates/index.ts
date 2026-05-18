@@ -9,6 +9,8 @@ import { SalesFunnelTemplate } from './SalesFunnelTemplate';
 import { CustomerJourneyTemplate } from './CustomerJourneyTemplate';
 import { WordCloudTemplate } from './WordCloudTemplate';
 import { DiagnosticScorecardTemplate } from './DiagnosticScorecardTemplate';
+import { KnowledgeGameTemplate } from './KnowledgeGameTemplate';
+import { LiveVotingTemplate } from './LiveVotingTemplate';
 
 /**
  * Registry of slugs that have an interactive preview template.
@@ -25,6 +27,8 @@ export const TEMPLATE_REGISTRY: Record<string, ComponentType> = {
   'customer-journey': CustomerJourneyTemplate,
   'word-cloud': WordCloudTemplate,
   'diagnostic-scorecard': DiagnosticScorecardTemplate,
+  'knowledge-game': KnowledgeGameTemplate,
+  'live-voting': LiveVotingTemplate,
 };
 
 export function getTemplate(slug: string): ComponentType | null {

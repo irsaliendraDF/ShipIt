@@ -58,6 +58,7 @@ export const catalog: CatalogTool[] = [
     description:
       'real-time multiplayer trivia with timer, points, leaderboard. white-label alternative to live trivia tools. solo or team mode.',
     sprite: 'BOLT',
+    hasPreview: true,
   },
   {
     slug: 'personality-assessment',
@@ -153,6 +154,7 @@ export const catalog: CatalogTool[] = [
     description:
       'real-time audience voting with live bar chart. no participant signup, host-controlled. white-label alternative to live polling tools.',
     sprite: 'BOLT',
+    hasPreview: true,
   },
   {
     slug: 'word-cloud',
