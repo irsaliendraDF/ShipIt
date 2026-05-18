@@ -37,15 +37,22 @@ function spriteFor(name: CatalogSprite, size = 18) {
 }
 
 function CatalogCard({ tool }: { tool: CatalogTool }) {
-  // Clicking a card jumps to the pick-a-tool form and pre-selects the tool
-  // via ?tool=slug, read by IntakeForm on mount.
-  const href = `?tool=${tool.slug}#pick-a-tool`;
+  // Tools with an interactive template route to the preview page.
+  // Others jump to the pick-a-tool form with ?tool=slug pre-selected.
+  const href = tool.hasPreview
+    ? `/build/preview/${tool.slug}`
+    : `?tool=${tool.slug}#pick-a-tool`;
   return (
     <a
       href={href}
-      className="group relative flex flex-col bg-offwhite border border-jet/10 rounded-2xl p-5 min-h-[200px] hover:-translate-y-[3px] hover:border-orange/50 transition-all duration-200"
+      className="group relative flex flex-col bg-offwhite border border-jet/10 rounded-2xl p-5 min-h-[200px] hover:-translate-y-[3px] hover:border-purple/50 transition-all duration-200"
       style={{ boxShadow: '0 2px 0 rgba(26,26,26,0.04)' }}
     >
+      {tool.hasPreview && (
+        <span className="absolute -top-2 -right-2 inline-flex items-center gap-1 font-pixel text-[8px] uppercase tracking-[0.18em] bg-purple text-cream rounded-full px-2.5 py-1">
+          ▶ try it
+        </span>
+      )}
       <div className="flex items-start justify-between gap-3">
         <div className="flex-shrink-0">{spriteFor(tool.sprite)}</div>
         <span className="inline-flex items-center font-pixel text-[9px] uppercase tracking-[0.1em] bg-jet text-cream rounded-full px-2.5 py-1">
@@ -58,8 +65,8 @@ function CatalogCard({ tool }: { tool: CatalogTool }) {
       <p className="mt-2 font-sans text-[14px] text-jet/70 leading-[1.45] flex-1">
         {tool.description}
       </p>
-      <span className="mt-4 font-sans text-[13px] font-semibold text-orange group-hover:text-jet transition-colors self-end">
-        pick this →
+      <span className="mt-4 font-sans text-[13px] font-semibold text-purple group-hover:text-jet transition-colors self-end">
+        {tool.hasPreview ? 'preview →' : 'pick this →'}
       </span>
     </a>
   );

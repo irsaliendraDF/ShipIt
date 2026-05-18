@@ -27,6 +27,8 @@ export type CatalogTool = {
   price: number;
   description: string;
   sprite: CatalogSprite;
+  /** Optional: true when an interactive template exists at /build/preview/[slug]. */
+  hasPreview?: boolean;
 };
 
 export const CATEGORY_LABEL: Record<CatalogCategory, string> = {
@@ -46,6 +48,7 @@ export const catalog: CatalogTool[] = [
     description:
       'multi-choice quiz with score tracking, branded results page, and shareable outcomes. for marketers, educators, and agencies who want a branded alternative to free quiz platforms.',
     sprite: 'SPARK',
+    hasPreview: true,
   },
   {
     slug: 'knowledge-game',
@@ -84,6 +87,7 @@ export const catalog: CatalogTool[] = [
     description:
       'customizable branded spinning wheel for live picks, raffles, group assignments. workshop and event staple, professionalized.',
     sprite: 'BOLT',
+    hasPreview: true,
   },
   {
     slug: 'random-picker',
@@ -104,6 +108,7 @@ export const catalog: CatalogTool[] = [
     description:
       'drag-to-place interactive 2x2 grid. Eisenhower, BCG, importance-effort, custom framework. exportable, shareable.',
     sprite: 'BUILD',
+    hasPreview: true,
   },
   {
     slug: 'sales-funnel',
@@ -131,6 +136,7 @@ export const catalog: CatalogTool[] = [
     description:
       "animated tiered pyramid for Maslow, Bloom's, maturity models, custom frameworks. click-to-reveal stages.",
     sprite: 'BUILD',
+    hasPreview: true,
   },
 
   // Workshop Activities
