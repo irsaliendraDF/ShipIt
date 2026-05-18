@@ -26,12 +26,33 @@ const SEED_WORDS: Word[] = [
 ];
 
 function fontSizeFor(count: number, maxCount: number): number {
-  const ratio = count / maxCount;
-  return 16 + Math.round(ratio * 32); // 16px → 48px
+  const ratio = maxCount > 0 ? count / maxCount : 0;
+  return 14 + Math.round(ratio * 42); // 14px → 56px so the heaviest words really anchor
 }
 
 function opacityFor(count: number, maxCount: number): number {
-  return 0.45 + (count / maxCount) * 0.55;
+  return 0.5 + (count / maxCount) * 0.5;
+}
+
+const ROTATION_RING = [0, 0, 0, 0, -12, 12, 90, -90, 0, 0, 0, -8, 8];
+
+// Sunflower spiral placement. Heaviest word lands at center; each subsequent
+// word steps outward by golden-angle increments so they spread organically
+// instead of stacking. Positions are percentages of the cloud container.
+function placeWords(sortedByWeight: Word[]) {
+  return sortedByWeight.map((w, i) => {
+    if (i === 0) {
+      return { ...w, x: 50, y: 50, rotation: 0 };
+    }
+    const goldenAngle = i * 137.5077;
+    const angleRad = (goldenAngle * Math.PI) / 180;
+    // Square-root growth keeps inner words tight, outer words spread.
+    const radius = Math.sqrt(i) * 9;
+    const x = 50 + Math.cos(angleRad) * radius;
+    const y = 50 + Math.sin(angleRad) * radius * 0.78; // slight vertical squash
+    const rotation = ROTATION_RING[i % ROTATION_RING.length] ?? 0;
+    return { ...w, x, y, rotation };
+  });
 }
 
 export function WordCloudTemplate() {
@@ -63,18 +84,24 @@ export function WordCloudTemplate() {
 
   const maxCount = Math.max(...words.map((w) => w.count));
   const sorted = [...words].sort((a, b) => b.count - a.count);
+  const placed = placeWords(sorted);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6 items-start max-w-[1080px] mx-auto">
       {/* The cloud */}
-      <div className="bg-white border border-jet/15 rounded-2xl p-6 sm:p-10 min-h-[420px] flex flex-wrap items-center justify-center gap-x-4 gap-y-2 content-center">
-        {sorted.map((w) => (
+      <div className="relative bg-white border border-jet/15 rounded-2xl overflow-hidden h-[460px] sm:h-[520px]">
+        {placed.map((w) => (
           <span
             key={w.text}
-            className="font-display italic text-jet leading-none transition-all"
+            className="absolute font-display italic text-jet leading-none whitespace-nowrap select-none"
             style={{
+              left: `${w.x}%`,
+              top: `${w.y}%`,
               fontSize: `${fontSizeFor(w.count, maxCount)}px`,
               opacity: opacityFor(w.count, maxCount),
+              transform: `translate(-50%, -50%) rotate(${w.rotation}deg)`,
+              transition:
+                'left 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), top 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), font-size 0.4s ease-out, opacity 0.4s ease-out, transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1)',
             }}
           >
             {w.text}
