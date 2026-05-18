@@ -43,10 +43,30 @@ const SEED_WORDS: Word[] = [
   { text: 'restless', count: 2 },
 ];
 
-const ROTATION_RING = [0, 0, 0, -12, 12, 0, 0, 90, 0, 0, -12, 0, 0, 12, -90];
-const MIN_FONT = 14;
-const MAX_FONT = 54;
-const BOX_PADDING = 8;
+// Almost everything reads horizontally; an occasional gentle tilt keeps it
+// from feeling like a typeset paragraph. 90° rotations are out — they make
+// the cloud silhouette break.
+const ROTATION_RING = [0, 0, 0, 0, -8, 0, 0, 8, 0, 0, -8, 0, 0, 8];
+const MIN_FONT = 13;
+const MAX_FONT = 48;
+const CHAR_WIDTH_RATIO = 0.62; // generous estimate for italic Fraunces
+const BOX_PADDING = 14;
+
+// Cloud silhouette as a union of overlapping circles / ellipses, all in
+// container-relative units (0..1). Used both to mask the placement search
+// and to render the background shape.
+type Shape =
+  | { type: 'ellipse'; cx: number; cy: number; rx: number; ry: number }
+  | { type: 'circle'; cx: number; cy: number; r: number };
+
+const CLOUD_SHAPES: Shape[] = [
+  { type: 'ellipse', cx: 0.50, cy: 0.66, rx: 0.46, ry: 0.26 },
+  { type: 'circle', cx: 0.50, cy: 0.30, r: 0.20 },
+  { type: 'circle', cx: 0.30, cy: 0.42, r: 0.16 },
+  { type: 'circle', cx: 0.70, cy: 0.40, r: 0.17 },
+  { type: 'circle', cx: 0.17, cy: 0.58, r: 0.13 },
+  { type: 'circle', cx: 0.84, cy: 0.56, r: 0.13 },
+];
 
 function fontSizeFor(count: number, maxCount: number): number {
   const ratio = maxCount > 0 ? count / maxCount : 0;
@@ -61,11 +81,28 @@ function rotationFor(index: number): number {
   return ROTATION_RING[index % ROTATION_RING.length] ?? 0;
 }
 
+function isInsideCloud(x: number, y: number, W: number, H: number): boolean {
+  for (const s of CLOUD_SHAPES) {
+    if (s.type === 'ellipse') {
+      const dx = (x - s.cx * W) / (s.rx * W);
+      const dy = (y - s.cy * H) / (s.ry * H);
+      if (dx * dx + dy * dy <= 1) return true;
+    } else {
+      const minDim = Math.min(W, H);
+      const radius = s.r * minDim;
+      const dx = x - s.cx * W;
+      const dy = y - s.cy * H;
+      if (dx * dx + dy * dy <= radius * radius) return true;
+    }
+  }
+  return false;
+}
+
 /**
- * Place each word along an Archimedean spiral outward from the center.
+ * Place each word along an Archimedean spiral from the cloud's centroid.
  * Each candidate position is rejected if its bounding box overlaps any
- * already-placed word or falls outside the container. If no position
- * works at the chosen font size, the word shrinks and tries again.
+ * already-placed word, falls outside the container, or has any corner
+ * outside the cloud silhouette. Words shrink and retry if they cannot fit.
  */
 function layoutCloud(
   sortedWords: Word[],
@@ -74,8 +111,10 @@ function layoutCloud(
   height: number,
 ): Placed[] {
   if (width <= 0 || height <= 0) return [];
-  const cx = width / 2;
-  const cy = height / 2;
+  // Spiral seed: center of the cloud's main body (slightly above geometric
+  // center because the bumps live up top).
+  const cx = width * 0.5;
+  const cy = height * 0.48;
   const placed: Placed[] = [];
 
   for (let idx = 0; idx < sortedWords.length; idx++) {
@@ -86,24 +125,34 @@ function layoutCloud(
 
     while (fontSize >= MIN_FONT && !result) {
       const rad = (rotation * Math.PI) / 180;
-      // Approximate text box for italic Fraunces at this font size.
-      const baseW = word.text.length * fontSize * 0.5;
-      const baseH = fontSize * 0.95;
+      const baseW = word.text.length * fontSize * CHAR_WIDTH_RATIO;
+      const baseH = fontSize * 1.0;
       const cosR = Math.abs(Math.cos(rad));
       const sinR = Math.abs(Math.sin(rad));
       const boxW = baseW * cosR + baseH * sinR + BOX_PADDING;
       const boxH = baseW * sinR + baseH * cosR + BOX_PADDING;
 
-      for (let i = 0; i < 600; i++) {
-        const t = i * 0.32;
-        const r = i * 1.6;
+      for (let i = 0; i < 900; i++) {
+        // Tighter spiral steps so we never skip a viable slot.
+        const t = i * 0.22;
+        const r = i * 1.1;
         const x = cx + r * Math.cos(t);
-        const y = cy + r * Math.sin(t) * 0.85; // squash vertically a hair
+        const y = cy + r * Math.sin(t) * 0.78;
         const left = x - boxW / 2;
         const top = y - boxH / 2;
         const right = x + boxW / 2;
         const bottom = y + boxH / 2;
-        if (left < 4 || right > width - 4 || top < 4 || bottom > height - 4) {
+        if (left < 2 || right > width - 2 || top < 2 || bottom > height - 2) {
+          continue;
+        }
+        // All four bbox corners + center must sit inside the cloud silhouette.
+        if (
+          !isInsideCloud(left, top, width, height) ||
+          !isInsideCloud(right, top, width, height) ||
+          !isInsideCloud(left, bottom, width, height) ||
+          !isInsideCloud(right, bottom, width, height) ||
+          !isInsideCloud(x, y, width, height)
+        ) {
           continue;
         }
         let overlaps = false;
@@ -133,7 +182,7 @@ function layoutCloud(
           break;
         }
       }
-      if (!result) fontSize -= 4;
+      if (!result) fontSize -= 3;
     }
 
     if (result) placed.push(result);
@@ -142,15 +191,54 @@ function layoutCloud(
   return placed;
 }
 
+function CloudSilhouette({ width, height }: { width: number; height: number }) {
+  if (width <= 0 || height <= 0) return null;
+  return (
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      width={width}
+      height={height}
+      className="absolute inset-0 pointer-events-none"
+      aria-hidden="true"
+    >
+      {CLOUD_SHAPES.map((s, i) => {
+        if (s.type === 'ellipse') {
+          return (
+            <ellipse
+              key={i}
+              cx={s.cx * width}
+              cy={s.cy * height}
+              rx={s.rx * width}
+              ry={s.ry * height}
+              fill="#f4f4f4"
+            />
+          );
+        }
+        const minDim = Math.min(width, height);
+        return (
+          <circle
+            key={i}
+            cx={s.cx * width}
+            cy={s.cy * height}
+            r={s.r * minDim}
+            fill="#f4f4f4"
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
 export function WordCloudTemplate() {
   const [words, setWords] = useState<Word[]>(SEED_WORDS);
   const [input, setInput] = useState('');
   const [recent, setRecent] = useState<string[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
+  // Bumped to re-trigger layout after the display font finishes loading
+  // (text metrics differ from the system fallback).
+  const [fontReady, setFontReady] = useState(false);
 
-  // Measure the cloud container once it mounts, and again whenever the
-  // viewport resizes (the container's own width scales with the grid).
   useLayoutEffect(() => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -169,6 +257,11 @@ export function WordCloudTemplate() {
     }
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  useEffect(() => {
+    if (typeof document === 'undefined' || !document.fonts) return;
+    document.fonts.ready.then(() => setFontReady(true));
   }, []);
 
   function addWord(e: FormEvent) {
@@ -200,7 +293,10 @@ export function WordCloudTemplate() {
   );
   const layout = useMemo(
     () => layoutCloud(sorted, maxCount, size.w, size.h),
-    [sorted, maxCount, size.w, size.h],
+    // fontReady triggers a relayout once the display font's real metrics
+    // are available.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [sorted, maxCount, size.w, size.h, fontReady],
   );
 
   return (
@@ -210,10 +306,11 @@ export function WordCloudTemplate() {
         ref={containerRef}
         className="relative bg-white border border-jet/15 rounded-2xl overflow-hidden h-[460px] sm:h-[520px]"
       >
+        <CloudSilhouette width={size.w} height={size.h} />
         {layout.map((w) => (
           <span
             key={w.text}
-            className="absolute font-display italic text-jet leading-none whitespace-nowrap select-none"
+            className="absolute font-display italic text-jet leading-none whitespace-nowrap select-none z-10"
             style={{
               left: `${w.x}px`,
               top: `${w.y}px`,
