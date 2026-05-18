@@ -528,7 +528,7 @@ export default function BuildHomePage() {
                   C
                 </div>
                 <div>
-                  <h3 className="font-display text-[22px] text-jet leading-tight">chido</h3>
+                  <h3 className="font-display text-[22px] text-jet leading-tight">chido samantha</h3>
                   <p className="mt-1 font-pixel text-[9px] uppercase text-purple tracking-[0.18em]">
                     MARKETING · BRAND · STORY
                   </p>
